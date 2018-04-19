@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :categories, only: [:create, :edit, :show, :index]
+  resources :categories, only: [:create, :edit, :show, :index, :new]
   resources :reviews, only: [:create, :show]
   resources :order_items, only: [:index]
   resources :orders, only: [:new, :create, :edit, :show, :index]
