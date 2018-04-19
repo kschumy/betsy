@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :products, except: [:destroy]
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants, only: [:create, :show, :index]
+  get "/auth/:provider/callback", to: "sessions#create"
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
