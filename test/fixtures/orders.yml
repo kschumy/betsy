@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email_address: MyString
+  mailing_address: MyString
+  cc_name: MyString
+  cc_number: 1
+  cc_exp: 1
+  cc_cvv: 1
+  cc_zip: 1
+  status: MyString
+
+two:
+  email_address: MyString
+  mailing_address: MyString
+  cc_name: MyString
+  cc_number: 1
+  cc_exp: 1
+  cc_cvv: 1
+  cc_zip: 1
+  status: MyString
