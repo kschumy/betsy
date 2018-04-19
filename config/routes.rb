@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/github', as: 'github_login'
 
+  get '/login', to: 'sessions#new', as: 'login_form'
+  post '/login', to: 'sessions#create', as: 'login'
+  delete '/login', to: 'sessions#destroy', as: 'logout'
+
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
   resources :order_items, only: [:index]

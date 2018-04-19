@@ -6,7 +6,7 @@ class Merchant < ApplicationRecord
       provider: auth_hash[:provider],
       uid: auth_hash[:uid],
       email: auth_hash[:info][:email],
-      name: auth_hash[:info][:nickname]
+      name: auth_hash[:info][:name]
     )
 
   end
