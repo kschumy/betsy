@@ -14,9 +14,10 @@
   <body>
     <header>
       <nav class="login_info">
-        <% if @merchant %>
+       <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
+        <% if @curr_merchant %>
           <li>
-            Welcome <%= @merchant.name %>
+            Welcome <%= @curr_merchant.username %>
             <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
           </li>
         <% else %>
@@ -40,3 +41,9 @@
 
   </body>
 </html>
+
+<!-- <% if session[:user_id] %>
+             <%= link_to "Logout", logout_path, method: :delete, class: "hollow button" %>
+           <% else %>
+             <%= link_to "Login", "/auth/github", class: "hollow button" %>
+           <% end %> -->

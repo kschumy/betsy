@@ -9,5 +9,5 @@ class Merchant < ApplicationRecord
       username: auth_hash[:info][:name]
     )
   end
-  
+
 end

@@ -59,7 +59,7 @@ class MerchantsController < ApplicationController
 
 
 
-  private
+
   def merchant_params
     return params.require(:merchant).permit(:username, :email, :uid, :provider)
   end
