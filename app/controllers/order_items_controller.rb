@@ -1,5 +1,7 @@
 class OrderItemsController < ApplicationController
+
   def index
+    @order_items = OrderItems.all
   end
 
   def show
@@ -18,5 +20,10 @@ class OrderItemsController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+  def order_items_params
+    params.require(:order_item).permit(:quantity)
   end
 end
