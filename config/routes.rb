@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   root 'products#index'
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
-  resources :order_items, only: [:index]
+  resources :order_items
   resources :orders, only: [:new, :create, :edit, :show, :index]
   resources :products, except: [:destroy]
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
