@@ -12,6 +12,18 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <% if @merchant %>
+          <li>
+            Welcome <%= @merchant.name %>
+            <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
+          </li>
+        <% else %>
+          <%= link_to "Login With GitHub", github_login_path, class: "button" %>
+        <% end %>
+      </nav>
+    </header>
 
     <%= yield %>
 
