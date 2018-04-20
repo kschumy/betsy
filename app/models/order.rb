@@ -7,12 +7,12 @@ class Order < ApplicationRecord
   validates_format_of :email_address, :with => /@/
   validates :cc_name, presence: true
   validates :cc_number, numericality: true, presence: true, length: { is: 16 }
-  validates :cc_cvv, presence: true, numericality: true, presence: true, length: { is: 3 }
+  validates :cc_cvv, presence: true, numericality: true, length: { is: 3 }
   validates :cc_zip, numericality: true, presence: true, length: { minimum: 5 }
   validates :street, presence: true
   validates :customer_name, presence: true
   validates :city, presence: true
-  validates :state, presence:true, inclusion: { in: state_array, message: "%{value} is not a valid state"}
+  validates :state, presence:true, inclusion: { in: :state_array, message: "%{value} is not a valid state"}
   validates :mailing_zip, numericality: true, presence: true, length: { minimum: 5 }
 
   validates :cc_exp_month, presence: true, numericality: { only_integer: true}, :in => 1..12
