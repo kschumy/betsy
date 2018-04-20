@@ -15,9 +15,9 @@ class Order < ApplicationRecord
   validates :state, presence:true, inclusion: { in: :state_array, message: "%{value} is not a valid state"}
   validates :mailing_zip, numericality: true, presence: true, length: { minimum: 5 }
 
-  validates :cc_exp_month, presence: true, numericality: { only_integer: true}, :in => 1..12
+  validates :cc_exp_month, presence: true, numericality: { only_integer: true, in: 1..12 }
 
-  validates :cc_exp_year, presence: true, numericality: { only_integer: true}, length: 4
+  validates :cc_exp_year, presence: true, numericality: { only_integer: true, minimum: Date.today.year }
 
   validates :status, presence: true, inclusion: { in: %w(pending paid complete cancelled), message: "%{value} is not a valid status" }
 
