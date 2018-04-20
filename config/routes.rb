@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login_form'
   post '/login', to: 'sessions#create', as: 'login'
   delete '/login', to: 'sessions#destroy', as: 'logout'
-  
-  root 'products#index'
+
+  root 'products#welcome'
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
   resources :order_items
