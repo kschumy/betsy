@@ -1,9 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  rating: 1
-  comment: MyString
+ rating: 1
+ comment: I was disappointed with this ball. I expect a ball on mars to bounch MUCH higher.
+ product_id: one
 
 two:
-  rating: 1
-  comment: MyString
+ rating: 5
+ comment: This wool sweater kept me toasty warm during the cold nights.
+ product_id: two
+
+three:
+ rating: 3
+ comment: The sweater was itchy but warm.
+ product_id: two
+
+four:
+ rating: 4
+ comment: Pretty good. As claimed, I didn't even notice it was dehydrated.
+ product_id: four
