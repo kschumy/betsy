@@ -9,12 +9,33 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = Category.new
+    if @user.nil?
+      flash[:status]= :failure
+      flash[:notice]= "You must be logged to add a new category!"
+      redirect_to root_path, status: :bad_request
+    else
+      @category = Category.new
+    end
   end
 
   def create
-    Category.create(category_params)
-    redirect_to categories_path
+    if @user.nil?
+      flash[:status] = :failure
+      flash[:notice]= "You must be logged in to add a new category"
+      redirect_to root_path
+    else
+      @category = Category.new(category_params)
+      if @category.save
+        flash[:status] = :success
+        flash[:notice] = "Succesfully created category: #{@category.name}!"
+        redirect_to categories_path
+      else
+        flash[:status] = :failure
+        flash[:notice] = "Blah! Blah!"
+        flash[:messages] = @category.errors.messages
+        render :new, status: :bad_request
+      end
+    end
   end
 
   def edit
@@ -33,6 +54,6 @@ class CategoriesController < ApplicationController
   private
   def category_params
     return
-    params.require(:category).permit(:name, :id)
+    params.require(:category).permit(:name)
   end
 end

@@ -5,15 +5,25 @@ class MerchantsController < ApplicationController
   end
 
   def show
-    @merchant = Merchant.find_by(id: params[:id])
+    if @merchant.nil?
+      if Merchant.find_by(id: params[:id])
+        flash[:status] = :failure
+        flash[:notice] = "Access to this page is restricted!"
+        redirect_to merchants_path
+      else
+        render_404
+      end
+
+    elseif 
+    # need to think how we will do this with session login or just have login/logout here
+
   end
 
   def new
   end
 
   def create
-    Merchant.create(merchant_params)
-    redirect_to merchants_path
+
   end
 
   def edit

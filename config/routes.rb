@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'products#index'
+
   resources :categories, only: [:create, :edit, :show, :index, :new]
   resources :reviews, only: [:create, :show]
   resources :order_items, only: [:index]
