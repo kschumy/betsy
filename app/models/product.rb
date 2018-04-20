@@ -8,4 +8,13 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
   validates :merchant, presence: true
 
+  def inventory_status
+    quantity = self.stock
+    if quantity > 0
+      return "In stock"
+    else
+      return "Out of stock"
+    end
+  end
+
 end
