@@ -1,7 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+ name: Novelty
 
 two:
-  name: MyString
+ name: Clothing
+
+three:
+ name: Hygiene
+
+four:
+ name: Food
+
+five:
+ name: Tools
