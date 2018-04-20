@@ -1,9 +1,16 @@
 class ProductsController < ApplicationController
   def index
-    @pcategories = Category.order(:name)
+    @products = Product.all
   end
 
   def show
+    product = Product.find_by(id: params[:id])
+    if product == nil
+      flash[:alert] = "Product does not exist"
+      redirect_to products_path
+    else
+      @product = product
+    end
   end
 
   def new
