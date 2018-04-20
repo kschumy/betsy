@@ -4,38 +4,63 @@ class MerchantsController < ApplicationController
     @merchants = Merchant.all
   end
 
-  def show
-    if @merchant.nil?
-      if Merchant.find_by(id: params[:id])
-        flash[:status] = :failure
-        flash[:notice] = "Access to this page is restricted!"
-        redirect_to merchants_path
+  def login
+    auth_hash = request.env['omniauth.auth']
+    if auth_hash[:uid]
+      @merchant = Merchant.find_by(uid: auth_hash[:uid], provider: 'github')
+      if @merchant.nil?
+        @merchant = Merchant.build_from_github(auth_hash)
+        if @merchant.save
+          flash[:success] = "Logged in successfully"
+          session[:merchant_id] = @merchant.id
+          redirect_to root_path
+          # successful_login
+        else
+          flash[:error] = "Some error happened in Merchant creation"
+          redirect_to root_path
+        end
       else
-        render_404
+        flash[:success] = "Logged in successfully"
+        session[:merchant_id] = @merchant.id
+        redirect_to root_path
+        # successful_login
       end
+    else
+      flash[:error] = "Logging in through GitHub not successful"
+      redirect_to root_path
+    end
+  end
 
-    elseif 
+  def show
+    # if @merchant.nil?
+    #   if Merchant.find_by(id: params[:id])
+    #     flash[:status] = :failure
+    #     flash[:notice] = "Access to this page is restricted!"
+    #     redirect_to merchants_path
+    #   else
+    #     render_404
+    #   end
+    #
+    # elseif
     # need to think how we will do this with session login or just have login/logout here
 
   end
 
-  def new
-  end
 
-  def create
 
-  end
+  private
 
-  def edit
-  end
 
-  def update
-  end
+    def successful_login
+      flash[:success] = "Logged in successfully"
+      session[:merchant_id] = @merchant.id
+      redirect_to root_path
+    end
 
-  def destroy
-  end
+
 
   private
   def merchant_params
     return params.require(:merchant).permit(:username, :email, :uid, :provider)
+  end
 end
