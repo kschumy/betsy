@@ -7,14 +7,10 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create', as: 'login'
   delete '/login', to: 'sessions#destroy', as: 'logout'
 
-<<<<<<< HEAD
-  root 'products#index'
-  resources :categories, only: [:create,:new, :edit, :show, :index]
-=======
+
   root 'products#welcome'
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
->>>>>>> products
   resources :order_items
   resources :orders, only: [:new, :create, :edit, :show, :index]
   resources :products, except: [:destroy] do
