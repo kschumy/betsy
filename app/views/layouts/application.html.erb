@@ -13,7 +13,7 @@
 
   <body>
     <header>
-      <nav>
+      <nav class="login_info">
         <% if @merchant %>
           <li>
             Welcome <%= @merchant.name %>
@@ -24,6 +24,17 @@
         <% end %>
       </nav>
     </header>
+    <h1>Mars Depot</h1>
+    <nav class="product_nav">
+      <ul>
+        <li>
+          <%= link_to "Shop All", products_path %>
+        </li>
+        <li>
+          category 2
+        </li>
+      </ul>
+    </nav>
 
     <%= yield %>
 
