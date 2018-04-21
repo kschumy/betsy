@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
 
-  get '/auth/:provider/callback', to: 'merchants#login', as: 'github_login'
-  # get "/auth/:provider/callback", to: "sessions#create", as: 'auth_callback'
+  get '/auth/:provider/callback', to: 'merchants#login'
+  get '/auth/github', as: 'github_login'
 
-  # get '/auth/github', to: 'merchants#login', as: 'github_login'
+  # TODO: is 'login' correct??
+  # delete 'login', to: 'merchants#destroy', as: 'github_logout'
+  delete "/logout", to: "merchants#destroy", as: "logout"
 
-  get '/login', to: 'sessions#new', as: 'login_form'
-  post '/login', to: 'sessions#create', as: 'login'
-  delete '/login', to: 'sessions#destroy', as: 'logout'
 
   root 'products#index'
   resources :categories, only: [:create, :edit, :show, :index]
