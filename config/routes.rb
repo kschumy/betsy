@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
 
-  get '/auth/:provider/callback', to: 'merchants#create'
+  get '/auth/:provider/callback', to: 'merchants#login'
   get '/auth/github', as: 'github_login'
 
-  get '/login', to: 'sessions#new', as: 'login_form'
-  post '/login', to: 'sessions#create', as: 'login'
-  delete '/login', to: 'sessions#destroy', as: 'logout'
+  
+  delete "/logout", to: "merchants#destroy", as: "logout"
 
 
-  root 'products#welcome'
+  root 'products#index'
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
   resources :order_items
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :show]
   end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
-  resources :merchants, only: [:create, :show, :index]
+  resources :merchants #, only: [:create, :show, :index]
 
 
 

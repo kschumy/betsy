@@ -7,7 +7,7 @@ class MerchantsController < ApplicationController
   def login
     auth_hash = request.env['omniauth.auth']
     if auth_hash[:uid]
-      @merchant = Merchant.find_by(uid: auth_hash[:uid], provider: 'github')
+      @merchant = Merchant.find_by(uid: auth_hash[:uid])
       if @merchant.nil?
         @merchant = Merchant.build_from_github(auth_hash)
         if @merchant.save
@@ -46,6 +46,14 @@ class MerchantsController < ApplicationController
 
   end
 
+  def destroy
+    
+    session[:merchant_id] = nil
+    flash[:success] = "Successfully logged out!"
+
+    redirect_to root_path
+  end
+
 
 
   private
@@ -59,7 +67,7 @@ class MerchantsController < ApplicationController
 
 
 
-  private
+
   def merchant_params
     return params.require(:merchant).permit(:username, :email, :uid, :provider)
   end
