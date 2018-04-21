@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'merchants#login'
   get '/auth/github', as: 'github_login'
 
-  
+
   delete "/logout", to: "merchants#destroy", as: "logout"
 
 
@@ -17,8 +17,6 @@ Rails.application.routes.draw do
   end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants #, only: [:create, :show, :index]
-
-
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
