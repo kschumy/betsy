@@ -3,9 +3,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'merchants#login'
   get '/auth/github', as: 'github_login'
 
-
   delete "/logout", to: "merchants#destroy", as: "logout"
-
 
   root 'products#welcome'
   resources :categories, only: [:create, :edit, :show, :index]
