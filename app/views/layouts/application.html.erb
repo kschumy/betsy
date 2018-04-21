@@ -1,65 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+  <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
 
-    <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-  </head>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
 
-  <body>
-    <header>
-      <nav class="login_info">
-       <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
+<body>
+  <header>
+
+    <nav class="main-nav">
+      <%= link_to "Mars Depot", root_path, :class =>  "title"%>
+      <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
+      <div class="login-buttons">
+
         <% if @curr_merchant %>
-          <li>
-            Welcome <%= @curr_merchant.username %>
-            <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
-          </li>
+        Welcome <%= @curr_merchant.username %>
+
+
+        <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
         <% else %>
-          <%= link_to "Login With GitHub", github_login_path, class: "button" %>
+        <%= link_to "Login With GitHub", github_login_path, class: "button" %>
         <% end %>
-      </nav>
-    </header>
-    <h1>Mars Depot</h1>
-    <nav class="product_nav">
-      <ul>
-        <li>
-          <%= link_to "Shop All", products_path %>
-        </li>
-        <li>
-          category 2
-        </li>
-      </ul>
+
+      </div>
+
     </nav>
-    <section class="alert-section">
-      <% flash.each do |name, message| %>
-        <section class="status <%= name %>">
-          <% if message.respond_to?(:each) %>
-            <h3>An error has occured.</h3>
-            <ul>
-              <% flash[:alert].each do |field, message| %>
-                <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
-              <% end %>
-            </ul>
-          <% else %>
-            <h3 class="success"><%= message %></h3>
-          <% end %>
-        </section>
+  </header>
+  <nav class="product_nav">
+    <ul>
+      <li>
+        <%= link_to "Shop All", products_path %>
+      </li>
+      <li>
+        category 2
+      </li>
+    </ul>
+  </nav>
+  <section class="alert-section">
+    <% flash.each do |name, message| %>
+    <section class="status <%= name %>">
+      <% if message.respond_to?(:each) %>
+      <h3>An error has occured.</h3>
+      <ul>
+        <% flash[:alert].each do |field, message| %>
+        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+        <% end %>
+      </ul>
+      <% else %>
+      <h3 class="success"><%= message %></h3>
       <% end %>
     </section>
+    <% end %>
+  </section>
 
-    <%= yield %>
+  <%= yield %>
 
-  </body>
+</body>
 </html>
 
 <!-- <% if session[:user_id] %>
-             <%= link_to "Logout", logout_path, method: :delete, class: "hollow button" %>
-           <% else %>
-             <%= link_to "Login", "/auth/github", class: "hollow button" %>
-           <% end %> -->
+<%= link_to "Logout", logout_path, method: :delete, class: "hollow button" %>
+<% else %>
+<%= link_to "Login", "/auth/github", class: "hollow button" %>
+<% end %> -->
