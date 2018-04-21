@@ -1,2 +1,26 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<section>
+  <section class="product-image">
+    <%= image_tag(@product.photo, :alt => "product image") %>
+  </section>
+  <section class="product-details">
+    <h2><%= @product.name %></h2>
+    <p>
+      <%= @product.inventory_status %>
+    </p>
+    <p>
+      $<%= @product.price %>
+    </p>
+    <p>
+      <%= @product.merchant.username %>
+    </p>
+    <p>
+      Description: <%= @product.description %>
+    </p>
+    <p>
+      Categories:
+      <% @product.categories.each do |category| %>
+      <%= category.name %>
+      <%end%>
+    </p>
+  </section>
+</section>

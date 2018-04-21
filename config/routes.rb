@@ -6,13 +6,16 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login_form'
   post '/login', to: 'sessions#create', as: 'login'
   delete '/login', to: 'sessions#destroy', as: 'logout'
-  
-  root 'products#index'
+
+
+  root 'products#welcome'
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
   resources :order_items
   resources :orders, only: [:new, :create, :edit, :show, :index]
-  resources :products, except: [:destroy]
+  resources :products, except: [:destroy] do
+    resources :reviews, only: [:create, :show]
+  end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants, only: [:create, :show, :index]
 
