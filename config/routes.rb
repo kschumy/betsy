@@ -3,12 +3,14 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'merchants#login'
   get '/auth/github', as: 'github_login'
 
-  
+
   delete "/logout", to: "merchants#destroy", as: "logout"
 
 
   root 'products#index'
-  resources :categories, only: [:create, :edit, :show, :index]
+  resources :categories, only: [:create, :edit, :show, :index] do
+    resources :products
+  end
   resources :reviews, only: [:create, :show]
   resources :order_items
   resources :orders, only: [:new, :create, :edit, :show, :index]
