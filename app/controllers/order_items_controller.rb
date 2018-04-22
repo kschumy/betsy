@@ -21,6 +21,8 @@ class OrderItemsController < ApplicationController
     else
       flash[:status] = :failure
       flash[:result_text] = "Item did not add to shopping cart"
+      flash[:messages] = @order_item.errors.messages
+
       render :new
     end
   end
@@ -45,6 +47,13 @@ class OrderItemsController < ApplicationController
       redirect_to order_items_path
       # if it's the last thing in the order, will need to redirect to root_path?
     end
+  end
+
+  def mark_shipped
+    @order_item  = OrderItem.find_by(id: params[:id])
+    @order_item.update(is_shipped: true)
+    @order_item.save
+    redirect_to order_items_path
   end
 
   private
