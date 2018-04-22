@@ -10,6 +10,7 @@ class Category < ApplicationRecord
                     uniqueness: { case_sensitive: false }
 
   def add_product(new_product)
+    # TODO add error throw
     self.products << new_product if new_product.is_a?(Product)
   end
 
