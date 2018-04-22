@@ -13,16 +13,16 @@ class Merchant < ApplicationRecord
 
     # Throw ArgumentError if provided auth_hash is not a hash or if it does not
     # have the key :info.
-    def valid_auth_hash_or_error(auth_hash)
-      if !auth_hash.is_a?(Hash) || !auth_hash.respond_to[:info]
+    def self.valid_auth_hash_or_error(auth_hash)
+      # if !auth_hash.is_a?(OmniAuth::AuthHash) || !auth_hash.has(:info)
         raise ArgumentError.new("Invalid initial format from provider")
-      end
+      # end
     end
 
     # PRE: provided auth_hash must be a hash and have the key :info.
     # Returns a new instance of Merchant, using the provided auth_hash to supply
     # provider, uid, email, and username.
-    def create_new_merchant(auth_hash)
+    def self.create_new_merchant(auth_hash)
       return Merchant.new(
         provider: auth_hash[:provider],
         uid: auth_hash[:uid],
