@@ -15,21 +15,39 @@
   <header>
 
     <nav class="main-nav">
-      <%= link_to "Mars Depot", root_path, :class =>  "title"%>
-      <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
-      <div class="login-buttons">
+      <ul class="dropdown" data-dropdown-menu >
+        <li class="main-title">
+          <%= link_to "Mars Depot", root_path, :class =>  "title"%>
+          <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
+        </li>
 
         <% if @curr_merchant %>
-        Welcome <%= @curr_merchant.username %>
 
+        <li class="is-dropdown-submenu-parent" style="float: right;">
+          <%= image_tag("icons/if_astronaut_44938.png", size: "60x60", alt: "User icon", class: "astronaut") %>
 
-        <%= link_to "Logout", logout_path, method: :delete, class: "button" %>
+          <ul class="menu" >
+            <li>
+              Signed in as<br /><strong><%= @curr_merchant.username %></strong>
+            </li>
+            <li>
+              <a href="#">Seller Dashboard</a>
+            </li>
+            <li>
+              <%= link_to "Logout", logout_path, method: :delete %>
+            </li>
+          </ul>
+        </li>
+
         <% else %>
-        <%= link_to "Login With GitHub", github_login_path, class: "button" %>
-        <% end %>
-
-      </div>
-
+        <li>
+          <%= link_to "Login With GitHub", github_login_path, class: "button" %>
+          <% end %>
+        </li>
+        <li>
+          <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %>
+        </li>
+      </ul>
     </nav>
   </header>
   <nav class="product_nav">
