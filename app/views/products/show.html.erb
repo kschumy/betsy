@@ -32,13 +32,9 @@
   </p>
 </section>
 
-<section class="reviews">
-<h5>Reviews</h5>
-<section>
-  TODO: Add Reviews
-</section>
-</section>
+<section class = "row rating container">
 
-<p>
-  TODO: Add button for people to review
-</p>
+  <h4>Reviews</h4>
+
+  <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
+</section>
