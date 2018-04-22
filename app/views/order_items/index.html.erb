@@ -1,2 +1,31 @@
-<h1>OrderItems#index</h1>
-<p>Find me in app/views/order_items/index.html.erb</p>
+<h3>List of Items </h3>
+<table>
+  <thead>
+    <tr>
+      <th width="100">Product</th>
+      <th width="100">Quantity</th>
+      <th width="100">Price</th>
+      <th width="100">Subtotal</th>
+      <th width="100">Shipping Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order_items.each do |order_item| %>
+    <tr>
+      <td><%= order_item.product_id %></td>
+      <td><%= order_item.quantity %></td>
+      <td><%= order_item.price %></td>
+      <td> #insert subtotal# </td>
+      <td>
+        <% if order_item.is_shipped == false %>
+        <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
+        <% else %>
+        Shipped
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Back to Welcome Page", root_path, class: "button" %>
