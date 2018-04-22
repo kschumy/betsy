@@ -34,4 +34,8 @@ class Order < ApplicationRecord
   def find_orders
     return self.orders
   end
+
+  def find_orders
+    return self.orders
+  end
 end
