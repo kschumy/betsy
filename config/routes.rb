@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:create, :edit, :show, :index]
   resources :reviews, only: [:create, :show]
   resources :order_items
-  resources :orders, only: [:new, :create, :edit, :show, :index]
+  patch 'order_items/:id/mark_shipped', to: 'order_items#mark_shipped', as: 'mark_item_shipped'
+  resources :orders, only: [:new, :create, :edit, :update, :show, :index]
   resources :products, except: [:destroy]
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants, only: [:create, :show, :index]
