@@ -7,7 +7,7 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
   validates :merchant, presence: true
- # validate should have minimum 1 category
+  # validate should have minimum 1 category
   def inventory_status
     quantity = self.stock
     if quantity > 0
@@ -17,6 +17,15 @@ class Product < ApplicationRecord
     end
     # QUESTION: is it ok if we refactor this to the following?
     # return self.stock > 0 ? "In stock" : "Out of stock"
+  end
+
+  def average_rating
+    return if reviews.empty
+    total_ratings = 0
+    reviews.each do |r|
+      total_ratings += r.rating
+    end
+    return sprintf('%.01f', total_ratings/reviews.length)
   end
 
 end
