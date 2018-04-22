@@ -4,20 +4,20 @@ astro:
   username: Astro_Anna
   email: astro_anna@transmars.com
   provider: github
-  uid: 2838892982
+  uid: 29172354
 
 
 quasar:
   username: Quasar_Qutie
   email: quasar_qutie@meteor.com
   provider: github
-  uid: 3893029
+  uid: 23457332
 
 rover:
   username: Rover_Rocks
   email: rrrrrrrover@marsmail.com
   provider: github
-  uid: 29389383290380920932
+  uid: 46788885
 
 # four:
 #  username: Rover_Rocks
