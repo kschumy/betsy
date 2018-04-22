@@ -7,6 +7,8 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
   validates :merchant, presence: true
+  valdidate :bad_name
+
  # validate should have minimum 1 category
   def inventory_status
     quantity = self.stock
