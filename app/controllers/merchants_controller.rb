@@ -8,11 +8,11 @@ class MerchantsController < ApplicationController
     auth_hash = request.env['omniauth.auth']
     if auth_hash[:uid]
       @merchant = Merchant.find_by(uid: auth_hash[:uid])
-      if @merchant.nil?
+      if @merchant.nil? # new Merchant
         @merchant = Merchant.build_from_github(auth_hash)
-        @merchant.save ? successful_login : unsuccessful_login("Merchant creation error")
+        @merchant.save ? successful_login("Welcome") : unsuccessful_login("Merchant creation error")
       else
-        successful_login
+        successful_login("Welcome back")
       end
     else
       unsuccessful_login("Logging in through GitHub not successful")
@@ -44,20 +44,16 @@ class MerchantsController < ApplicationController
 
   private
 
+  def successful_login(message)
+    flash[:success] = message << ", " << @merchant.username
+    session[:merchant_id] = @merchant.id
+    redirect_to root_path
+  end
 
-    def successful_login
-      flash[:success] = "Logged in successfully"
-      session[:merchant_id] = @merchant.id
-      redirect_to root_path
-    end
-
-    def unsuccessful_login(error_message)
-      flash[:error] = error_message
-      redirect_to root_path
-    end
-
-
-
+  def unsuccessful_login(error_message)
+    flash[:error] = error_message
+    redirect_to root_path
+  end
 
   def merchant_params
     return params.require(:merchant).permit(:username, :email, :uid, :provider)
