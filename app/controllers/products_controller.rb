@@ -26,7 +26,8 @@ class ProductsController < ApplicationController
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path
     else
-      flash[:alert] = "Could not create product"
+      flash[:alert] = "Could not create product #{@product.name}"
+      redirect_to products_path
     end
 
   end
@@ -42,6 +43,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued)
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id)
   end
 end
