@@ -25,7 +25,8 @@ class ReviewsController < ApplicationController
     else
       @review = Review.new(review_params)
       if @review.save
-        flash [:success] = "Your review was added succesfully!"
+        flash[:success] = :success
+        flash[:result_text] = "Your review was added succesfully!"
         redirect_to product_path(@review.product_id)
       else
         flash[:failure] = :failure
@@ -49,3 +50,4 @@ class ReviewsController < ApplicationController
   def review_params
     params.permit(:rating, :comment, :product_id)
   end
+end

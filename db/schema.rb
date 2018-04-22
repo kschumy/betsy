@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180420195253) do
+ActiveRecord::Schema.define(version: 20180422061623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(version: 20180420195253) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "category_products", force: :cascade do |t|
+  create_table "categories_products", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "product_id"
     t.bigint "category_id"
-    t.index ["category_id"], name: "index_category_products_on_category_id"
-    t.index ["product_id"], name: "index_category_products_on_product_id"
+    t.index ["category_id"], name: "index_categories_products_on_category_id"
+    t.index ["product_id"], name: "index_categories_products_on_product_id"
   end
 
   create_table "merchants", force: :cascade do |t|
@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20180420195253) do
     t.string "email_address"
     t.string "cc_name"
     t.bigint "cc_number"
-    t.integer "cc_cvv"
-    t.integer "cc_zip"
+    t.string "cc_cvv"
+    t.string "cc_zip"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20180420195253) do
     t.string "customer_name"
     t.string "city"
     t.string "state"
-    t.integer "mailing_zip"
+    t.string "mailing_zip"
     t.integer "cc_exp_month"
     t.integer "cc_exp_year"
   end
@@ -84,15 +84,15 @@ ActiveRecord::Schema.define(version: 20180420195253) do
 
   create_table "reviews", force: :cascade do |t|
     t.integer "rating"
-    t.string "comment"
+    t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "product_id"
     t.index ["product_id"], name: "index_reviews_on_product_id"
   end
 
-  add_foreign_key "category_products", "categories"
-  add_foreign_key "category_products", "products"
+  add_foreign_key "categories_products", "categories"
+  add_foreign_key "categories_products", "products"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "products", "merchants"

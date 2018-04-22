@@ -1,2 +1,40 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<section class="product-main">
+  <section class="product-image">
+    <%= image_tag(@product.photo, :alt => "product image") %>
+  </section>
+  <section class="product-details">
+    <h2><%= @product.name %></h2>
+    <p>
+      <%= @product.inventory_status %>
+    </p>
+    <p>
+      $<%= @product.price %>
+    </p>
+    <p>
+      <%= link_to @merchant.username, merchant_path(@merchant.id) %>
+    </p>
+    <p>
+      Description: <%= @product.description %>
+    </p>
+    <p>
+      Categories:
+      <% @product.categories.each do |category| %>
+      <%= category.name %>
+      <%end%>
+    </p>
+  </section>
+</section>
+
+<section class="ratings-summary">
+  <h5>Ratings Summary</h5>
+  <p>
+    TODO: CALCULATE AVG RATING
+  </p>
+</section>
+
+<section class = "row rating container">
+
+  <h4>Reviews</h4>
+
+  <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
+</section>

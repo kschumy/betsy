@@ -3,23 +3,19 @@
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
+
+# one:
+#   category_id: novelty.id
+#   product_id: ball.id
 #
-one:
- category_id: one
- product_id: one
-
-two:
- category_id: three
- product_id: three
-
-three:
- category_id: two
- product_id: two
-
-four:
- category_id: four
- product_id: four
-
-five:
- category_id: one
- product_id: four
+# two:
+#   category_id: hygiene
+#   product_id: soap
+#
+# three:
+#   category_id: clothing
+#   product_id: sweater
+#
+# four:
+#  category_id: hygiene
+#  product_id: icecream

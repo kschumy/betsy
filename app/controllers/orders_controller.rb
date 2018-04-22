@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: params[:id])
     if @order.nil?
       redirect_to products_path
+    end
   end
 
   def update
@@ -34,4 +35,5 @@ class OrdersController < ApplicationController
   private
   def order_params
     return params.require(:order). permit(:cc_name, :mailing_address, :email_address, :cc_number, :cc_exp, :cc_cvv, :cc_zip)
+  end
 end

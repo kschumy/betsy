@@ -1,10 +1,20 @@
 require "test_helper"
 
 describe MerchantsController do
-  it "should get index" do
-    get merchants_path
-    value(response).must_be :success?
+  describe 'index' do
+    it "should get index" do
+      get merchants_path
+      value(response).must_be :success?
+    end
   end
+
+  describe 'show' do
+    it "should respond to show" do
+      get merchants_path
+      value(response).must_be :success?
+    end
+  end
+
 
   # it "should get show" do
   #   get merchants_show_url

@@ -18,8 +18,33 @@
 
 */
 body {
-
   background-size: 100% auto;
+  padding: 20px 20px;
+}
 
+.title {
+  font-size: 4em;
+}
 
+.dropdown{
+  display: flex;
+  align-items: center;
+}
+
+.main-title {
+  margin-right: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.astronaut {
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
+
+.cart {
+  margin-right: 50px;
+  margin-bottom: 10px;
 }
