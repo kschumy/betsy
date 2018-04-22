@@ -11,7 +11,7 @@
       $<%= @product.price %>
     </p>
     <p>
-      <%= @product.merchant.username %>
+      <%= link_to @merchant.username, merchant_path(@merchant.id) %>
     </p>
     <p>
       Description: <%= @product.description %>
