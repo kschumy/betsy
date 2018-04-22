@@ -14,10 +14,21 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new(product_params)
+    @product = Product.new
   end
 
   def create
+    @product = Product.new(product_params)
+    merchant = Merchant.find_by(id: session[:merchant_id])
+    @product.discontinued = false
+    @product.merchant = merchant
+    if @product.save
+      flash[:success] = "#{@product.name} saved"
+      redirect_to products_path
+    else
+      flash[:alert] = "Could not create product"
+    end
+
   end
 
   def edit
