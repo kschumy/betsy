@@ -1,0 +1,45 @@
+<section>
+  <%= form_for @order do |f| %>
+
+  <%= f.label :email_address %>
+  <%= f.text_field :email_address %>
+
+  <%= f.label :customer_name %>
+  <%= f.text_field :customer_name %>
+
+  <%= f.label :street %>
+  <%= f.text_field :street %>
+
+  <%= f.label :city %>
+  <%= f.text_field :city %>
+
+  <%= f.label :state %>
+  <%= f.text_field :state %>
+
+  <%= f.label :mailing_zip %>
+  <%= f.text_field :mailing_zip %>
+
+  <%= f.label :cc_name %>
+  <%= f.text_field :cc_name %>
+
+  <%= f.label :cc_number %>
+  <%= f.text_field :cc_number %>
+
+  <%= f.label :cc_cvv %>
+  <%= f.text_field :cc_cvv %>
+
+  <%= f.label :cc_zip %>
+  <%= f.text_field :cc_zip %>
+
+  <%= f.label :cc_exp_month %>
+  <%= f.text_field :cc_exp_month %>
+
+  <%= f.label :cc_exp_year %>
+  <%= f.text_field :cc_exp_year %>
+
+  <%= f.label :status %>
+  <%= f.text_field :status %>
+
+  <%= f.submit class: "button" %>
+  <% end %>
+</section>
