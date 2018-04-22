@@ -1,2 +1,17 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<h1 class="page-header">Order Info</h1>
+
+
+<h3>Order ID: <%= @order.id %></h3>
+<p>Email Address: <%= @order.email_address %></p>
+<p>Customer Name: <%= @order.customer_name %></p>
+<p>Address: <%= @order.street %> <%= @order.city %>, <%= @order.state %> <%= @order.mailing_zip %></p>
+<p>CC Number: **<%= @order.cc_number.to_s[-4..-1]  %></p>
+<p>CC CVV: <%= @order.cc_cvv %></p>
+<p>CC Zip: <%= @order.cc_zip %></p>
+<p>Exp: <%= @order.cc_exp_month %>/<%= @order.cc_exp_year %></p>
+<p>Status: <%= @order.status %></p>
+
+<%= link_to "Edit Order", edit_order_path, class: "button" %>
+<%= link_to "New Order", new_order_path, class: "button" %>
+<%= link_to "View All Orders", orders_path, class: "button" %>
+<%= link_to "Back to Welcome Page", root_path, class: "button" %>
