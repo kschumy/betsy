@@ -11,13 +11,9 @@ Rails.application.routes.draw do
   resources :order_items
   patch 'order_items/:id/mark_shipped', to: 'order_items#mark_shipped', as: 'mark_item_shipped'
   resources :orders, only: [:new, :create, :edit, :update, :show, :index]
-<<<<<<< HEAD
   resources :products, except: [:destroy] do
     resources :reviews, only: [:create, :new]
   end
-=======
-  resources :products, except: [:destroy]
->>>>>>> orders_ss
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants #, only: [:create, :show, :index]
 
