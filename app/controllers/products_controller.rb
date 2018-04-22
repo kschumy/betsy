@@ -6,12 +6,16 @@ class ProductsController < ApplicationController
 
   def show
     product = Product.find_by(id: params[:id])
+
     if product == nil
       flash[:alert] = "Product does not exist"
       redirect_to products_path
     else
       @product = product
+      @merchant = @product.merchant
+
     end
+
   end
 
   def new
@@ -65,6 +69,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id)
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id, category_ids: [])
   end
 end

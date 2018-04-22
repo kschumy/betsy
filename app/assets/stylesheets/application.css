@@ -26,12 +26,25 @@ body {
   font-size: 4em;
 }
 
-.main-nav {
+.dropdown{
   display: flex;
   align-items: center;
 }
 
-div.login-buttons {
-  margin-top: 20px;
-  margin-left: auto;
+.main-title {
+  margin-right: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.astronaut {
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
+
+.cart {
+  margin-right: 50px;
+  margin-bottom: 10px;
 }
