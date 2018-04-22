@@ -14,10 +14,22 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new(product_params)
+    @product = Product.new
   end
 
   def create
+    @product = Product.new(product_params)
+    merchant = Merchant.find_by(id: session[:merchant_id])
+    @product.discontinued = false
+    @product.merchant = merchant
+    if @product.save
+      flash[:success] = "#{@product.name} saved"
+      redirect_to products_path
+    else
+      flash[:alert] = "Could not create product #{@product.name}"
+      redirect_to products_path
+    end
+
   end
 
   def edit
@@ -31,6 +43,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued)
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id)
   end
 end
