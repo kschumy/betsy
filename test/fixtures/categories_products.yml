@@ -5,17 +5,17 @@
 # below each fixture, per the syntax in the comments below
 
 # one:
-#   index_categories_products_on_category_id: novelty
-#   index_categories_products_on_product_id: ball
+#   category_id: novelty.id
+#   product_id: ball.id
 #
 # two:
-#   index_categories_products_on_category_id: hygiene
-#   index_categories_products_on_product_id: soap
+#   category_id: hygiene
+#   product_id: soap
 #
 # three:
-#   index_categories_products_on_category_id: clothing
-#   index_categories_products_on_product_id: sweater
+#   category_id: clothing
+#   product_id: sweater
 #
 # four:
-#  index_categories_products_on_category_id: hygiene
-#  index_categories_products_on_product_id: icecream
+#  category_id: hygiene
+#  product_id: icecream

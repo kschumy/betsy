@@ -9,6 +9,10 @@ class Category < ApplicationRecord
                     length: { minimum: 1 },
                     uniqueness: { case_sensitive: false }
 
+  def add_product(new_product)
+    self.products << new_product if new_product.is_a?(Product)
+  end
+
   private
 
   def remove_white_space_from_name

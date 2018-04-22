@@ -56,20 +56,48 @@ describe Category do
   end
 
   describe "relations" do
-    it "has a list of votes" do
-      dan = users(:dan)
-      dan.must_respond_to :votes
-      dan.votes.each do |vote|
-        vote.must_be_kind_of Vote
-      end
+    it "responds to products" do
+      category = categories(:novelty)
+      category.must_respond_to :products
+      category.products.must_equal []
     end
-    #
-    #   it "has a list of ranked works" do
-    #     dan = users(:dan)
-    #     dan.must_respond_to :ranked_works
-    #     dan.ranked_works.each do |work|
-    #       work.must_be_kind_of Work
-    #     end
-    #   end
+
+    it "can have products" do
+      category = categories(:novelty)
+      category.products << products(:ball)
+
+      category.products.must_include(products(:ball))
+    end
+
+    it "must be added to product's list of categories" do
+      product = products(:sweater)
+      category = categories(:clothing)
+      category.products << product
+
+      product.categories.must_include(category)
+    end
+
+    it "can have multiple products" do
+      category = categories(:novelty)
+      category.products << products(:ball)
+      category.products << products(:icecream)
+
+      category.products.must_equal [products(:ball), products(:icecream)]
+    end
+
+    it "can be initialized with products" do
+      new_category = Category.create(name: "foo", products: [products(:ball), products(:icecream)])
+      new_category.valid?.must_equal true
+    end
+
+    it "can be initialized with products" do
+      # new_category = Category.new(name: "foo", products: [Date.today])
+      # new_category.valid?.must_equal false
+      new_category = Category.create(name: "foo")
+      new_category.products << products(:icecream)
+      new_category.add_product(Date.today)
+
+      new_category.products.must_equal [products(:icecream)]
     end
   end
+end
