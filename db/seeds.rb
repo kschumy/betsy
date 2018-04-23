@@ -20,7 +20,7 @@ CSV.foreach(category_file, :headers => true) do |row|
     category_failures << category
     puts "Failed to save category: #{category.inspect}"
   else
-    puts "Created passenger: #{category.inspect}"
+    puts "Created category: #{category.inspect}"
   end
 end
 
