@@ -168,6 +168,8 @@ describe Product do
 
   describe "self.products_available method" do
     it "returns an array of products that are not discontinued" do
+      Product.products_available.must_be_kind_of Array
+      Product.products_available.count.must_equal 4
     end
   end
 end
