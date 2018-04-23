@@ -2,10 +2,6 @@ class OrderItem < ApplicationRecord
   belongs_to :product
   belongs_to :order
 
-  def get_order_items
-    return find_order_items
-  end
-
   def get_item_subtotal
     price * quantity
   end
@@ -30,9 +26,26 @@ class OrderItem < ApplicationRecord
     Merchant.find(merchant_id).id
   end
 
+  def shipping_status
+    if is_shipped == false && get_order_status == "paid"
+      shipping_status = "Ready to ship"
+    elsif is_shipped == false
+      shipping_status = "Not shipped"
+    else is_shipped == false
+      shipping_status = "Shipped"
+    end
+  end
+  #
+  # def table_view
+  #   if table_order_items == @order.order_items
+  #     table_view = "Order view"
+  #   elsif table_order_items == @merchant.order_items
+  #     table_view = "Merchant view"
+  #   else
+  #     table_view = "Item view"
+  #   end
+  # end
+
   private
 
-  def find_order_items
-    return self.order_items
-  end
 end

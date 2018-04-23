@@ -1,35 +1,7 @@
-<h3>List of Items </h3>
-<table>
-  <thead>
-    <tr>
-      <th width="100">Product</th>
-      <th width="100">Merchant</th>
-      <th width="50">Quantity</th>
-      <th width="100">Price</th>
-      <th width="100">Subtotal</th>
-      <th width="100">Shipping Status</th>
-      <th width="100">Order Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @order_items.each do |order_item| %>
-    <tr>
-      <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
-      <td><%= link_to order_item.get_item_merchant, merchant_path(order_item.get_item_merchant_id) %></td>
-      <td><%= order_item.quantity %> </td>
-      <td><%= order_item.price %></td>
-      <td> <%= order_item.get_item_subtotal %></td>
-      <td>
-        <% if order_item.is_shipped == false && order_item.get_order_status == "paid" %>
-        <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
-        <% else %>
-        Shipped
-        <% end %>
-      </td>
-      <td><%= order_item.get_order_status %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<h4>This order_items index is for development use only; is not meant to be published </h4>
+
+<%= render partial: "shared/table" , locals: { table_order_items: @order_items } %>
 
 <%= link_to "Back to Welcome Page", root_path, class: "button" %>
+
+<%= render partial: "cart" %>
