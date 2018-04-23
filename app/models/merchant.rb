@@ -5,7 +5,7 @@ class Merchant < ApplicationRecord
   # throws ArgumentError.
   # Returns a new instance of Merchant from provided auth_hash.
   def self.build_from_github(auth_hash)
-    valid_auth_hash_or_error(auth_hash)
+    # valid_auth_hash_or_error(auth_hash)
     create_new_merchant(auth_hash)
   end
 
@@ -39,7 +39,7 @@ class Merchant < ApplicationRecord
     )
   end
 
-  def get_valid_name(auth_hash_info)
+  def self.get_valid_name(auth_hash_info)
     if auth_hash_info[:name].nil? || auth_hash_info[:name].empty?
       return auth_hash_info[:nickname]
     else
