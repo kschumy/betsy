@@ -29,4 +29,7 @@ class Product < ApplicationRecord
     end
   end
 
+  def self.products_available
+    return self.select { |product| product.discontinued == false }
+  end
 end
