@@ -29,11 +29,6 @@ class Order < ApplicationRecord
 
   validates :status, presence: true, inclusion: { in: STATUS, message: "%{value} is not a valid status" }
 
-  # QUESTION: do we need this? If so, why? -Kirsten
-  def get_orders
-    return find_orders
-  end
-
   def self.show_pending
     show_orders("pending")
   end
@@ -48,6 +43,18 @@ class Order < ApplicationRecord
 
   def self.show_cancelled
     show_orders("cancelled")
+  end
+
+  def get_total_revenue
+    return calc_revenue
+  end
+
+
+  private
+
+  def calc_revenue
+    order_items = self.order_items
+    return order_items.inject(0) { |sum, order_item| sum + order_item.get_item_subtotal }
   end
 
 end
