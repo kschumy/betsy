@@ -14,14 +14,14 @@ class Order < ApplicationRecord
   # validation of email is not restricted, only requires @
   validates_format_of :email_address, :with => /@/
   validates :cc_name, presence: true
-  validates :cc_number, presence: true, numericality: true, length: { is: 16 }
+  validates :cc_number, presence: true, length: { is: 16 }
   validates :cc_cvv, presence: true, length: { is: 3 }
   validates :cc_zip, presence: true, length: { minimum: 5 }
   validates :street, presence: true
   validates :customer_name, presence: true
   validates :city, presence: true
   validates :state, presence:true, inclusion: { in: STATES, message: "%{value} is not a valid state"}
-  validates :mailing_zip, numericality: true, presence: true, length: { minimum: 5 }
+  validates :mailing_zip, presence: true, length: { minimum: 5 }
 
   validates :cc_exp_month, presence: true, numericality: { only_integer: true, in: 1..12 }
 
@@ -29,6 +29,7 @@ class Order < ApplicationRecord
 
   validates :status, presence: true, inclusion: { in: STATUS, message: "%{value} is not a valid status" }
 
+  # QUESTION: do we need this? If so, why? -Kirsten
   def get_orders
     return find_orders
   end
