@@ -45,7 +45,8 @@ class MerchantsController < ApplicationController
   private
 
   def successful_login(message)
-    flash[:success] = message << ", " << @merchant.username
+    success_message = message << ", " << @merchant.username
+    flash[:success] = success_message
     session[:merchant_id] = @merchant.id
     redirect_to root_path
   end

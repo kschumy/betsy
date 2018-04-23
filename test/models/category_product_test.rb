@@ -1,3 +1,4 @@
+# TODO: delete
 # require "test_helper"
 #
 # describe CategoryProduct do

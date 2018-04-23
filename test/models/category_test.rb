@@ -98,6 +98,6 @@ describe Category do
     #   new_category.add_product(Date.today)
     #
     #   new_category.products.must_equal [products(:icecream)]
-    end
+    # end
   end
 end
