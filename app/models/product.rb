@@ -10,11 +10,22 @@ class Product < ApplicationRecord
   validates :photo, presence: true
   validates :stock, presence: true
 
-
   validates_length_of :category_ids, :minimum => 1
-  # validate should have minimum 1 category
   def inventory_status
     return self.stock > 0 ? "In stock" : "Out of stock"
   end
 
+  def get_average_rating
+     sum = 0.0
+     num = self.reviews.length
+     self.reviews.each do |review|
+       sum += review.rating
+     end
+     average = sum/num
+     if average == 0 || average.nil? || average.nan?
+       return "No reviews"
+     else
+       return "#{format("%.1f", average)} out of 5"
+     end
+   end
 end
