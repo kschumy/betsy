@@ -19,20 +19,20 @@ class ProductsController < ApplicationController
   end
 
   def new
-    merchant = Merchant.find_by(id: session[:merchant_id])
-    if merchant.nil?
-      flash[:alert] = "Must be logged in to view page"
-      redirect_to products_path
-    else
+    # merchant = Merchant.find_by(id: session[:merchant_id])
+    # if merchant.nil?
+    #   flash[:alert] = "Must be logged in to view page"
+    #   redirect_to products_path
+    # else
       @product = Product.new
-    end
+    # end
   end
 
   def create
     @product = Product.new(product_params)
-    merchant = Merchant.find_by(id: session[:merchant_id])
+    # merchant = Merchant.find_by(id: session[:merchant_id])
     @product.discontinued = false
-    @product.merchant = merchant
+    # @product.merchant = merchant
     if @product.save
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path

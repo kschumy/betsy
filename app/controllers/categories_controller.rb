@@ -9,21 +9,21 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    if @merchant.nil?
-      flash[:status]= :failure
-      flash[:result_text]= "You must be logged in to add a new category!"
-      redirect_to root_path, status: :bad_request
-    else
+    # if @merchant.nil?
+    #   flash[:status]= :failure
+    #   flash[:result_text]= "You must be logged in to add a new category!"
+    #   redirect_to root_path, status: :bad_request
+    # else
       @category = Category.new
-    end
+    # end
   end
 
   def create
-    if @merchant.nil?
-      flash[:status] = :failure
-      flash[:result_text]= "You must be logged in to add a new category"
-      redirect_to root_path
-    else
+    # if @merchant.nil?
+    #   flash[:status] = :failure
+    #   flash[:result_text]= "You must be logged in to add a new category"
+    #   redirect_to root_path
+    # else
       @category = Category.new(category_params)
       if @category.save
         flash[:status] = :success
@@ -35,7 +35,7 @@ class CategoriesController < ApplicationController
         flash[:messages] = @category.errors.messages
         render :new, status: :bad_request
       end
-    end
+    # end
   end
 
   def edit

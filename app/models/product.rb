@@ -10,7 +10,7 @@ class Product < ApplicationRecord
   validates :photo, presence: true
   validates :stock, presence: true
 
-  validates_length_of :category_ids, :minimum => 1
+  # validates_length_of :category_ids, :minimum => 1
   def inventory_status
     return self.stock > 0 ? "In stock" : "Out of stock"
   end
