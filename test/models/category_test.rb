@@ -90,14 +90,14 @@ describe Category do
       new_category.valid?.must_equal true
     end
 
-    it "can be initialized with products" do
-      # new_category = Category.new(name: "foo", products: [Date.today])
-      # new_category.valid?.must_equal false
-      new_category = Category.create(name: "foo")
-      new_category.products << products(:icecream)
-      new_category.add_product(Date.today)
-
-      new_category.products.must_equal [products(:icecream)]
+    # it "can be initialized with products" do
+    #   # new_category = Category.new(name: "foo", products: [Date.today])
+    #   # new_category.valid?.must_equal false
+    #   new_category = Category.create(name: "foo")
+    #   new_category.products << products(:icecream)
+    #   new_category.add_product(Date.today)
+    #
+    #   new_category.products.must_equal [products(:icecream)]
     end
   end
 end

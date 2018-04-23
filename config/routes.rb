@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   resources :products, except: [:destroy] do
     resources :reviews, only: [:create, :new]
   end
-  resources :products, except: [:destroy]
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
   resources :merchants #, only: [:create, :show, :index]
 
