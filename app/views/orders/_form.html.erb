@@ -40,9 +40,14 @@
   <%= f.label :status %>
   <%= f.text_field :status %>
 
-  <%= f.submit "Place order", class: "button" %>
+  <%= f.submit "Save order", class: "button" %>
 
   <% end %>
 </section>
-<%= link_to "Save Order", orders_path, class: "button" %>
-<%= link_to "Cancel Order", order_path(order), method: "patch", class: "button" %>
+
+<% if @order.status == "pending" %>
+<%= link_to('Cancel Order', mark_order_cancelled_path(@order), method: :patch, class: "button") %>
+<% end %>
+<% if @order.status == "pending" %>
+<%= link_to('Checkout', checkout_order_path(@order), method: :patch, class: "button") %>
+<% end %>
