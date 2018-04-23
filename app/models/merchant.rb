@@ -27,8 +27,17 @@ class Merchant < ApplicationRecord
         provider: auth_hash[:provider],
         uid: auth_hash[:uid],
         email: auth_hash[:info][:email],
-        username: auth_hash[:info][:name] ||  auth_hash[:info][:nickname]
+        username: get_valid_name(auth_hash[:info])
       )
+    end
+
+    def get_valid_name(auth_hash_info)
+      if auth_hash_info[:name].nil? || auth_hash_info[:name].empty?
+        return auth_hash_info[:nickname]
+      else
+        return  auth_hash_info[:name]
+      end
+
     end
 
 end

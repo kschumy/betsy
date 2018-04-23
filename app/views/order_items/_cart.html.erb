@@ -1,37 +1,38 @@
-<h3>List of Items </h3>
+<h3>Cart - pending items</h3>
+<h6>Sidenote: This is an unformatted partial view; it ultimately won't be on this index page </h6>
 <table>
   <thead>
     <tr>
       <th width="100">Product</th>
       <th width="100">Merchant</th>
       <th width="50">Quantity</th>
+      <th width="50"></th>
       <th width="100">Price</th>
       <th width="100">Subtotal</th>
-      <th width="100">Shipping Status</th>
-      <th width="100">Order Status</th>
+      <th width="100"></th>
+
     </tr>
   </thead>
   <tbody>
     <% @order_items.each do |order_item| %>
+    <% if order_item.get_order_status == "pending"%>
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
       <td><%= link_to order_item.get_item_merchant, merchant_path(order_item.get_item_merchant_id) %></td>
-      <td><%= order_item.quantity %> </td>
+
+      <td>
+        <%= form_for order_item do |f| %>
+        <%= f.text_field :quantity , "size" => 4%>
+      </td>
+      <td> <%= f.submit "Update Quantity"%> </td>
+      <% end %>
       <td><%= order_item.price %></td>
       <td> <%= order_item.get_item_subtotal %></td>
-      <td>
-        <% if order_item.shipping_status == "Ready to ship" %>
-        <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
-        <% else %>
-        <%= order_item.shipping_status %>
-        <% end %>
+      <td><%= link_to "Remove item from cart", order_item_path(order_item), method: "delete", data: { confirm: "Are you sure?" } %>
       </td>
-      <td><%= order_item.get_order_status %></td>
+
     </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Back to Welcome Page", root_path, class: "button" %>
-
-<%= render partial: "cart" %>
