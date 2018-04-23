@@ -3,8 +3,13 @@ require "test_helper"
 describe Product do
   let(:product) { products(:ball) }
   let(:novelty) { categories(:novelty)}
+  let(:clothing) { categories(:clothing)}
 
   describe "relations" do
+    it "responds to categories" do
+      product.must_respond_to :categories
+    end
+
     it "must have a category field" do
       product.categories.must_equal []
       product.categories << novelty
@@ -12,19 +17,17 @@ describe Product do
       product.categories.must_include category
     end
 
-    #
-    #   it "has a list of voting users" do
-    #     album = works(:album)
-    #     album.must_respond_to :ranking_users
-    #     album.ranking_users.each do |user|
-    #       user.must_be_kind_of User
-    #     end
-    #   end
-    # end
-    #
-    #
-    # it "must be valid" do
-    #   value(product).must_be :valid?
-    # end
-  
+    it "must be added to category's list of products" do
+      product.categories << novelty
+      novelty.products.must_include(product)
+    end
+
+    it "can have multiple categories" do
+      product.categories << novelty
+      product.categories << clothing
+      product.categories.must_equal [categories(:novelty), categories(:clothing)]
+      product.categories.count.must_equal 2
+    end
+
+  end
 end
