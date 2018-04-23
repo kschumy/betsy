@@ -45,6 +45,10 @@ class Order < ApplicationRecord
     return calc_revenue
   end
 
+  def add_item_to_cart(new_order_item)
+    self.order_items << new_order_item
+  end
+
 
   private
 
