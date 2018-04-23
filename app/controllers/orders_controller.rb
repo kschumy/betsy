@@ -57,7 +57,7 @@ class OrdersController < ApplicationController
   def cart
     if session.has_key?(:cart_id)
       @order = Order.find_by(id: session[:cart_id])
-      redirect_to order_path(params[:id])
+      # redirect_to order_path(params[:id])
     else
       # flash.now[:status] = "Cart is empty"
     end

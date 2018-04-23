@@ -15,7 +15,7 @@ class OrderItemsController < ApplicationController
   def create
     @order_item  = OrderItem.new(order_item_params)
     if !session.has_key?(:cart_id)
-      @order = Order.new(status: "pending")
+      @order = Order.create(status: "pending")
       session[:cart_id] = @order.id
     else
       # @order = Order.new(status: "pending")
@@ -23,16 +23,17 @@ class OrderItemsController < ApplicationController
       @order = Order.find_by(id: session[:cart_id])
     end
     @order.add_item_to_cart(@order_item)
+    
     if @order_item.save
-      flash[:status] = :success
-      flash[:result_text] = "Successfully added item ##{@order_item.id} to shopping cart"
+      flash[:success] = :success
+      # flash[:result_text] = "Successfully added item ##{@order_item.id} to shopping cart"
       redirect_to order_items_path
     else
-      flash[:status] = :failure
-      flash[:result_text] = "Item did not add to shopping cart"
-      flash[:messages] = @order_item.errors.messages
+      # flash[:status] = :failure
+      # flash[:result_text] = "Item did not add to shopping cart"
+      flash[:alert] = @order_item.errors.messages
 
-      render :new
+      # render :new
     end
 
   end

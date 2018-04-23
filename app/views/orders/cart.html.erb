@@ -1,1 +1,9 @@
 <h1>Cart!</h1>
+
+<ul>
+	<% @order.order_items.each do |item| %>
+	<li>
+		<%= item.product.name %>
+	</li>
+	<% end %>
+</ul>
