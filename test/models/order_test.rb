@@ -125,5 +125,5 @@ describe Order do
     #
     #   new_order.products.must_equal [products(:icecream)]
     # end
-  end
+  
 end
