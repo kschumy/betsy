@@ -63,7 +63,8 @@ class ProductsController < ApplicationController
     end
   end
 
-  def destroy
+  def retire
+
   end
 
   private
