@@ -30,6 +30,16 @@ class OrderItem < ApplicationRecord
     Merchant.find(merchant_id).id
   end
 
+  def shipping_status
+    if is_shipped == false && get_order_status == "paid"
+      shipping_status = "Ready to ship"
+    elsif is_shipped == false
+      shipping_status = "Not shipped"
+    else is_shipped == false
+      shipping_status = "Shipped"
+    end
+  end
+
   private
 
   def find_order_items
