@@ -6,6 +6,10 @@ class OrderItem < ApplicationRecord
     return find_order_items
   end
 
+  def get_item_subtotal
+    price * quantity
+  end
+
   private
 
   def find_order_items
