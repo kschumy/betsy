@@ -25,10 +25,10 @@
   </section>
 </section>
 
-<section class="ratings-summary">
-  <h5>Ratings Summary</h5>
+<section class = "row rating-average container">
+  <h4>Ratings Summary</h4>
   <p>
-    TODO: CALCULATE AVG RATING
+    <%= @product.get_average_rating%>
   </p>
 </section>
 
@@ -36,5 +36,24 @@
 
   <h4>Reviews</h4>
 
+  <% if @product.reviews.empty? %>
+  <p>
+    Please be the first to review!
+  </p>
+  <%else %>
+  <ul>
+    <li>
+    <% @product.reviews.each do |review| %>
+      <% review.rating.times do%>
+      <%= "🚀" %>
+      <% end %>
+    </li>
+      <p>
+        <%= review.comment %>
+      </p>
+    </section>
+      <% end%>
+  </ul>
+    <% end%>
+
   <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
-</section>
