@@ -16,16 +16,17 @@ class Product < ApplicationRecord
   end
 
   def get_average_rating
-     sum = 0.0
-     num = self.reviews.length
-     self.reviews.each do |review|
-       sum += review.rating
-     end
-     average = sum/num
-     if average == 0 || average.nil? || average.nan?
-       return "No reviews"
-     else
-       return "#{format("%.1f", average)} out of 5"
-     end
-   end
+    sum = 0.0
+    num = self.reviews.length
+    self.reviews.each do |review|
+      sum += review.rating
+    end
+    average = sum/num
+    if average == 0 || average.nil? || average.nan?
+      return "No reviews"
+    else
+      return "#{format("%.1f", average)} out of 5"
+    end
+  end
+
 end
