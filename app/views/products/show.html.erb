@@ -13,6 +13,9 @@
     <p>
       <%= link_to @merchant.username, merchant_path(@merchant.id) %>
     </p>
+    <div>
+      <%= render partial: "add_to_cart_form" %>
+    </div>
     <p>
       Description: <%= @product.description %>
     </p>
