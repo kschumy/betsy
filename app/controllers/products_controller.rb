@@ -15,7 +15,7 @@ class ProductsController < ApplicationController
       @merchant = @product.merchant
 
     end
-
+    
   end
 
   def new
