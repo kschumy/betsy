@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path
     else
-      flash.now[:alert] = @product.errors
+      flash[:alert] = "Could not create product #{@product.name}"
       render :new
     end
   end
@@ -56,7 +56,7 @@ class ProductsController < ApplicationController
         flash[:success] = "#{@product.name} updated"
         redirect_to product_path(@product.id)
       else
-        flash[:alert] << "A problem occurred: Could not update product #{@product.name}"
+        flash[:alert] = "A problem occurred: Could not update product #{@product.name}"
         render :edit
       end
     else
@@ -83,6 +83,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant, :categories)
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id, category_ids: [])
   end
 end
