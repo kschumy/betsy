@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :reviews, only: [:create, :new]
   resources :order_items
   patch 'order_items/:id/mark_shipped', to: 'order_items#mark_shipped', as: 'mark_item_shipped'
+  patch 'orders/:id/cancel_order', to: 'orders#cancel_order', as: 'mark_order_cancelled'
   resources :orders, only: [:new, :create, :edit, :update, :show, :index]
   resources :products, except: [:destroy] do
     resources :reviews, only: [:create, :new]

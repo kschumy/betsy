@@ -40,6 +40,9 @@
   <%= f.label :status %>
   <%= f.text_field :status %>
 
-  <%= f.submit class: "button" %>
+  <%= f.submit "Place order", class: "button" %>
+
   <% end %>
 </section>
+<%= link_to "Save Order", orders_path, class: "button" %>
+<%= link_to "Cancel Order", order_path(order), method: "patch", class: "button" %>
