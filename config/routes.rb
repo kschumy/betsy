@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "merchants#destroy", as: "logout"
 
   root 'products#welcome'
-  resources :categories, only: [:create, :edit, :show, :index] do
+  resources :categories, only: [:create, :edit, :show, :index, :new] do
     resources :products, only: [:index]
   end
   resources :reviews, only: [:create, :new]
