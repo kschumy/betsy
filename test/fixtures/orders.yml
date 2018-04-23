@@ -6,12 +6,12 @@ star_mouse_order:
   cc_number: 1234192910310395
   cc_cvv: 123
   cc_zip: 99503
-  status: Paid
-  customer_name: Maria Meteor
-  street: 111 Comet Street
-  city: Io
-  state: CA
-  mailing_zip: 02210
+  status: paid
+  customer_name: Ada Lovelace
+  street: 123 Kickass Ave
+  city: Seattle
+  state: WA
+  mailing_zip: 98103
   cc_exp_month: 12
   cc_exp_year: 2020
 
@@ -21,12 +21,12 @@ user_mcuser_order:
   cc_number: 3928450302049586
   cc_cvv: 113
   cc_zip: 35425
-  status: Paid
-  customer_name: Maria Meteor
+  status: paid
+  customer_name: User McUser
   street: 111 Comet Street
   city: Aurora
-  state: WA
-  mailing_zip: 02940
+  state: GA
+  mailing_zip: 99921
   cc_exp_month: 12
   cc_exp_year: 2019
 
@@ -36,11 +36,11 @@ mystring_order:
   cc_number: 3928450302049587
   cc_cvv: 114
   cc_zip: 35485
-  status: Pending
+  status: pending
   customer_name: Maria Meteor
   street: 51 Canal Street
   city: Titan
   state: WA
-  mailing_zip: 02940
+  mailing_zip: 12940
   cc_exp_month: 12
   cc_exp_year: 2018
