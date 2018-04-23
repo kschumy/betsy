@@ -16,7 +16,7 @@ class OrderItemsController < ApplicationController
     @order_item  = OrderItem.new(order_item_params)
     if @order_item.order_id.nil?
       order = Order.new
-      order
+
     if @order_item.save
       flash[:status] = :success
       flash[:result_text] = "Successfully added item to shopping cart"
@@ -27,6 +27,7 @@ class OrderItemsController < ApplicationController
       flash[:messages] = @order_item.errors.messages
 
       render :new
+    end
     end
   end
 
