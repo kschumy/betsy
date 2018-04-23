@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.all.select { |product| product.discontinued == false }
+    @products = Product.products_available
   end
 
   def show
