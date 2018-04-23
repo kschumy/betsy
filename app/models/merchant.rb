@@ -39,7 +39,7 @@ class Merchant < ApplicationRecord
     )
   end
 
-  def get_valid_name(auth_hash_info)
+  def self.get_valid_name(auth_hash_info)
     if auth_hash_info[:name].nil? || auth_hash_info[:name].empty?
       return auth_hash_info[:nickname]
     else

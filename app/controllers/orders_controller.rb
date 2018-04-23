@@ -54,6 +54,9 @@ class OrdersController < ApplicationController
     end
   end
 
+  def view_cart
+  end
+
   def destroy
   end
 
