@@ -29,13 +29,32 @@ class Order < ApplicationRecord
     return find_orders
   end
 
+  def self.show_pending
+    show_orders("pending")
+  end
+
+  def self.show_paid
+    show_orders("paid")
+  end
+
+  def self.show_complete
+    show_orders("complete")
+  end
+
+  def self.show_cancelled
+    show_orders("cancelled")
+  end
+
+  def self.show_orders(status)
+    where(status: status).order(created_at: :desc)
+  end
+
+
+
   private
 
   def find_orders
     return self.orders
   end
 
-  def find_orders
-    return self.orders
-  end
 end
