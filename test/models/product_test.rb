@@ -160,7 +160,11 @@ describe Product do
     end
 
     it "returns 'This product has no reviews' if product has no reviews" do
+<<<<<<< HEAD
       soap.reviews.count.must_equal 0
+=======
+      reviesoap.reviews.count.must_equal 0
+>>>>>>> 7d7a8c70f70ebd5c9046de6e72ccf1a4854e7fc1
     end
   end
 end

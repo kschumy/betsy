@@ -26,7 +26,7 @@ end
 
 merchant_file = Rails.root.join('db', 'merchants_seeds.csv')
 merchant_failures = []
-i = 1
+i = 100000
 CSV.foreach(merchant_file, :headers => true) do |row|
   merchant = Merchant.new
   merchant.username = row['username']
