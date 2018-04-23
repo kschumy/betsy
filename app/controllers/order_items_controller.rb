@@ -14,6 +14,9 @@ class OrderItemsController < ApplicationController
 
   def create
     @order_item  = OrderItem.new(order_item_params)
+    if @order_item.order_id.nil?
+      order = Order.new
+      order
     if @order_item.save
       flash[:status] = :success
       flash[:result_text] = "Successfully added item to shopping cart"

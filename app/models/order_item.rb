@@ -2,6 +2,13 @@ class OrderItem < ApplicationRecord
   belongs_to :product
   belongs_to :order
 
+  # before_validation(on: :save) do
+  #   Order.new
+  # end
+
+  # TODO: needs validations!
+
+
   def get_item_subtotal
     price * quantity
   end

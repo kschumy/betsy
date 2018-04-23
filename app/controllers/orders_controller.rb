@@ -55,7 +55,11 @@ class OrdersController < ApplicationController
   end
 
   def view_cart
+    @order = Order.find_by(id: params[:id])
   end
+
+  # def view_cart
+  # end
 
   def destroy
   end
