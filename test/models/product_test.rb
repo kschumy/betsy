@@ -155,16 +155,19 @@ describe Product do
   end
 
   describe "get_average_rating method" do
-    it "returns average rating of a specific product" do
+    it "returns average rating of a specific product if it has existing reviews" do
       product.get_average_rating.must_equal "1.0 out of 5"
     end
 
     it "returns 'This product has no reviews' if product has no reviews" do
-<<<<<<< HEAD
-      soap.reviews.count.must_equal 0
-=======
-      reviesoap.reviews.count.must_equal 0
->>>>>>> 7d7a8c70f70ebd5c9046de6e72ccf1a4854e7fc1
+      product = products(:soap)
+      product.reviews.count.must_equal 0
+      product.get_average_rating.must_equal "This product has no reviews"
+    end
+  end
+
+  describe "self.products_available method" do
+    it "returns an array of products that are not discontinued" do
     end
   end
 end
