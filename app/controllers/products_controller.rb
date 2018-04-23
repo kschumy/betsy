@@ -15,6 +15,7 @@ class ProductsController < ApplicationController
       @merchant = @product.merchant
 
     end
+
   end
 
   def new
@@ -63,8 +64,21 @@ class ProductsController < ApplicationController
     end
   end
 
-  def retire
+  def deactivate
+    @product = Product.find_by(id: params[:id])
+    @merchant = Merchant.find_by(id: session[:merchant_id])
 
+    if !@product.nil?
+      if @product.update(discontinued: true)
+        flash[:success] = "#{@product.name} deactivated"
+        redirect_to merchant_path(@merchant.id)
+      else
+        flash[:alert] = "A problem occurred: Could not deactivate product #{@product.name}"
+        redirect_to merchant_path(@merchant.id)
+      end
+    else
+      redirect_to products_path
+    end
   end
 
   private
