@@ -54,12 +54,27 @@ class OrdersController < ApplicationController
     end
   end
 
-  def view_cart
-    @order = Order.find_by(id: params[:id])
+  def cart
+    if session.has_key?(:cart_id)
+      @order = Order.find_by(id: session[:cart_id])
+      redirect_to order_path(params[:id])
+    else
+      # flash.now[:status] = "Cart is empty"
+    end
   end
 
-  # def view_cart
-  # end
+  def checkout
+    @order = Order.find_by(id: params[:id])
+    @order.update(order_params)
+    if @order.save
+      flash[:success] = "Order placed!"
+      redirect_to order_path(params[:id])
+    else
+      flash[:errors] = @order.errors
+      redirect_back fallback_location: view_cart_path
+    end
+
+  end
 
   def destroy
   end

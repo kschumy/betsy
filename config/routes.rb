@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :new]
   end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
-  get '/cart/:id', to: "order#view_cart", as: 'view_cart'
+  get '/cart', to: "orders#cart", as: 'view_cart'
   # patch '/cart', to: "order#view_cart", as: 'view_cart'
 
 

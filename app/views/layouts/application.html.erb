@@ -41,7 +41,8 @@
           </li>
           <% end %>
           <li>
-            <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %>
+            <%= link_to "View Cart", view_cart_path(id: session[:cart_id]), class: "button" %>,
+            <!-- <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %> -->
           </li>
         </ul>
       </div>
