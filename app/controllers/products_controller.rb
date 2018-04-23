@@ -15,7 +15,6 @@ class ProductsController < ApplicationController
       @merchant = @product.merchant
 
     end
-
   end
 
   def new
@@ -38,7 +37,7 @@ class ProductsController < ApplicationController
       redirect_to products_path
     else
       flash[:alert] = "Could not create product #{@product.name}"
-      redirect_to products_path
+      render :new
     end
   end
 
