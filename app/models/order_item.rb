@@ -26,7 +26,11 @@ class OrderItem < ApplicationRecord
     Merchant.find(merchant_id).id
   end
 
+
   def shipping_status
+    # TODO: review the logic on this when all logic is figured out. Also, our
+    # logic currently has a 'complete' mean that the order has shipped. But does
+    # this makes sense if merchants can mark individual order_items as shipped?
     if is_shipped == false && get_order_status == "paid"
       shipping_status = "Ready to ship"
     elsif is_shipped == false
@@ -34,6 +38,12 @@ class OrderItem < ApplicationRecord
     else is_shipped == false
       shipping_status = "Shipped"
     end
+    # Possible refactor:
+    # if is_shipped
+    #   return "Shipped"
+    # else
+    #   return get_order_status == "paid" ? "Ready to ship" : "Not ready to ship"
+    # end
   end
   #
   # def table_view
