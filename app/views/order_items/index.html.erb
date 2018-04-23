@@ -7,22 +7,34 @@
       <th width="100">Price</th>
       <th width="100">Subtotal</th>
       <th width="100">Shipping Status</th>
+          <th width="100">Order ID</th>
     </tr>
   </thead>
   <tbody>
     <% @order_items.each do |order_item| %>
     <tr>
       <td><%= order_item.product_id %></td>
-      <td><%= order_item.quantity %></td>
+
+      <td>
+        <% if order_item.get_order_status == "pending"%>
+        <%= form_for order_item do |f| %>
+        <%= f.text_field :quantity %>
+        <%= f.submit "Update Quantity"%>
+        <% end %>
+        <% else %>
+        <%= order_item.quantity %>
+        <% end %>
+      </td>
       <td><%= order_item.price %></td>
       <td> <%= order_item.get_item_subtotal %></td>
       <td>
-        <% if order_item.is_shipped == false %>
+        <% if order_item.is_shipped == false && order_item.get_order_status == "paid" %>
         <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
         <% else %>
         Shipped
         <% end %>
       </td>
+            <td><%= order_item.get_order_status %></td>
     </tr>
     <% end %>
   </tbody>

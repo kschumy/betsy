@@ -10,6 +10,12 @@ class OrderItem < ApplicationRecord
     price * quantity
   end
 
+  def get_order_status
+    Order.find(order_id).status
+    # order_id
+    # order[self.order_id].status
+  end
+
   private
 
   def find_order_items
