@@ -5,6 +5,9 @@
 		<section class="cell medium-auto">
 			<h4><%= link_to product.name, product_path(product.id) %></h4>
 		</section>
+		<p>
+		  <%= link_to "Add Category", new_category_path%>
+		</p>
 		<% end %>
 	</article>
 </section>
