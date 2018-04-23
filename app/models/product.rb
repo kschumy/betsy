@@ -9,11 +9,6 @@ class Product < ApplicationRecord
   validates :merchant, presence: true
 
 
- # validate should have minimum 1 category
-
-  valdidate :bad_name
-
-
   def inventory_status
     quantity = self.stock
     if quantity > 0
@@ -25,13 +20,17 @@ class Product < ApplicationRecord
     # return self.stock > 0 ? "In stock" : "Out of stock"
   end
 
-  def average_rating
-    return if reviews.empty
-    total_ratings = 0
-    reviews.each do |r|
-      total_ratings += r.rating
-    end
-    return sprintf('%.01f', total_ratings/reviews.length)
-  end
-
+  def get_average_rating
+     sum = 0.0
+     num = self.reviews.length
+     self.reviews.each do |review|
+       sum += review.rating
+     end
+     average = sum/num
+     if average == 0 || average.nil? || average.nan?
+       return "No reviews"
+     else
+       return "#{format("%.1f", average)} out of 5"
+     end
+   end
 end
