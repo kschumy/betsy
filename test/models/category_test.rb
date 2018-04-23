@@ -87,7 +87,9 @@ describe Category do
 
     it "can be initialized with products" do
       new_category = Category.create(name: "foo", products: [products(:ball), products(:icecream)])
+
       new_category.valid?.must_equal true
+    puts   new_category.errors.inspect
       new_category.products.must_equal [products(:ball), products(:icecream)]
     end
 
