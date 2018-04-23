@@ -28,7 +28,7 @@ class CategoriesController < ApplicationController
       if @category.save
         flash[:status] = :success
         flash[:result_text] = "Succesfully created category: #{@category.name}!"
-        redirect_to merchant_path(session[:user_id])
+        redirect_to merchant_path(@merchant.id)
       else
         flash[:status] = :failure
         flash[:notice] = "Blah! Blah!"
