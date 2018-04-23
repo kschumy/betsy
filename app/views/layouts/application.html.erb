@@ -53,7 +53,6 @@
     <% flash.each do |name, message| %>
     <section class="status <%= name %>">
       <% if message.respond_to?(:each) %>
-
       <h3>An error has occured.</h3>
       <ul>
         <% flash[:alert].each do |field, message| %>
@@ -70,9 +69,6 @@
   <%= yield %>
 </body>
 </html>
-
-
-
 
 <!-- <% if session[:user_id] %>
 <%= link_to "Logout", logout_path, method: :delete, class: "hollow button" %>

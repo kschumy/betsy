@@ -4,17 +4,17 @@ describe Order do
   describe "valid" do
     let(:order) { orders(:user_mcuser_order) }
     let(:new_order_hash) {
-      { email_address: "starmouse@crater.com",
+      { email_address: "testdata@mars.com",
         cc_name: "Test Dummy",
         cc_number: "1234192910312811",
         cc_cvv: "201",
         cc_zip: "99503",
         status: "pending",
         customer_name: "Ada Marslover",
-        street: 123 Kickass Ave,
-        city: Seattle,
-        state: WA,
-        mailing_zip: 98103,
+        street: "123 Ada Ave.",
+        city: "Atlanta",
+        state: "GA",
+        mailing_zip: "30064",
         cc_exp_month: 12,
         cc_exp_year: 2020
       }
@@ -38,8 +38,6 @@ describe Order do
       order.customer_name =  nil
       order.save
       order.valid?.must_equal false
-
-
 
       Order.create().valid?.must_equal false
     end
