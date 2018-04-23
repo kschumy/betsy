@@ -34,10 +34,20 @@ class Order < ApplicationRecord
     return find_orders
   end
 
-  private
+  def self.show_pending
+    show_orders("pending")
+  end
 
-  def find_orders
-    return self.orders
+  def self.show_paid
+    show_orders("paid")
+  end
+
+  def self.show_complete
+    show_orders("complete")
+  end
+
+  def self.show_cancelled
+    show_orders("cancelled")
   end
 
 end
