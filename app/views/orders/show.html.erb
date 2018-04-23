@@ -1,7 +1,7 @@
 <h1 class="page-header">Order Info</h1>
 
 
-<h3>Order ID: <%= @order.id %></h3>
+<h5>Order ID: <%= @order.id %></h5>
 <p>Email Address: <%= @order.email_address %></p>
 <p>Customer Name: <%= @order.customer_name %></p>
 <p>Address: <%= @order.street %> <%= @order.city %>, <%= @order.state %> <%= @order.mailing_zip %></p>
@@ -15,3 +15,6 @@
 <%= link_to "New Order", new_order_path, class: "button" %>
 <%= link_to "View All Orders", orders_path, class: "button" %>
 <%= link_to "Back to Welcome Page", root_path, class: "button" %>
+
+<%= render partial: "shared/table" , locals: { table_order_items: @order.order_items } %>
+<p> Total Revenue: <%= @order.get_total_revenue %> </p>
