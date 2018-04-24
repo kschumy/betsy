@@ -1,9 +1,9 @@
 class Merchant < ApplicationRecord
   has_many :products
 
-  # validates :username, uniqueness: true, presence: true
-  # validates :email, presence: true
-  # 
+  validates :username, uniqueness: true, presence: true
+  validates :email, presence: true
+
 
   # PRE: provided auth_hash must be a hash and have the key :info. Otherwise,
   # throws ArgumentError.
