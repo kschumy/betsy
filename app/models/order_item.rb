@@ -15,8 +15,6 @@ class OrderItem < ApplicationRecord
 
   def get_order_status
     Order.find(order_id).status
-    # order_id
-    # order[self.order_id].status
   end
 
   def get_item_name

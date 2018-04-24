@@ -1,9 +1,12 @@
 <h1>Cart!</h1>
-
-<ul>
-	<% @order.order_items.each do |item| %>
-	<li>
-		<%= item.product.name %>
-	</li>
-	<% end %>
-</ul>
+<% if @order.nil? %>
+	<h3>Cart is empty!</h3>
+<% else %>
+	<ul>
+		<% @order.order_items.each do |item| %>
+		<li>
+			<%= item.product.name %>
+		</li>
+		<% end %>
+	</ul>
+<% end %>

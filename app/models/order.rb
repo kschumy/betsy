@@ -57,6 +57,7 @@ class Order < ApplicationRecord
     return order_items.inject(0) { |sum, order_item| sum + order_item.get_item_subtotal }
   end
 
+  # THIS ALL WILL BE REFACTORED - Kirsten
   def self.validate_all_info
     # validates :customer_name, presence: true
     if !customer_name.is_a?(String) || customer_name.blank?

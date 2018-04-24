@@ -13,9 +13,7 @@ class ProductsController < ApplicationController
     else
       @product = product
       @merchant = @product.merchant
-
     end
-
   end
 
   def new
