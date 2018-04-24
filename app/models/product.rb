@@ -12,7 +12,7 @@ class Product < ApplicationRecord
 
   # validates_length_of :category_ids, :minimum => 1
   def inventory_status
-    return self.stock > 0 ? "In stock" : "Out of stock"
+    return stock > 0 ? "In stock" : "Out of stock"
   end
 
   def get_average_rating
