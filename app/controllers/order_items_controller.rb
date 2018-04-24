@@ -14,28 +14,13 @@ class OrderItemsController < ApplicationController
 
   def create
     @order_item  = OrderItem.new(order_item_params)
-    if !session.has_key?(:cart_id)
-      @order = Order.create(status: "pending")
-      session[:cart_id] = @order.id
-    else
-      # @order = Order.new(status: "pending")
-      # session[:cart_id] = @order.id
-      @order = Order.find_by(id: session[:cart_id])
-    end
-    @order.add_item_to_cart(@order_item)
-    
+    set_order_for_order_item
     if @order_item.save
       flash[:success] = :success
-      # flash[:result_text] = "Successfully added item ##{@order_item.id} to shopping cart"
       redirect_to order_items_path
     else
-      # flash[:status] = :failure
-      # flash[:result_text] = "Item did not add to shopping cart"
       flash[:alert] = @order_item.errors.messages
-
-      # render :new
     end
-
   end
 
   def edit
@@ -52,11 +37,8 @@ class OrderItemsController < ApplicationController
     @order_item  = OrderItem.find_by(id: params[:id])
     if @order_item
       @order_item.destroy
-      flash[:status] = :success
-      flash[:result_text] = "Successfully destroyed item from shopping cart"
-      #will personalize message
+      flash[:success] = "Successfully destroyed item from shopping cart"
       redirect_to order_items_path
-      # if it's the last thing in the order, will need to redirect to root_path?
     end
   end
 
@@ -72,4 +54,15 @@ class OrderItemsController < ApplicationController
   def order_item_params
     params.require(:order_item).permit(:quantity, :price, :is_shipped, :product_id, :order_id)
   end
+
+  def set_order_for_order_item
+    if session[:cart_id] == nil
+      order = Order.create(status: "pending")
+      session[:cart_id] = order.id
+    else
+      order = Order.find_by(id: session[:cart_id])
+    end
+    order.add_item_to_cart(@order_item)
+  end
+
 end
