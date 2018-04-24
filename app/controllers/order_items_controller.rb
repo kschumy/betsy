@@ -13,7 +13,6 @@ class OrderItemsController < ApplicationController
   end
 
   def create
-    check_inventory(order_item_params[:quantity], order_item_params[:product_id])
     @order_item  = OrderItem.new(order_item_params)
     set_order_for_order_item
     if @order_item.save
@@ -21,6 +20,7 @@ class OrderItemsController < ApplicationController
       redirect_to order_items_path
     else
       flash[:alert] = @order_item.errors.messages
+      redirect_to product_path(order_item_params[:product_id])
     end
   end
 
@@ -64,14 +64,6 @@ class OrderItemsController < ApplicationController
       order = Order.find_by(id: session[:cart_id])
     end
     order.add_item_to_cart(@order_item)
-  end
-
-  def check_inventory(params_quantity, product_id)
-    product = Product.find(product_id)
-    available_quantity = product.stock
-    if params_quantity.to_i > available_quantity
-      flash[:alert] = "Only #{product.stock} are in stock"
-    end
   end
 
 end
