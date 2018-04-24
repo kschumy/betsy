@@ -20,7 +20,6 @@
       <td><%= order_item.price %></td>
       <td> <%= order_item.get_item_subtotal %></td>
       <td>
-        
         <% if order_item.shipping_status == "Ready to ship" %>
         <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
         <% else %>
