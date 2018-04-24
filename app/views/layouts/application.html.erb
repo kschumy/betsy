@@ -62,26 +62,20 @@
   </header>
   <main>
     <% if flash[:alert] || flash[:success] %>
-      <section class="callout alert" data-closable>
-        <% flash.each do |name, message| %>
-        <section class="status <%= name %>">
-          <% if message.respond_to?(:each) %>
-
-          <h5>An error has occured.</h5>
+      <% if flash[:alert] %>
+        <section class="callout alert" data-closable>
           <ul>
             <% flash[:alert].each do |field, message| %>
-            <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+              <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
             <% end %>
           </ul>
-          <!-- <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-        <span aria-hidden="true">&times;</span> -->
-          <% else %>
-          <h3 class="success"><%= message %></h3>
-          <% end %>
         </section>
+      <% else %>
+          <h5 class="success callout" data-closable><%= flash[:success] %></h5>
         <% end %>
       </section>
     <% end %>
+
     <%= yield %>
   </main>
 </body>
