@@ -67,12 +67,6 @@ CSV.foreach(product_file, :headers => true) do |row|
 end
 
 
-categories_products_list = [
-  {product_id: 1, category_id: 1},
-  {product_id: 2, category_id: 1},
-  {product_id: 3, category_id: 3},
-  {product_id: 4, category_id: 4},
-]
 
 order_file = Rails.root.join('db', 'orders_seeds.csv')
 order_failures = []
