@@ -1,5 +1,4 @@
 <h3>Cart - pending items</h3>
-<h6>Sidenote: This is an unformatted partial view; it ultimately won't be on this index page </h6>
 <table>
   <thead>
     <tr>
@@ -14,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @order_items.each do |order_item| %>
+    <% cart_order_items.each do |order_item| %>
     <% if order_item.get_order_status == "pending"%>
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
