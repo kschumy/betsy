@@ -17,6 +17,13 @@ class Merchant < ApplicationRecord
     OrderItem.where(product_id: self.get_merchant_products)
   end
 
+  def get_merchant_orders
+    order_item_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+    order_ids = order_item_ids.uniq
+    Order.where(:id => order_ids)
+  end
+
+
   private
 
   # Throw ArgumentError if provided auth_hash is not a hash or if it does not

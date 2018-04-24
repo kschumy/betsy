@@ -21,6 +21,7 @@ class MerchantsController < ApplicationController
 
   def show
     @merchant = Merchant.find_by(id: params[:id])
+    @orders = @merchant.get_merchant_orders
     # if @merchant.nil?
     #   if Merchant.find_by(id: params[:id])
     #     flash[:status] = :failure

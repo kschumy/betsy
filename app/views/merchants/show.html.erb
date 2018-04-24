@@ -9,9 +9,30 @@
 		<% end %>
 	</article>
 </section>
-                <p>
-                  <%= link_to "Add Category", new_category_path%>
-                </p>
+<p>
+	<%= link_to "Add Category", new_category_path%>
+</p>
 
 <br>
+
+<h3>List of Orders</h3>
+<h5>Total number of paid and complete orders: <%= @orders.count %></h5>
+<table>
+  <thead>
+    <tr>
+      <th width="50">Order ID</th>
+      <th width="150">Customer Name</th>
+      <th width="100">Order Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orders.each do |order| %>
+    <tr>
+      <td><%= link_to order.id, order_path(order.id) %></td>
+      <td><%= order.customer_name %></td>
+      <td><%= order.status %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 <%= render partial: "shared/table" , locals: { table_order_items: @merchant.get_merchant_order_items } %>
