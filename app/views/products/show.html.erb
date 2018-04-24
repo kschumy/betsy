@@ -51,11 +51,11 @@
       <p>
         <%= review.comment %>
       </p>
-    </section>
+
       <% end%>
   </ul>
     <% end%>
-
+  </section>
   <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
   <p>
     <%= link_to "Deactivate", deactivate_product_path(@product.id), class: 'button', method: :patch %>
