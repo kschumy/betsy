@@ -36,19 +36,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def edit
-    @category = Category.find_by(id:params[:id])
-    if @category.nil?
-      redirect_to categories_path
-    end
-  end
-
-  def update
-  end
-
-  def destroy
-  end
-
   private
 
   def category_params
