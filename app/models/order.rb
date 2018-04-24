@@ -46,7 +46,16 @@ class Order < ApplicationRecord
   end
 
   def add_item_to_cart(new_order_item)
-    self.order_items << new_order_item
+    self.order_items << new_order_item if is_allowed_to_change?
+  end
+
+  def is_allowed_to_change?
+    return status == "pending"
+  end
+
+
+  def delete_order_items_in_cart
+    order_items.each { |items| items.destroy } if is_allowed_to_change?
   end
 
 
