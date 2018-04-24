@@ -5,8 +5,16 @@ class OrderItem < ApplicationRecord
   # before_validation(on: :save) do
   #   Order.new
   # end
+  validates :quantity, presence: true, numericality: { only_integer: true }
+  validate :quantity_limits
 
   # TODO: needs validations!
+  def quantity_limits
+    available_quantity = product.stock
+    if quantity.to_i > available_quantity
+      errors.add(:quantity, "Only #{product.stock} are available")
+    end
+  end
 
 
   def get_item_subtotal

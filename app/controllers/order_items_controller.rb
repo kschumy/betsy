@@ -20,6 +20,7 @@ class OrderItemsController < ApplicationController
       redirect_to order_items_path
     else
       flash[:alert] = @order_item.errors.messages
+      redirect_to product_path(order_item_params[:product_id])
     end
   end
 
