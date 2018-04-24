@@ -18,9 +18,7 @@ class CategoriesController < ApplicationController
 
   def create
     if @merchant.nil?
-      flash[:status] = :failure
-      flash[:result_text]= "You must be logged in to add a new category"
-      redirect_to root_path
+      render_404
     else
       @category = Category.new(category_params)
       if @category.save
@@ -28,25 +26,10 @@ class CategoriesController < ApplicationController
         flash[:result_text] = "Succesfully created category: #{@category.name}!"
         redirect_to merchant_path(@merchant.id)
       else
-        flash[:status] = :failure
-        flash[:notice] = "Blah! Blah!"
-        flash[:messages] = @category.errors.messages
+        flash[:alert] = "Category creation could not be completed"
         render :new, status: :bad_request
       end
     end
-  end
-
-  def edit
-    @category = Category.find_by(id:params[:id])
-    if @category.nil?
-      redirect_to categories_path
-    end
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   private

@@ -9,9 +9,6 @@
 		<% end %>
 	</article>
 </section>
-                <p>
-                  <%= link_to "Add Category", new_category_path%>
-                </p>
-
-<br>
-<%= render partial: "shared/table" , locals: { table_order_items: @merchant.get_merchant_order_items } %>
+<p>
+<%= link_to "Add Category", new_category_path%>
+</p>
