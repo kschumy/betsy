@@ -46,3 +46,17 @@ ul {
   margin-right: 50px;
   margin-bottom: 10px;
 }
+
+.row {
+  max-width: 100%;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 10px;
+  padding: 25px 20px 10px 20px;
+}
+
+main, .alert-section {
+  max-width: 75rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 2rem;
+}

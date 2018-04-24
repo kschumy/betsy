@@ -49,26 +49,27 @@
     </div>
 
   </header>
+  <main>
+    <section class="alert-section">
+      <% flash.each do |name, message| %>
+      <section class="status <%= name %>">
+        <% if message.respond_to?(:each) %>
 
-  <section class="alert-section">
-    <% flash.each do |name, message| %>
-    <section class="status <%= name %>">
-      <% if message.respond_to?(:each) %>
-
-      <h3>An error has occured.</h3>
-      <ul>
-        <% flash[:alert].each do |field, message| %>
-        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+        <h3>An error has occured.</h3>
+        <ul>
+          <% flash[:alert].each do |field, message| %>
+          <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+          <% end %>
+        </ul>
+        <% else %>
+        <h3 class="success"><%= message %></h3>
         <% end %>
-      </ul>
-      <% else %>
-      <h3 class="success"><%= message %></h3>
+      </section>
       <% end %>
     </section>
-    <% end %>
-  </section>
 
-  <%= yield %>
+    <%= yield %>
+  </main>
 </body>
 </html>
 

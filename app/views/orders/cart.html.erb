@@ -2,6 +2,14 @@
 <% if @order.nil? %>
 	<h3>Cart is empty!</h3>
 <% else %>
+<section class="grid-x">
+  <row class="cell large-auto">One</row>
+  <row class="cell large-auto">Two</row>
+  <row class="cell large-auto">Three</row>
+  <row class="cell large-auto">Four</row>
+  <row class="cell large-auto">Five</row>
+  <row class="cell large-auto">Six</row>
+</row>
 	<ul>
 		<% @order.order_items.each do |item| %>
 		<li>
