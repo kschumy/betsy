@@ -7,6 +7,28 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+require 'csv'
+
+CATEGORY_FILE = Rails.root.join('db', 'seed_data','categories_seeds.csv')
+
+category_failures = []
+CSV.foreach(CATEGORY_FILE, :headers => true) do |row|
+  category = Category.new
+  category.name = row['category']
+  successeful = category.save
+  if !successful
+    category_failures << category
+    puts "Failed to save category: #{category.inspect}"
+  else
+    puts "Created passenger: #{categorycategory.inspect}"
+  end
+
+  # data = Hash[row.headers.zip(row.fields)]
+  # puts data
+  # Category.create!(data)
+end
+
+
 merchant_list = [
   { username: "Apollo", email: "apollo@example.com", uid: 1, provider: "github" },
   { username: "barnards_star", email: "barnards_star@example.net", uid: 2, provider: "github" }
@@ -15,17 +37,17 @@ merchant_list = [
 merchant_list.each do |merchant|
   new_merchant = Merchant.create(merchant)
 end
-
-category_list = [
-  {name: "Novelty"},
-  {name: "Food"},
-  {name: "Scientific Method"},
-  {name: "Tools"},
-]
-
-category_list.each do |category|
-  new_category = Category.create(category)
-end
+#
+# category_list = [
+#   {name: "Novelty"},
+#   {name: "Food"},
+#   {name: "Scientific Method"},
+#   {name: "Tools"},
+# ]
+#
+# category_list.each do |category|
+#   new_category = Category.create(category)
+# end
 
 
 product_list = [
