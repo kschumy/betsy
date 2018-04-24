@@ -40,9 +40,14 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find_by(id: params[:id])
+    render_404 unless !@merchant.nil? && @merchant.id == @product.merchant.id
+
     if @product.nil?
       redirect_to root_path
+    # elsif @merchant.nil? || @merchant.id != @product.merchant.id
+    #   render :new, status: :bad_request
     end
+
   end
 
   def update
