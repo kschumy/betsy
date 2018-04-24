@@ -12,13 +12,12 @@ class ProductsController < ApplicationController
       redirect_to products_path
     else
       @product = product
-      @merchant = @product.merchant
+      @product_merchant = @product.merchant
     end
   end
 
   def new
-    merchant = Merchant.find_by(id: session[:merchant_id])
-    if merchant.nil?
+    if @merchant.nil?
       flash[:alert] = "Must be logged in to view page"
       redirect_to products_path
     else
@@ -28,9 +27,8 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    merchant = Merchant.find_by(id: session[:merchant_id])
     @product.discontinued = false
-    @product.merchant = merchant
+    @product.merchant = @merchant
     if @product.save
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path
@@ -64,11 +62,9 @@ class ProductsController < ApplicationController
 
   def deactivate
     @product = Product.find_by(id: params[:id])
-    @merchant = Merchant.find_by(id: session[:merchant_id])
-
     if !@product.nil?
       if @product.update(discontinued: true)
-        flash[:success] = "#{@product.name} deactivated"
+        flash[:success] = "Product #{@product.name} (Product ID: #{@product.id}) Deactivated"
         redirect_to merchant_path(@merchant.id)
       else
         flash[:alert] = "A problem occurred: Could not deactivate product #{@product.name}"
