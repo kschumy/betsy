@@ -8,7 +8,7 @@
       <%= @product.inventory_status %>
     </p>
     <p>
-      $<%= @product.price %>
+      $<%= @product.get_price_in_dollars %>
     </p>
     <p>
       <%= link_to @merchant.username, merchant_path(@merchant.id) %>

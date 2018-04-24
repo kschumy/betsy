@@ -4,8 +4,10 @@ class Product < ApplicationRecord
   has_many :order_items
   belongs_to :merchant
 
+  # before_validation :convert_price_to_int
+
   validates :name, presence: true, uniqueness: true
-  validates :price, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 } #numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
   validates :merchant, presence: true
   validates :photo, presence: true
   validates :stock, presence: true
@@ -29,4 +31,23 @@ class Product < ApplicationRecord
     end
   end
 
+  def get_price_in_dollars
+    return price.cents_to_dollars
+    # return '%.2f' % (price / 100.0)
+  end
+
+  def price_from_form
+    price
+  end
+
+  def price_from_form=(form_price)
+    self.price = (form_price.to_f * 100).to_i
+  end
+
+  private
+
+  def convert_price_to_int
+    # raise
+    self.price = (self.price * 100).to_i if self.price.is_a?(Float)
+  end
 end
