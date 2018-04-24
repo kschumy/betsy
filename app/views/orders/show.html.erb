@@ -4,14 +4,15 @@
 <p>Order ID: <%= @order.id %></p>
 <p>Email Address: <%= @order.email_address %></p>
 <p>Customer Name: <%= @order.customer_name %></p>
-<p>Address: <%= @order.street %> <%= @order.city %>, <%= @order.state %> <%= @order.mailing_zip %></p>
+<p>Shipping Address: <%= @order.street %> <%= @order.city %>, <%= @order.state %> <%= @order.mailing_zip %></p>
 <p>CC Number: **<%= @order.cc_number.to_s[-4..-1]  %></p>
 <p>CC CVV: <%= @order.cc_cvv %></p>
 <p>CC Zip: <%= @order.cc_zip %></p>
 <p>Exp: <%= @order.cc_exp_month %>/<%= @order.cc_exp_year %></p>
+<p>Date placed: <%= @order.created_at %></p>
 <p>Status: <%= @order.status %></p>
 <br>
-<p> Total Revenue: $<%= @order.get_total_revenue %> </p>
+<p> Total Cost: $<%= @order.get_total_revenue %> </p>
 <br>
 <%= render partial: "shared/table" , locals: { table_order_items: @order.order_items } %>
 <br>

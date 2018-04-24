@@ -1,0 +1,7 @@
+<section>
+  <%= form_for @order_item do |f| %>
+  <%= f.label :quantity %>
+  <%= f.select :quantity, options_for_select(1..@product.stock)%>
+  <%= f.submit "Add to Cart"%>
+  <% end %>
+</section>

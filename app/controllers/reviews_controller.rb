@@ -1,13 +1,8 @@
 class ReviewsController < ApplicationController
-  def index
-  end
-
-  def show
-  end
 
   def new
     @product = Product.find_by(id:params[:product_id])
-    if find_merchant && @merchant.id == @product.merchant.id
+    if !@merchant.nil? && @merchant.id == @product.merchant.id
       flash[:status] = :failure
       flash[:notice] = "You can't review your own product!"
       redirect_to product_path(@product.id)
@@ -19,7 +14,7 @@ class ReviewsController < ApplicationController
 
   def create
     @product = Product.find_by(id:params[:product_id])
-    if find_merchant && merchant.id == @product.merchant.id
+    if !@merchant.nil? && @merchant.id == @product.merchant.id
       flash.now[:failure] = "You can't review your own product!"
       redirect_to product_path(@product.id)
     else
@@ -36,15 +31,6 @@ class ReviewsController < ApplicationController
         render :new, status: :bad_request
       end
     end
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
   end
 
   def review_params
