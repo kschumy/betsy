@@ -1,20 +1,13 @@
-<h1>Cart!</h1>
+<h3 class="page-header">Cart!</h3>
 <% if @order.nil? %>
 	<h3>Cart is empty!</h3>
 <% else %>
-<section class="grid-x">
-  <row class="cell large-auto">One</row>
-  <row class="cell large-auto">Two</row>
-  <row class="cell large-auto">Three</row>
-  <row class="cell large-auto">Four</row>
-  <row class="cell large-auto">Five</row>
-  <row class="cell large-auto">Six</row>
-</row>
-	<ul>
-		<% @order.order_items.each do |item| %>
-		<li>
-			<%= item.product.name %>
-		</li>
-		<% end %>
-	</ul>
+	<% @order.order_items.each do |item| %>
+		<section class="grid-x grid-margin-x align-middle cart-rows">
+			<row class="cell small-1"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></row>
+			<row class="cell large-auto item-name-in-cart"><%= item.product.name %></row>
+		  <row class="cell small-2"><%= item.quantity %></row>
+		  <row class="cell small-2"><%= item.get_item_subtotal %></row>
+	</section>
+	<% end %>
 <% end %>
