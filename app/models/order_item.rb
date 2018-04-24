@@ -39,6 +39,16 @@ class OrderItem < ApplicationRecord
       shipping_status = "Shipped"
     end
   end
+  #
+  # def table_view
+  #   if table_order_items == @order.order_items
+  #     table_view = "Order view"
+  #   elsif table_order_items == @merchant.order_items
+  #     table_view = "Merchant view"
+  #   else
+  #     table_view = "Item view"
+  #   end
+  # end
 
   private
 
