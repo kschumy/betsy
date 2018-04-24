@@ -37,7 +37,7 @@
   <h4>Reviews</h4>
 
   <% if @product.reviews.empty? %>
-  <% if @merchant.id != @product.merchant.id %>
+  <% if !@merchant.nil? && @merchant.id != @product.merchant.id %>
   <p>
     Be the first martian to review!
   </p>
@@ -58,27 +58,16 @@
     <p>
       <%= review.comment %>
     </p>
-  </section>
+    <% end%>
+  </ul>
   <% end%>
-</ul>
-<% end%>
+</section>
 
-<% if @merchant.id != @product.merchant.id %>
+<% if @merchant.nil? || @merchant.id != @product.merchant.id %>
 <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
 <% end %>
-<% if @merchant.id == @product.merchant.id %>
+<% if !@merchant.nil? && @merchant.id == @product.merchant.id %>
 <p>
   <%= link_to "Deactivate this product", deactivate_product_path(@product.id), class: 'button', method: :patch %>
 </p>
 <% end %>
-      <p>
-        <%= review.comment %>
-      </p>
-      <% end%>
-  </ul>
-    <% end%>
-  </section>
-  <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
-  <p>
-    <%= link_to "Deactivate", deactivate_product_path(@product.id), class: 'button', method: :patch %>
-  </p>
