@@ -10,9 +10,7 @@ class CategoriesController < ApplicationController
 
   def new
     if @merchant.nil?
-      flash[:status]= :failure
-      flash[:result_text]= "You must be logged in to add a new category!"
-      redirect_to root_path, status: :bad_request
+      render_404
     else
       @category = Category.new
     end
