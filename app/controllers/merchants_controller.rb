@@ -21,7 +21,6 @@ class MerchantsController < ApplicationController
 
   def show
     @merchant = Merchant.find_by(id: params[:id])
-    @orders = @merchant.get_merchant_orders
     # if @merchant.nil?
     #   if Merchant.find_by(id: params[:id])
     #     flash[:status] = :failure
@@ -35,6 +34,11 @@ class MerchantsController < ApplicationController
     # # elseif
     # # need to think how we will do this with session login or just have login/logout here
     # #
+  end
+
+  def order_fulfillment
+    @merchant = Merchant.find_by(id: params[:id])
+    @orders = @merchant.get_merchant_orders
   end
 
   def destroy
