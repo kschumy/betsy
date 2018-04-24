@@ -38,6 +38,13 @@ class MerchantsController < ApplicationController
 
   def destroy
     session[:merchant_id] = nil
+    if session[:cart_id] != nil
+      order = Order.find_by(id: session[:cart_id])
+      order.order_items.each do |items|
+        items.destroy
+      end
+      order.destroy
+    end
     session[:cart_id] = nil
     flash[:success] = "Successfully logged out!"
     redirect_to root_path
