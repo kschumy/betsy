@@ -13,6 +13,10 @@ class OrderItem < ApplicationRecord
     price * quantity
   end
 
+  def get_subtotal_to_string
+    price * quantity
+  end
+
   def get_order_status
     Order.find(order_id).status
   end
