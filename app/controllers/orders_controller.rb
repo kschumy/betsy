@@ -24,7 +24,6 @@ class OrdersController < ApplicationController
       flash[:result_text] = "Order did not create"
       flash[:messages] = @order.errors.messages
       render :new
-      # raise
     end
 
   end

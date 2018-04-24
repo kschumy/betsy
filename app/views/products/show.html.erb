@@ -5,13 +5,13 @@
   <section class="product-details">
     <h2><%= @product.name %></h2>
     <p>
-      <%= @product.inventory_status %>
+      <%= @product.stock %> <%= @product.inventory_status %>
     </p>
     <p>
       $<%= @product.price %>
     </p>
     <p>
-      <%= link_to @merchant.username, merchant_path(@merchant.id) %>
+      <%= link_to @product_merchant.username, merchant_path(@product_merchant.id) %>
     </p>
     <p>
       Description: <%= @product.description %>
@@ -37,17 +37,42 @@
   <h4>Reviews</h4>
 
   <% if @product.reviews.empty? %>
+  <% if @merchant.id != @product.merchant.id %>
   <p>
-    Please be the first to review!
+    Be the first martian to review!
   </p>
+  <% else %>
+  <p>
+    This product has no reviews
+  </p>
+  <% end %>
+
   <%else %>
   <ul>
     <li>
-    <% @product.reviews.each do |review| %>
+      <% @product.reviews.each do |review| %>
       <% review.rating.times do%>
       <%= "🚀" %>
       <% end %>
     </li>
+<<<<<<< HEAD
+    <p>
+      <%= review.comment %>
+    </p>
+  </section>
+  <% end%>
+</ul>
+<% end%>
+
+<% if @merchant.id != @product.merchant.id %>
+<p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
+<% end %>
+<% if @merchant.id == @product.merchant.id %>
+<p>
+  <%= link_to "Deactivate this product", deactivate_product_path(@product.id), class: 'button', method: :patch %>
+</p>
+<% end %>
+=======
       <p>
         <%= review.comment %>
       </p>
@@ -60,3 +85,4 @@
   <p>
     <%= link_to "Deactivate", deactivate_product_path(@product.id), class: 'button', method: :patch %>
   </p>
+>>>>>>> 9f06d411d96d3b3af8dde8f4b9c3ff99f8aeb525

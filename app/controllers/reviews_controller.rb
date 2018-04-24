@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
 
   def create
     @product = Product.find_by(id:params[:product_id])
-    if find_merchant && @merchant.id == @product.merchant.id
+    if @merchant.id == @product.merchant.id
       flash.now[:failure] = "You can't review your own product!"
       redirect_to product_path(@product.id)
     else

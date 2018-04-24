@@ -23,7 +23,7 @@ class Product < ApplicationRecord
     end
     average = sum/num
     if average == 0 || average.nil? || average.nan?
-      return "This product has no reviews"
+      return "This product has no ratings"
     else
       return "#{format("%.1f", average)} out of 5"
     end
