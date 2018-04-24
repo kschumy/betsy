@@ -9,6 +9,7 @@
       <th width="100">Subtotal</th>
       <th width="100">Shipping Status</th>
       <th width="100">Order Status</th>
+      <th width="100">Order ID</th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +28,7 @@
         <% end %>
       </td>
       <td><%= order_item.get_order_status %></td>
+      <td><%= link_to order_item.order_id, order_path(order_item.order_id) %></td>
     </tr>
     <% end %>
   </tbody>
