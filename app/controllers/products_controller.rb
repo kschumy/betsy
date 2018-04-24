@@ -18,8 +18,7 @@ class ProductsController < ApplicationController
 
   def new
     if @merchant.nil?
-      flash[:alert] = "Must be logged in to view page"
-      redirect_to products_path
+      render_404
     else
       @product = Product.new
     end
