@@ -17,9 +17,12 @@
 *= require foundation_and_overrides
 
 */
+html * {
+  font-family: 'Scope One', serif;
+  text-transform: uppercase;
+}
 body {
   background-size: 100% auto;
-  padding: 2rem 1rem;
 }
 
 .dropdown{
@@ -28,9 +31,19 @@ body {
   align-items: center;
 }
 
+.main-nav {
+  padding: 40px;
+  width: 100%;
+  background-color: rgb(23, 1, 110)
+}
+
 .mars {
   margin-right: auto;
-  font-size: 4em;
+  font-size: 5em;
+}
+
+.mars a {
+  color: rgb(210, 101, 0)
 }
 
 ul {
@@ -45,4 +58,13 @@ ul {
 .cart {
   margin-right: 50px;
   margin-bottom: 10px;
+}
+
+.nav-items {
+  font-size: 1.5em;
+  display: inline-flex;
+}
+.nav-items li {
+  padding: 10px;
+  display: inline;
 }
