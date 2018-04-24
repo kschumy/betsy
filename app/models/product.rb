@@ -33,7 +33,6 @@ class Product < ApplicationRecord
 
   def get_price_in_dollars
     return price.cents_to_dollars
-    # return '%.2f' % (price / 100.0)
   end
 
   def price_from_form
