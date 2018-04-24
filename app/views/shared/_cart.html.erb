@@ -1,5 +1,4 @@
 <h3>Cart - pending items</h3>
-<h6>Sidenote: This is an unformatted partial view; it ultimately won't be on this index page </h6>
 <table>
   <thead>
     <tr>
@@ -10,11 +9,11 @@
       <th width="100">Price</th>
       <th width="100">Subtotal</th>
       <th width="100"></th>
-
+      <th width="100">Order ID</th>
     </tr>
   </thead>
   <tbody>
-    <% @order_items.each do |order_item| %>
+    <% cart_order_items.each do |order_item| %>
     <% if order_item.get_order_status == "pending"%>
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
@@ -30,7 +29,7 @@
       <td> <%= order_item.get_item_subtotal %></td>
       <td><%= link_to "Remove item from cart", order_item_path(order_item), method: "delete", data: { confirm: "Are you sure?" } %>
       </td>
-
+      <td><%= order_item.order_id %></td>
     </tr>
     <% end %>
     <% end %>

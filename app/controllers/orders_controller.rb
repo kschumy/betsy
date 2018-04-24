@@ -35,6 +35,22 @@ class OrdersController < ApplicationController
     end
   end
 
+  def checkout_order
+    @order = Order.find_by(id: params[:id])
+    @order.update(status: "paid")
+    @order.save
+    redirect_to order_path
+  end
+
+  def cancel_order
+    @order = Order.find_by(id: params[:id])
+    @order.update(status: "cancelled")
+    @order.save
+    redirect_to root_path
+  end
+
+
+
   def update
     @order = Order.find_by(id: params[:id])
     @order.update(order_params)
