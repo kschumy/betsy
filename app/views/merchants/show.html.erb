@@ -11,3 +11,5 @@
 		<% end %>
 	</article>
 </section>
+<br>
+<%= render partial: "shared/table" , locals: { table_order_items: @merchant.get_merchant_order_items } %>
