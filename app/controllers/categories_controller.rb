@@ -22,8 +22,7 @@ class CategoriesController < ApplicationController
     else
       @category = Category.new(category_params)
       if @category.save
-        flash[:status] = :success
-        flash[:result_text] = "Succesfully created category: #{@category.name}!"
+        flash[:success] = "Successfully created category: #{@category.name}!"
         redirect_to merchant_path(@merchant.id)
       else
         flash[:alert] = "Category creation could not be completed"

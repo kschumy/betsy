@@ -39,48 +39,45 @@
             <% else %>
             <li>
               <%= link_to "Login With GitHub", github_login_path, class: "button" %>
-
             </li>
             <% end %>
             <li>
+              <!-- <%= link_to "View Cart", view_cart_path(id: session[:cart_id]), class: "button" %>, -->
               <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-  </header>
-
-  <section class="alert-section">
-    <% flash.each do |name, message| %>
-    <section class="status <%= name %>">
-      <% if message.respond_to?(:each) %>
-
-      <h3>An error has occured.</h3>
-      <ul>
-        <% flash[:alert].each do |field, message| %>
-        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
-        <% end %>
+    <nav class="product-nav">
+      <ul class="nav-items">
+        <li>
+          <%= link_to "All Products", products_path %>
+        </li>
+        <li>
+          Categories
+        </li>
       </ul>
+    </nav>
+  </header>
+  <main>
+    <% if flash[:alert] || flash[:success] %>
+      <% if flash[:alert] %>
+        <section class="callout alert" data-closable>
+          <ul>
+            <% flash[:alert].each do |field, message| %>
+              <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+            <% end %>
+          </ul>
+        </section>
       <% else %>
-      <h3 class="success"><%= message %></h3>
-      <% end %>
-    </section>
+          <h5 class="success callout" data-closable><%= flash[:success] %></h5>
+        <% end %>
+      </section>
     <% end %>
-  </section>
 
-  <nav class="product-nav">
-    <ul class="nav-items">
-      <li>
-        <%= link_to "All Products", products_path %>
-      </li>
-      <li>
-        Categories
-      </li>
-    </ul>
-  </nav>
-
-  <%= yield %>
+    <%= yield %>
+  </main>
 </body>
 </html>
 
