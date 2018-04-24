@@ -39,48 +39,51 @@
             <% else %>
             <li>
               <%= link_to "Login With GitHub", github_login_path, class: "button" %>
-
             </li>
             <% end %>
             <li>
+              <!-- <%= link_to "View Cart", view_cart_path(id: session[:cart_id]), class: "button" %>, -->
               <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-  </header>
-
-  <section class="alert-section">
-    <% flash.each do |name, message| %>
-    <section class="status <%= name %>">
-      <% if message.respond_to?(:each) %>
-
-      <h3>An error has occured.</h3>
-      <ul>
-        <% flash[:alert].each do |field, message| %>
-        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
-        <% end %>
+    <nav class="product-nav">
+      <ul class="nav-items">
+        <li>
+          <%= link_to "All Products", products_path %>
+        </li>
+        <li>
+          Categories
+        </li>
       </ul>
-      <% else %>
-      <h3 class="success"><%= message %></h3>
-      <% end %>
-    </section>
+    </nav>
+  </header>
+  <main>
+    <% if flash[:alert] || flash[:success] %>
+      <section class="callout alert" data-closable>
+        <% flash.each do |name, message| %>
+        <section class="status <%= name %>">
+          <% if message.respond_to?(:each) %>
+
+          <h5>An error has occured.</h5>
+          <ul>
+            <% flash[:alert].each do |field, message| %>
+            <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+            <% end %>
+          </ul>
+          <!-- <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span> -->
+          <% else %>
+          <h3 class="success"><%= message %></h3>
+          <% end %>
+        </section>
+        <% end %>
+      </section>
     <% end %>
-  </section>
-
-  <nav class="product-nav">
-    <ul class="nav-items">
-      <li>
-        <%= link_to "All Products", products_path %>
-      </li>
-      <li>
-        Categories
-      </li>
-    </ul>
-  </nav>
-
-  <%= yield %>
+    <%= yield %>
+  </main>
 </body>
 </html>
 

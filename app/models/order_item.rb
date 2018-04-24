@@ -2,14 +2,31 @@ class OrderItem < ApplicationRecord
   belongs_to :product
   belongs_to :order
 
+  # before_validation(on: :save) do
+  #   Order.new
+  # end
+  validates :quantity, presence: true, numericality: { only_integer: true }
+  validate :quantity_limits
+
+  # TODO: needs validations!
+  def quantity_limits
+    available_quantity = product.stock
+    if quantity.to_i > available_quantity
+      errors.add(:quantity, "Only #{product.stock} are available")
+    end
+  end
+
+
   def get_item_subtotal
     price * quantity
   end
 
+  def get_subtotal_to_string
+    return get_item_subtotal
+  end
+
   def get_order_status
     Order.find(order_id).status
-    # order_id
-    # order[self.order_id].status
   end
 
   def get_item_name
@@ -45,6 +62,7 @@ class OrderItem < ApplicationRecord
     #   return get_order_status == "paid" ? "Ready to ship" : "Not ready to ship"
     # end
   end
+
   #
   # def table_view
   #   if table_order_items == @order.order_items

@@ -19,7 +19,12 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :new]
   end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
-  resources :merchants #, only: [:create, :show, :index]
+
+  get '/cart', to: "orders#cart", as: 'view_cart'
+  # patch '/cart', to: "order#view_cart", as: 'view_cart'
+
+
+  resources :merchants #, only: [:create, :show, :index] # TODO: update!!
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
 
   def show
     product = Product.find_by(id: params[:id])
-
+    @order_item = OrderItem.new
     if product == nil
       flash[:alert] = "Product does not exist"
       redirect_to products_path
@@ -32,7 +32,7 @@ class ProductsController < ApplicationController
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path
     else
-      flash[:alert] = "Could not create product #{@product.name}"
+      flash.now[:alert] = @product.errors
       render :new
     end
   end
@@ -81,6 +81,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id, category_ids: [])
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :price_from_form, :merchant_id, category_ids: [])
   end
 end
