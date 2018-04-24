@@ -1,59 +1,59 @@
-username, email
-andromeda, andromeda@example.com
-apollo, apollo@example.com
-aquarius, aquarius@example.com
-arcturus, arcturus@example.org
-aries, aries@example.com
-atlantis, atlantis@example.net
-auriga, auriga@example.com
-barnards_star, barnards_star@example.net
-betelgeuse, betelgeuse@example.net
-big_dipper, big_dipper@example.com
-blackeye, blackeye@example.com
-bodes_nebula, bodes_nebula@example.org
-cancer, cancer@example.net
-canis_major, canis_major@example.net
-capricornus, capricornus@example.com
-centaurus_a, centaurus_a@example.net
-challenger, challenger@example.org
-columbia, columbia@example.com
-discovery, discovery@example.net
-dumbell_nebula, dumbell_nebula@example.com
-eagle_nebula, eagle_nebula@example.org
-endeavour, endeavour@example.com
-enterprise, enterprise@example.net
-gemini, gemini@example.com
-hoags_object, hoags_object@example.net
-lagoon_nebula, lagoon_nebula@example.net
-leo_minor, leo_minor@example.com
-libra, libra@example.com
-loe, loe@example.net
-lyra, lyra@example.com
-mahasim, mahasim@example.net
-mercury, mercury@example.com
-messier_83, messier_83@example.com
-milky_way, milky_way@example.net
-orion, orion@example.com
-owl_nebula, owl_nebula@example.org
-pinwheel, pinwheel@example.com
-pisces, pisces@example.com
-polaris, polaris@example.net
-procyon_a, procyon_a@example.net
-proxima_centauri, proxima_centauri@example.net
-rigel, rigel@example.com
-ring_nebula, ring_nebula@example.com
-ross_154, ross_154@example.com
-ross_248, ross_248@example.com
-sagittarius, sagittarius@example.com
-scorpius, scorpius@example.org
-sirius_a, sirius_a@example.com
-sirius_b, sirius_b@example.com
-sun, sun@example.net
-sunflower, sunflower@example.com
-triangulum, triangulum@example.com
-triffid_nebula, triffid_nebula@example.com
-ursa_minor, ursa_minor@example.com
-vega, vega@example.org
-virgo, virgo@example.com
-whirlpool, whirlpool@example.com
-wolf_359, wolf_359@example.org
+username,email
+andromeda,andromeda@example.com
+apollo,apollo@example.com
+aquarius,aquarius@example.com
+arcturus,arcturus@example.org
+aries,aries@example.com
+atlantis,atlantis@example.net
+auriga,auriga@example.com
+barnards_star,barnards_star@example.net
+betelgeuse,betelgeuse@example.net
+big_dipper,big_dipper@example.com
+blackeye,blackeye@example.com
+bodes_nebula,bodes_nebula@example.org
+cancer,cancer@example.net
+canis_major,canis_major@example.net
+capricornus,capricornus@example.com
+centaurus_a,centaurus_a@example.net
+challenger,challenger@example.org
+columbia,columbia@example.com
+discovery,discovery@example.net
+dumbell_nebula,dumbell_nebula@example.com
+eagle_nebula,eagle_nebula@example.org
+endeavour,endeavour@example.com
+enterprise,enterprise@example.net
+gemini,gemini@example.com
+hoags_object,hoags_object@example.net
+lagoon_nebula,lagoon_nebula@example.net
+leo_minor,leo_minor@example.com
+libra,libra@example.com
+loe,loe@example.net
+lyra,lyra@example.com
+mahasim,mahasim@example.net
+mercury,mercury@example.com
+messier_83,messier_83@example.com
+milky_way,milky_way@example.net
+orion,orion@example.com
+owl_nebula,owl_nebula@example.org
+pinwheel,pinwheel@example.com
+pisces,pisces@example.com
+polaris,polaris@example.net
+procyon_a,procyon_a@example.net
+proxima_centauri,proxima_centauri@example.net
+rigel,rigel@example.com
+ring_nebula,ring_nebula@example.com
+ross_154,ross_154@example.com
+ross_248,ross_248@example.com
+sagittarius,sagittarius@example.com
+scorpius,scorpius@example.org
+sirius_a,sirius_a@example.com
+sirius_b,sirius_b@example.com
+sun,sun@example.net
+sunflower,sunflower@example.com
+triangulum,triangulum@example.com
+triffid_nebula,triffid_nebula@example.com
+ursa_minor,ursa_minor@example.com
+vega,vega@example.org
+virgo,virgo@example.com
+whirlpool,whirlpool@example.com
+wolf_359,wolf_359@example.org

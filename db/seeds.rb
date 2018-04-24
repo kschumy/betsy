@@ -9,56 +9,63 @@
 
 require 'csv'
 
-CATEGORY_FILE = Rails.root.join('db', 'seed_data','categories_seeds.csv')
+category_file = Rails.root.join('db', 'categories_seeds.csv')
 
 category_failures = []
-CSV.foreach(CATEGORY_FILE, :headers => true) do |row|
+CSV.foreach(category_file, :headers => true) do |row|
   category = Category.new
   category.name = row['category']
-  successeful = category.save
+  successful = category.save
   if !successful
     category_failures << category
     puts "Failed to save category: #{category.inspect}"
   else
-    puts "Created passenger: #{categorycategory.inspect}"
+    puts "Created passenger: #{category.inspect}"
+  end
+end
+
+merchant_file = Rails.root.join('db', 'merchants_seeds.csv')
+merchant_failures = []
+i = 1
+CSV.foreach(merchant_file, :headers => true) do |row|
+  merchant = Merchant.new
+  merchant.username = row['username']
+  merchant.email = row['email']
+  merchant.uid = i
+  merchant.provider = "github"
+  successful = merchant.save
+  if !successful
+    merchant_failures << merchant
+    puts "Failed to save merchant: #{merchant.inspect}"
+  else
+    puts "Created merchant: #{merchant.inspect}"
+  end
+  i += 1
+end
+
+
+product_file = Rails.root.join('db', 'products_seeds.csv')
+product_failures = []
+
+CSV.foreach(product_file, :headers => true) do |row|
+  product = Product.new
+  product.name = row['name']
+  product.price = row['price']
+  product.description = row['description']
+  product.stock = row['stock']
+  product.discontinued = row['discontinued']
+  product.photo = row['photo']
+  product.merchant_id = row['merchant_id']
+  successful = product.save
+  if !successful
+    product_failures << product
+    puts "Failed to save product: #{product.inspect}"
+  else
+    puts "Created product: #{product.inspect}"
   end
 
-  # data = Hash[row.headers.zip(row.fields)]
-  # puts data
-  # Category.create!(data)
 end
 
-
-merchant_list = [
-  { username: "Apollo", email: "apollo@example.com", uid: 1, provider: "github" },
-  { username: "barnards_star", email: "barnards_star@example.net", uid: 2, provider: "github" }
-]
-
-merchant_list.each do |merchant|
-  new_merchant = Merchant.create(merchant)
-end
-#
-# category_list = [
-#   {name: "Novelty"},
-#   {name: "Food"},
-#   {name: "Scientific Method"},
-#   {name: "Tools"},
-# ]
-#
-# category_list.each do |category|
-#   new_category = Category.create(category)
-# end
-
-
-product_list = [
-  { name: "Pogo Stick", price: 1234, description: "Jump for miles", stock: 400, merchant_id: 1 , photo: "products/image_not_available.jpg"},
-  { name: "Jump rope", price: 2345, description: "Jump for days", stock: 400, merchant_id: 1, photo: "products/image_not_available.jpg"},
-  { name: "Telescope", price: 12048, description: "See for miles", stock: 400, merchant_id: 2, photo: "icons/telescope.png"}
-]
-
-product_list.each do |product|
-  new_product = Product.create(product)
-end
 
 categories_products_list = [
   {product_id: 1, category_id: 1},
@@ -67,41 +74,67 @@ categories_products_list = [
   {product_id: 4, category_id: 4},
 ]
 
-category_list.each do |category|
-  new_category = Category.create(category)
+order_file = Rails.root.join('db', 'orders_seeds.csv')
+order_failures = []
+
+CSV.foreach(order_file, :headers => true) do |row|
+  order = Order.new
+  order.email_address = row['email_address']
+  order.cc_name = row['cc_name']
+  order.cc_number = row['cc_number']
+  order.cc_cvv = row['cc_cvv']
+  order.cc_zip = row['cc_zip']
+  order.status = row['status']
+  order.street = row['street']
+  order.customer_name = row['customer_name']
+  order.city = row['city']
+  order.state = row['state']
+  order.mailing_zip = row['mailing_zip']
+  order.cc_exp_month = row['cc_exp_month']
+  order.cc_exp_year = row['cc_exp_year']
+  successful = order.save
+  if !successful
+    order_failures << order
+    puts "Failed to save order: #{order.inspect}"
+  else
+    puts "Created order: #{order.inspect}"
+  end
+
 end
 
-order_list = [
-  {email_address: "Sara.Soehm@kuhic.com", cc_name: "Sara S", cc_number: 1234192910310395, cc_cvv: 111, cc_zip: 98191 , status: "paid", street: "11 Main Street", customer_name: "Sara S", city: "Tacoma", state: "WA", mailing_zip: 91891, cc_exp_month: 12, cc_exp_year: 2021 },
-  {email_address: "Jo.Renner@gaylordkshlerin.net", cc_name: "Jo S", cc_number: 1234192910310393, cc_cvv: 222, cc_zip: 22222 , status: "complete", street: "22 Main Street", customer_name: "Jo S", city: "Junction City", state: "WA", mailing_zip: 92222, cc_exp_month: 12, cc_exp_year: 2022 },
-  {email_address: "Lily.Rippin@wintheiser.info", cc_name: "Lily S", cc_number: 1234192910310311, cc_cvv: 333, cc_zip: 33333 , status: "pending", street: "33 Main Street", customer_name: "Lily S", city: "Lakeside", state: "WA", mailing_zip: 93333, cc_exp_month: 12, cc_exp_year: 2023 },
-  {email_address: "Bling@kuhic.com", cc_name: "Bling S", cc_number: 1234192910320395, cc_cvv: 444, cc_zip: 44444 , status: "paid", street: "11 Main Street", customer_name: "Bling S", city: "Tacoma", state: "WA", mailing_zip: 91891, cc_exp_month: 12, cc_exp_year: 2021 },
-  {email_address: "Candy@gaylordkshlerin.net", cc_name: "Candy S", cc_number: 1234292910310393, cc_cvv: 555, cc_zip: 55555 , status: "cancelled", street: "22 Main Street", customer_name: "Candy S", city: "Junction City", state: "WA", mailing_zip: 92222, cc_exp_month: 12, cc_exp_year: 2022 },
-  {email_address: "Oreos@wintheiser.info", cc_name: "Oreos S", cc_number: 1234192910320311, cc_cvv: 666, cc_zip: 66666 , status: "pending", street: "33 Main Street", customer_name: "Oreo S", city: "Lakeside", state: "WA", mailing_zip: 93333, cc_exp_month: 12, cc_exp_year: 2023 },
-  {email_address: "Plaintain@kuhic.com", cc_name: "Plaintain S", cc_number: 1234192912310395, cc_cvv: 777, cc_zip: 77777 , status: "complete", street: "11 Main Street", customer_name: "Plaintain S", city: "Tacoma", state: "WA", mailing_zip: 91891, cc_exp_month: 12, cc_exp_year: 2021 },
-  {email_address: "Shoes@gaylordkshlerin.net", cc_name: "Shoe S", cc_number: 1234192920310393, cc_cvv: 888, cc_zip: 88888 , status: "paid", street: "22 Main Street", customer_name: "Shoe S", city: "Junction City", state: "WA", mailing_zip: 92222, cc_exp_month: 12, cc_exp_year: 2022 },
-  {email_address: "Table@wintheiser.info", cc_name: "Table S", cc_number: 1234192920310311, cc_cvv: 999, cc_zip: 99999 , status: "pending", street: "33 Main Street", customer_name: "Table S", city: "Lakeside", state: "WA", mailing_zip: 93333, cc_exp_month: 12, cc_exp_year: 2023 }
-]
+order_items_file = Rails.root.join('db', 'order_items_seeds.csv')
+order_item_failures = []
 
-order_list.each do |order|
-  new_order = Order.create(order)
+CSV.foreach(order_items_file, :headers => true) do |row|
+  order_item = OrderItem.new
+  order_item.quantity = row['quantity']
+  order_item.price = row['price']
+  order_item.is_shipped = row['is_shipped']
+  order_item.product_id = row['product_id']
+  order_item.order_id = row['order_id']
+  successful = order_item.save
+  if !successful
+    order_item_failures << order_item
+    puts "Failed to save order_item: #{order_item.inspect}"
+  else
+    puts "Created order_item: #{order_item.inspect}"
+  end
 end
 
-order_item_list = [
-  {quantity: 1, price: 1234, is_shipped: false, product_id: 1, order_id: 1 },
-  {quantity: 2, price: 2345, is_shipped: true, product_id: 2, order_id: 2 },
-  {quantity: 3, price: 12048, is_shipped: false, product_id: 3, order_id: 3 },
-  {quantity: 4, price: 1234, is_shipped: false, product_id: 1, order_id: 4 },
-  {quantity: 5, price: 12048, is_shipped: false, product_id: 3, order_id: 5 },
-  {quantity: 6, price: 2345, is_shipped: false, product_id: 2, order_id: 6 },
-  {quantity: 7, price: 12048, is_shipped: true, product_id: 3, order_id: 7 },
-  {quantity: 8, price: 2345, is_shipped: true, product_id: 2, order_id: 7 },
-  {quantity: 9, price: 2345, is_shipped: false, product_id: 2, order_id: 8 },
-  {quantity: 7, price: 1234, is_shipped: false, product_id: 1, order_id: 8 },
-  {quantity: 8, price: 12048, is_shipped: false, product_id: 3, order_id: 9 },
-  {quantity: 9, price: 2345, is_shipped: false, product_id: 2, order_id: 9 },
-]
+review_file = Rails.root.join('db', 'reviews_seeds.csv')
+review_failures = []
 
-order_item_list.each do |item|
-  new_item = OrderItem.create(item)
+
+CSV.foreach(review_file, :headers => true) do |row|
+  review = Review.new
+  review.rating = row['rating']
+  review.comment = row['comment']
+  review.product_id = row['product_id']
+  successful = review.save
+  if !successful
+    review_failures << review
+    puts "Failed to save review: #{review.inspect}"
+  else
+    puts "Created review: #{review.inspect}"
+  end
 end
