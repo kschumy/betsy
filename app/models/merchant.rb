@@ -36,16 +36,6 @@ class Merchant < ApplicationRecord
       order_items.inject(0) { |sum, order_item| sum + (order_item.get_subtotal) }
   end
 
-  #
-  # def get_merchant_orders_all
-  #   order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
-  #   Order.where(:id => order_ids)
-  # end
-
-  # def get_fulfillment_count
-  #
-  #   @orders.count
-  # end
 
   private
 
