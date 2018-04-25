@@ -31,32 +31,32 @@ class MerchantsController < ApplicationController
     #   end
     # else
     #   @merchant
-    # # elseif
-    # # need to think how we will do this with session login or just have login/logout here
-    # #
-  end
+      # elseif
+      # need to think how we will do this with session login or just have login/logout here
+      #
+    end
 
-  def destroy
-    session[:merchant_id] = nil
-    flash[:success] = "Successfully logged out!"
-    redirect_to root_path
-  end
+    def destroy
+      session[:merchant_id] = nil
+      flash[:success] = "Successfully logged out!"
+      redirect_to root_path
+    end
 
-  private
+    private
 
-  def successful_login(message)
-    success_message = message << ", " << @merchant.username
-    flash[:success] = success_message
-    session[:merchant_id] = @merchant.id
-    redirect_to root_path
-  end
+    def successful_login(message)
+      success_message = message << ", " << @merchant.username
+      flash[:success] = success_message
+      session[:merchant_id] = @merchant.id
+      redirect_to root_path
+    end
 
-  def unsuccessful_login(error_message)
-    flash[:error] = error_message
-    redirect_to root_path
-  end
+    def unsuccessful_login(error_message)
+      flash[:error] = error_message
+      redirect_to root_path
+    end
 
-  def merchant_params
-    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+    def merchant_params
+      return params.require(:merchant).permit(:username, :email, :uid, :provider)
+    end
   end
-end
