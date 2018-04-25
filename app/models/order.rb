@@ -61,7 +61,7 @@ class Order < ApplicationRecord
 
   def calc_revenue
     order_items = self.order_items
-    return order_items.inject(0) { |sum, order_item| sum + order_item.get_item_subtotal }
+    return order_items.inject(0) { |sum, order_item| sum + order_item.get_subtotal }
   end
 
   # THIS ALL WILL BE REFACTORED - Kirsten

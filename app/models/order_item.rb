@@ -22,7 +22,7 @@ class OrderItem < ApplicationRecord
   end
 
   def get_subtotal_to_string
-    return get_item_subtotal
+    return get_subtotal
   end
 
   def get_order_status
