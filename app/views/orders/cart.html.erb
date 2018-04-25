@@ -2,6 +2,15 @@
 <% if @order.nil? %>
 <h3>Cart is empty!</h3>
 <% else %>
+<!-- <div class="grid-x padding-gutters align-right">
+	<div class="small-1 small-1 cell">
+		<p> Quantity</p> </div>
+	<div class="small-2 small-2 cell">
+		<p> Price</p>
+		</div>
+	</div>
+</div> -->
+
 <section class="cart-area">
 	<% @order.order_items.each do |item| %>
 	<section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
@@ -13,6 +22,7 @@
 		<section class="small-2 small-2 cell"><%= link_to "remove", order_item_path(item.id), method: :delete, class: "button tiny", data: {confirm: 'Are you sure?' } %></section>
 
 		<section class="small-1 small-1 cell"><%= form_for item do |f| %>
+			<%= f.label :quantity %>
 			<%= f.select :quantity, options_for_select(1..item.product.stock, item.quantity ), {}, {value: item.quantity, class: 'form-control', onchange: 'this.form.submit();'} %>
 			<% end %></section>
 
@@ -23,7 +33,7 @@
 	<% end %>
 	<section class="subtotal-summary">
 		<% if @order.total_quantity == 1 %>
-		<h3>subtotal (1 item):</h3>
+		<h3>subtotal (1 item): <%= @order.get_current_total.cents_to_dollars%></h3>
 		<% else %>
 		<h3>subtotal(<%= @order.total_quantity%> items): <%= @order.get_current_total.cents_to_dollars%></h3>
 		<%end%>

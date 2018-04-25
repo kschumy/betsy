@@ -7,7 +7,7 @@
     <div class="product-summary">
       <%= image_tag(p.photo, :alt => "product image") %>
       <div><%= p.name %></div>
-      <div><small>$<%= p.price.cents_to_dollars %></small></div>
+      <div><small><%= p.price.cents_to_dollars %></small></div>
     </div>
     <%end%>
   </li>
