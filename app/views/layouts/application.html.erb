@@ -41,33 +41,35 @@
     </nav>
     <nav class="product-nav">
       <ul class="nav-items">
+        <% Category.all.limit(10).each do |cat| %>
+        <li>
+          <%= link_to cat.name, category_path(cat.id) %>
+        </li>
+        <% end %>
         <li>
           <%= link_to "All Products", products_path %>
-        </li>
-        <li>
-          Categories
         </li>
       </ul>
     </nav>
   </header>
   <main>
     <% if flash[:alert] || flash[:success] %>
-      <% if flash[:alert] %>
-        <section class="callout alert" data-closable>
-          <ul>
-            <% flash[:alert].each do |field, message| %>
-              <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
-            <% end %>
-          </ul>
-        </section>
-      <% else %>
-          <h5 class="success callout" data-closable><%= flash[:success] %></h5>
+    <% if flash[:alert] %>
+    <section class="callout alert" data-closable>
+      <ul>
+        <% flash[:alert].each do |field, message| %>
+        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
         <% end %>
-      </section>
+      </ul>
+    </section>
+    <% else %>
+    <h5 class="success callout" data-closable><%= flash[:success] %></h5>
     <% end %>
+  </section>
+  <% end %>
 
-    <%= yield %>
-  </main>
+  <%= yield %>
+</main>
 </body>
 </html>
 

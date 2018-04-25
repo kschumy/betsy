@@ -5,7 +5,13 @@ end
 class Integer
 
   def cents_to_dollars
-    return '%.2f' % (self / 100.0)
+    return "$#{'%.2f' % (self / 100.0)}"
   end
 
+end
+
+
+
+def show_date
+  return self.strftime("%m/%d/%Y")
 end
