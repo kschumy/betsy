@@ -12,7 +12,7 @@
 <p>Date placed: <%= @order.created_at.show_date %></p>
 <p>Status: <%= @order.status %></p>
 <br>
-<p> Total Cost: $<%= @order.get_total_revenue.cents_to_dollars %> </p>
+<p> Total Cost: <%= @order.get_total_revenue.cents_to_dollars %> </p>
 <br>
 <%= render partial: "shared/table" , locals: { table_order_items: @order.order_items } %>
 <br>
