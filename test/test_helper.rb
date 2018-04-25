@@ -2,9 +2,11 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
-require "minitest/reporters"  # for Colorized output
+
+require "minitest/reporters"
 require 'simplecov'
 SimpleCov.start
+
 #  For colorful output!
 Minitest::Reporters.use!(
   Minitest::Reporters::SpecReporter.new,
@@ -40,15 +42,15 @@ class ActiveSupport::TestCase
      uid: merchant.uid,
      info: {
        email: merchant.email,
-       nickname: merchant.name,
+       nickname: merchant.username,
      }
    }
  end
 
- def perform_login(user)
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(merchant))
+ def perform_login(merchant,provider)
+    OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(mock_auth_hash(merchant))
 
-    get auth_callback_path(merchant.provider)
+    get "/auth/#{provider}/callback"
   end
 
 end
