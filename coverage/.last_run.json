@@ -1,14 +1,5 @@
-<<<<<<< HEAD
 {
   "result": {
-    "covered_percent": 74.78
+    "covered_percent": 57.21
   }
 }
-||||||| merged common ancestors
-=======
-{
-  "result": {
-    "covered_percent": 70.62
-  }
-}
->>>>>>> testing
