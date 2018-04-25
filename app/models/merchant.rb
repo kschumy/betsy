@@ -21,20 +21,19 @@ class Merchant < ApplicationRecord
     OrderItem.where(product_id: self.get_merchant_products)
   end
 
-  def get_merchant_orders
-    order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
-    Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
+  def get_merchant_orders(status)
+    if status == "all"
+      order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+      Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
+    elsif
+      order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+      Order.where(:id => order_ids).where("orders.status = ?", status)
+    end
   end
 
   def get_merchant_revenue(status)
-    if status == "all"
-      order_items = OrderItem.where(order_id: self.get_merchant_orders, product_id: self.get_merchant_products)
+      order_items = OrderItem.where(order_id: self.get_merchant_orders(status), product_id: self.get_merchant_products)
       order_items.inject(0) { |sum, order_item| sum + (order_item.get_subtotal) }
-          raise
-    elsif
-      order_items = OrderItem.where(order_id: self.get_merchant_orders, product_id: self.get_merchant_products)
-      order_items.inject(0) { |sum, order_item| sum + (order_item.get_subtotal) }
-    end
   end
 
   #

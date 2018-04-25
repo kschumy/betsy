@@ -1,43 +1,25 @@
-<section>
+<section class = "merchant order metrics">
   <h3><%= @merchant.username %> - order fulfillment page</h3>
   <br>
-  <h4>Total number of paid and complete orders: <%= @orders.count %></h4>
-  <h5> Paid orders: <%= @orders.where(status: "paid").count %> /   Complete orders: <%= @orders.where(status: "complete").count %></h5>
+  <h4>number of paid and complete orders: <%= @orders.count %></h4>
+  <h5> <%= link_to 'Paid orders:', {controller: 'merchants', action: 'order_fulfillment', :status => 'paid'} %> <%= @paid_orders.count %> /   <%= link_to 'Complete orders:', {controller: 'merchants', action: 'order_fulfillment', :status => 'completed'} %> <%= @complete_orders.count %></h5>
+  <h4>Total revenue: <%= @merchant.get_merchant_revenue("all") %></h4>
+     <h4> Revenue from paid: <%= @merchant.get_merchant_revenue("paid") %> / Revenue from complete: <%= @merchant.get_merchant_revenue("complete") %> </h4>
   <br>
-    <h4>Total revenue of paid and complete orders: <%= @orders.count %></h4>
+</section>
 
-<h4> All Orders </h4>
-  <% @orders.each do |order| %>
-  <ul>
-    <li> <%= link_to "Order ##{order.id}", order_path(order.id) %> </li>
-    <li>Date: <%= order.created_at.show_date %> </li>
-    <li>Status: <%= order.status %> </li>
-  </ul>
-
+<section class = "merchant orders">
+  <h4> Paid Orders </h4>
+  <% @paid_orders.each do |order| %>
+  <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
   <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
-  <br>
   <% end %>
+</section>
 
-<h4> Paid Orders </h4>
-  <% @orders.where(status: "paid").each do |order| %>
-  <ul>
-    <li> <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.strftime("%B %d, %Y") %>) </li>
-  </ul>
-
+<section class = "merchant orders">
+  <h4> Completed Orders </h4>
+  <% @complete_orders.each do |order| %>
+  <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
   <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
-  <br>
   <% end %>
-
-<h4> Completed Orders </h4>
-  <% @orders.where(status: "complete").each do |order| %>
-  <ul>
-    <li> <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.strftime("%B %d, %Y") %>) </li>
-  </ul>
-
-  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
-  <br>
-  <br>
-  <% end %>
-
-  <li><%= link_to 'Paid Status', {controller: 'merchants', action: 'order_fulfillment', :status => 'paid'} %></li>
-  <li><%= link_to 'Completed Status', {controller: 'merchants', action: 'order_fulfillment', :status => 'completed'} %></li>
+</section>
