@@ -9,7 +9,7 @@
 			<section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %></section>
 			<section class="small-2 small-2 cell">remove from cart</section>
 			<section class="small-1 small-1 cell"><%= item.quantity %></section>
-			<section class="small-1 small-1 cell"><%= item.get_subtotal %></section>
+			<section class="small-1 small-1 cell"><%= item.get_subtotal.cents_to_dollars %></section>
 	</section>
 	<% end %>
 		</section>
