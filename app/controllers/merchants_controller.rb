@@ -40,7 +40,7 @@ class MerchantsController < ApplicationController
     # Deletes items in cart and cart because user has not purchased them.
     if session[:cart_id] != nil
       order = Order.find_by(id: session[:cart_id])
-      order.delete_order_items_in_cart
+      order.delete_all_items_in_cart
       order.destroy
       session[:cart_id] = nil
     end
