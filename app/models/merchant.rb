@@ -21,6 +21,16 @@ class Merchant < ApplicationRecord
     OrderItem.where(product_id: self.get_merchant_products)
   end
 
+  def get_merchant_orders
+    order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+    Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
+  end
+
+  # def get_fulfillment_count
+  #
+  #   @orders.count
+  # end
+
   private
 
   # Throw ArgumentError if provided auth_hash is not a hash or if it does not

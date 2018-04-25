@@ -1,0 +1,17 @@
+<section>
+  <h3><%= @merchant.username %> - order fulfillment page</h3>
+  <br>
+  <h5>Total number of paid and complete orders: <%= @orders.count %></h5>
+  <br>
+  <% @orders.each do |order| %>
+
+  <ul>
+    <li> <%= link_to "Order ##{order.id}", order_path(order.id) %> </li>
+    <li>Date: <%= order.created_at.strftime("%B %d, %Y") %> </li>
+    <li>Status: <%= order.status %> </li>
+  </ul>
+
+  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
+  <br>
+  <br>
+  <% end %>

@@ -36,6 +36,11 @@ class MerchantsController < ApplicationController
     # #
   end
 
+  def order_fulfillment
+    @merchant = Merchant.find_by(id: params[:id])
+    @orders = @merchant.get_merchant_orders
+  end
+
   def destroy
     # Deletes items in cart and cart because user has not purchased them.
     if session[:cart_id] != nil

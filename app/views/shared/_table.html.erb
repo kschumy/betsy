@@ -1,22 +1,19 @@
-<h3>List of Items</h3>
+
 <table>
   <thead>
     <tr>
       <th width="100">Product</th>
-      <th width="100">Merchant</th>
       <th width="50">Quantity</th>
       <th width="100">Price</th>
       <th width="100">Subtotal</th>
       <th width="100">Shipping Status</th>
-      <th width="100">Order Status</th>
-      <th width="100">Order ID</th>
+      <th width="100"> </th>
     </tr>
   </thead>
   <tbody>
     <% table_order_items.each do |order_item| %>
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
-      <td><%= link_to order_item.get_item_merchant, merchant_path(order_item.get_item_merchant_id)  %></td>
       <td><%= order_item.quantity %></td>
       <td><%= order_item.price %></td>
       <td> <%= order_item.get_subtotal %></td>
@@ -27,8 +24,7 @@
         <%= order_item.shipping_status %>
         <% end %>
       </td>
-      <td><%= order_item.get_order_status %></td>
-      <td><%= link_to order_item.order_id, order_path(order_item.order_id) %></td>
+      <td> </td>
     </tr>
     <% end %>
   </tbody>
