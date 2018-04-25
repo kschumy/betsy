@@ -18,11 +18,14 @@ class Merchant < ApplicationRecord
   end
 
   def get_merchant_orders
-    order_item_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
-    order_ids = order_item_ids.uniq
-    Order.where(:id => order_ids)
+    order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+    Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
   end
 
+  # def get_fulfillment_count
+  #
+  #   @orders.count
+  # end
 
   private
 
