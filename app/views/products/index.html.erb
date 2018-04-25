@@ -1,4 +1,14 @@
-<h2 class="prod-title"><strong>All Products</strong></h2>
+
+
+  <section class="columns medium-10 small-12 all_products">
+    <% if params[:merchant_id]%>
+        <h5><%= Merchant.find(params[:merchant_id]).username  %>'s Mars Supplies</h5>
+    <% elsif params[:search]%>
+        <h5>Products / Search: <%= params[:search] %></h5>
+    <% else %>
+      <h5>Products / All</h5>
+    <% end %></h5>
+
 
 <ul class="prod-container">
   <% @products.each do |p| %>
@@ -7,7 +17,7 @@
     <div class="product-summary">
       <%= image_tag(p.photo, :alt => "product image") %>
       <div><%= p.name %></div>
-      <div><small>$<%= p.price.cents_to_dollars %></small></div>
+      <div><small><%= p.price.cents_to_dollars %></small></div>
     </div>
     <%end%>
   </li>
