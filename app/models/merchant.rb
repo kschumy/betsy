@@ -26,6 +26,19 @@ class Merchant < ApplicationRecord
     Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
   end
 
+  def get_merchant_orders_all
+    order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+    Order.where(:id => order_ids)
+  end
+
+  def get_merchant_orders_revenue
+    # order_ids = self.get_merchant_order_items.collect { |order_item| order_item.order_id }
+    # Order.where(:id => order_ids).where(status: status)
+    order_items = OrderItem.where(order_id: self.order_id)
+    return order_items.inject(0) { |sum, order_item| sum + order_item.get_subtotal }
+
+  end
+
   # def get_fulfillment_count
   #
   #   @orders.count

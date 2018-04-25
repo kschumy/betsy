@@ -17,7 +17,7 @@ class OrderItem < ApplicationRecord
   end
 
 
-  def get_item_subtotal
+  def get_subtotal
     price * quantity
   end
 
