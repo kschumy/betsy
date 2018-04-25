@@ -1,17 +1,31 @@
 <h3 class="page-header">Cart</h3>
 <% if @order.nil? %>
-	<h3>Cart is empty!</h3>
+<h3>Cart is empty!</h3>
 <% else %>
-	<section class="cart-area">
+<section class="cart-area">
 	<% @order.order_items.each do |item| %>
-		<section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
-			<section class="large-3 large-2 cell"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
-			<section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %></section>
-			<section class="small-2 small-2 cell">remove from cart</section>
-			<section class="small-1 small-1 cell"><%= item.quantity %></section>
-			<section class="small-1 small-1 cell"><%= item.get_subtotal %></section>
+	<section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
+		<section class="large-3 large-2 cell"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
+
+		<section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %>
+		</section>
+
+		<section class="small-2 small-2 cell"><%= link_to "remove", order_item_path(item.id), method: :delete, class: "button tiny", data: {confirm: 'Are you sure?' } %></section>
+
+		<section class="small-1 small-1 cell"><%= form_for item do |f| %>
+			<%= f.select :quantity, options_for_select(1..item.product.stock, item.quantity ), {}, {value: item.quantity, class: 'form-control', onchange: 'this.form.submit();'} %>
+			<% end %></section>
+
+			<section class="small-1 small-1 cell"><%= item.get_subtotal.cents_to_dollars %></section>
+		</section>
+		<% end %>
 	</section>
 	<% end %>
-		</section>
-<% end %>
+	<section class="subtotal-summary">
+		<% if @order.total_quantity == 1 %>
+		<h3>subtotal (1 item):</h3>
+		<% else %>
+		<h3>subtotal(<%= @order.total_quantity%> items): <%= @order.get_current_total.cents_to_dollars%></h3>
+		<%end%>
+	</section>
 </section>
