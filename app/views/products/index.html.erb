@@ -1,13 +1,13 @@
 <h2 class="prod-title"><strong>All Products</strong></h2>
 
-<ul>
+<ul class="prod-container">
   <% @products.each do |p| %>
-  <li>
+  <li class="product">
     <%= link_to product_path(p.id) do %>
-    <div>
+    <div class="product-summary">
       <%= image_tag(p.photo, :alt => "product image") %>
-      <%= p.name %>
-      <small>$<%= p.price %></small>
+      <div><%= p.name %></div>
+      <div><small>$<%= p.price %></small></div>
     </div>
     <%end%>
   </li>
