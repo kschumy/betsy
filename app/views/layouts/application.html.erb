@@ -32,14 +32,16 @@
             <% else %>
             <li><%= link_to "Login With GitHub", github_login_path, class: "button" %></li>
             <% end %>
-            <li>
+            <li class="cart-container">
               <%= link_to image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart"),  view_cart_path(id: session[:cart_id]) %>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <nav class="product-nav">
+  </header>
+  <main>
+    <div class="product-nav">
       <ul class="nav-items">
         <% Category.all.limit(10).each do |cat| %>
         <li>
@@ -50,9 +52,7 @@
           <%= link_to "All Products", products_path %>
         </li>
       </ul>
-    </nav>
-  </header>
-  <main>
+    </div>
     <% if flash[:alert] || flash[:success] %>
     <% if flash[:alert] %>
     <section class="callout alert" data-closable>
