@@ -14,6 +14,9 @@ class Order < ApplicationRecord
   validate :validate_credit_card_info, on: :checkout
   validate :validate_email_address, on: :checkout
 
+  def total_quantity
+    return order_items.inject(0) { |sum, order_item| sum + order_item.quantity }
+  end
 
   def get_current_total
     return calc_revenue if is_allowed_to_change?
