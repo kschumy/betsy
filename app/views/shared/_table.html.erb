@@ -15,8 +15,8 @@
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
       <td><%= order_item.quantity %></td>
-      <td><%= order_item.price %></td>
-      <td> <%= order_item.get_item_subtotal %></td>
+      <td><%= order_item.price.cents_to_dollars %></td>
+      <td> <%= order_item.get_item_subtotal.cents_to_dollars %></td>
       <td>
         <% if order_item.shipping_status == "Ready to ship" %>
         <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
