@@ -1,2 +1,18 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<h2 class="cat-title"><strong><%= @category.name%></strong></h2></h2>
+
+<section>
+  <ul>
+    <% @category.products.each do |product| %>
+    <li>
+      <%= link_to product_path(product.id) do %>
+      <div>
+        <%= image_tag(product.photo, :alt => "product image") %>
+        <%= product.name %>
+        <small>$<%= product.price %></small>
+      </div>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+
+</section>
