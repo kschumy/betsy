@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
     #note: I'm not sure which is more suitable, the above or Order.create(order_params)
     if @order.save
       flash[:success] = "Successfully created order"
-      redirect_to order_items_path
+      redirect_to view_cart_path
     else
       flash[:alert] = @order.errors.messages
       render :new

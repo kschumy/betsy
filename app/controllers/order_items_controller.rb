@@ -17,7 +17,7 @@ class OrderItemsController < ApplicationController
     set_order_for_order_item
     if @order_item.save
       flash[:success] = :success
-      redirect_to order_items_path
+      redirect_to view_cart_path
     else
       flash[:alert] = @order_item.errors.messages
       redirect_to product_path(order_item_params[:product_id])
@@ -31,7 +31,7 @@ class OrderItemsController < ApplicationController
   def update
     @order_item  = OrderItem.find_by(id: params[:id])
     @order_item.update(order_item_params)
-    redirect_to order_items_path
+    redirect_to view_cart_path
   end
 
   def destroy
@@ -39,7 +39,7 @@ class OrderItemsController < ApplicationController
     if @order_item
       @order_item.destroy
       flash[:success] = "Successfully destroyed item from shopping cart"
-      redirect_to order_items_path
+      redirect_to view_cart_path
     end
   end
 
