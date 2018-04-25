@@ -1,6 +1,8 @@
 require "test_helper"
 
 describe Category do
+  let(:novelty) { categories(:novelty) }
+
   describe "valid" do
     it "must be valid" do
       categories(:novelty).must_be :valid?

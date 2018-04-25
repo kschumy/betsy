@@ -51,6 +51,15 @@ ul {
   list-style-type: none;
 }
 
+main, .alert-section {
+  /*changed to 90 rem to fit more products in page lemme know if this messes anything up -jackie*/
+  max-width: 90rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding-bottom: 2rem;
+  padding: 3px;
+}
+
 .astronaut {
   margin-right: 75px;
   margin-bottom: 10px;
@@ -68,4 +77,84 @@ ul {
 .nav-items li {
   padding: 10px;
   display: inline;
+}
+.row {
+  /* max-width: 100%;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 10px;
+  padding: 25px 20px 10px 20px; */
+}
+
+.cart-sections {
+  max-width: 100%;
+  border-bottom: 1px solid #EEEEEE;
+  margin-bottom: 10px;
+  padding: 25px 20px 10px 20px;
+}
+
+/*
+** ignored this!!! ** - Kirsten
+.cart-rows {
+height: 8rem;
+}
+
+.cart-row {
+max-width: 100%;
+border-bottom: 1px solid #EEEEEE;
+margin-bottom: 10px;
+padding: 25px 20px 10px 20px;
+}
+
+.cart-rows, .cart-rows * {
+height: 6em;
+}
+
+.cart-rows > .row {
+height: 6em;
+} */
+
+.item-name-in-cart {
+  font-size: 1.5rem;
+}
+
+.page-header {
+  font-size: 3rem;
+}
+
+.order-item-cart-pic {
+  max-width: 2rem;
+  max-height: auto;
+  min-width: 75px;
+  min-height: auto;
+}
+
+.callout {
+  font-size: 0.9em;
+
+}
+
+
+/* .checkout-button {
+float: right;
+} */
+
+.prod-title {
+  text-align: center;
+}
+
+.product {
+  width: 350px;
+  padding: 70px;
+  margin-right: 10px;
+}
+
+.prod-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.product-summary:hover {
+  color: rgb(235, 124, 8)
 }

@@ -23,64 +23,53 @@
             <% if @curr_merchant %>
             <li class="astronaut" >
               <%= image_tag("icons/if_astronaut_44938.png", size: "60x60", alt: "User icon") %>
-
               <ul class="menu">
-                <li>
-                  Signed in as<br /><strong><%= @curr_merchant.username %></strong>
-                </li>
-                <li>
-                  <a href="#">Seller Dashboard</a>
-                </li>
-                <li>
-                  <%= link_to "Logout", logout_path, method: :delete %>
-                </li>
+                <li>Signed in as<br /><strong><%= @curr_merchant.username %></strong></li>
+                <li><a href="#">Seller Dashboard</a></li>
+                <li><%= link_to "Logout", logout_path, method: :delete %></li>
               </ul>
             </li>
             <% else %>
-            <li>
-              <%= link_to "Login With GitHub", github_login_path, class: "button" %>
-
-            </li>
+            <li><%= link_to "Login With GitHub", github_login_path, class: "button" %></li>
             <% end %>
             <li>
-              <%= image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart") %>
+              <%= link_to image_tag("icons/if_shopping_cart red_10535.png", size: "60x60", alt: "Shopping Cart", class: "cart"),  view_cart_path(id: session[:cart_id]) %>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    <nav class="product-nav">
+      <ul class="nav-items">
+        <% Category.all.limit(10).each do |cat| %>
+        <li>
+          <%= link_to cat.name, category_path(cat.id) %>
+        </li>
+        <% end %>
+        <li>
+          <%= link_to "All Products", products_path %>
+        </li>
+      </ul>
+    </nav>
   </header>
-
-  <section class="alert-section">
-    <% flash.each do |name, message| %>
-    <section class="status <%= name %>">
-      <% if message.respond_to?(:each) %>
-
-      <h3>An error has occured.</h3>
+  <main>
+    <% if flash[:alert] || flash[:success] %>
+    <% if flash[:alert] %>
+    <section class="callout alert" data-closable>
       <ul>
         <% flash[:alert].each do |field, message| %>
         <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
         <% end %>
       </ul>
-      <% else %>
-      <h3 class="success"><%= message %></h3>
-      <% end %>
     </section>
+    <% else %>
+    <h5 class="success callout" data-closable><%= flash[:success] %></h5>
     <% end %>
   </section>
-
-  <nav class="product-nav">
-    <ul class="nav-items">
-      <li>
-        <%= link_to "All Products", products_path %>
-      </li>
-      <li>
-        Categories
-      </li>
-    </ul>
-  </nav>
+  <% end %>
 
   <%= yield %>
+</main>
 </body>
 </html>
 

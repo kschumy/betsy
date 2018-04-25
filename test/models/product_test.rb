@@ -162,7 +162,7 @@ describe Product do
     it "returns 'This product has no reviews' if product has no reviews" do
       product = products(:soap)
       product.reviews.count.must_equal 0
-      product.get_average_rating.must_equal "This product has no reviews"
+      product.get_average_rating.must_equal "This product has no ratings"
     end
   end
 
