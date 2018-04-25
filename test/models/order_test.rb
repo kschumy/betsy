@@ -3,22 +3,31 @@ require "test_helper"
 describe Order do
   describe "valid" do
     let(:order) { orders(:user_mcuser_order) }
-    # let(:new_order_hash) {
-    #   { email_address: "starmouse@crater.com",
-    #     cc_name: "Test Dummy",
-    #     cc_number: "1234192910312811",
-    #     cc_cvv: "201",
-    #     cc_zip: "99503",
-    #     status: "pending",
-    #     customer_name: "Ada Marslover",
-    #     street: 123 Kickass Ave,
-    #     city: Seattle,
-    #     state: WA,
-    #     mailing_zip: 98103,
-    #     cc_exp_month: 12,
-    #     cc_exp_year: 2020
-    #   }
-    #  }
+    let(:new_paid_order_hash) {
+      { email_address: "starmouse@crater.com",
+        cc_name: "Test Dummy",
+        cc_number: 1234192910312811,
+        cc_cvv: "201",
+        cc_zip: "99503",
+        status: "paid",
+        customer_name: "Ada MarsFan",
+        street: "123 Space Ave",
+        city: "Seattle",
+        state: "WA",
+        mailing_zip: "98103",
+        cc_exp_month: 12,
+        cc_exp_year: 2050,
+        order_items: []
+      }
+    }
+      let(:new_item) {
+        OrderItem.new(
+          quantity: 10,
+          price: 249,
+          is_shipped: false,
+          product: products(:ball),
+          order: Order.new(status: "pending"))
+      }
 
     it "must be valid" do
       order.must_be :valid?
@@ -26,6 +35,8 @@ describe Order do
 
     # Valid customer_name ------------------------------------------------------
     it "must have at least one character in customer_name" do
+      order.update!(status: "paid")
+
       order.customer_name = ""
       order.save
       order.valid?.must_equal false
@@ -39,11 +50,29 @@ describe Order do
       order.save
       order.valid?.must_equal false
 
-
-
-      Order.create().valid?.must_equal false
+      # Order.create().valid?.must_equal false
     end
 
+    it "must have at least one character in customer_name" do
+      # order.update!(status: "paid")
+
+      order.customer_name = ""
+      order.save
+      order.valid?.must_equal true
+      # order.errors.must_include :customer_name
+
+      order.customer_name =  "         "
+      order.save
+      order.valid?.must_equal true
+
+      order.customer_name =  nil
+      order.save
+      order.valid?.must_equal true
+
+      # Order.create().valid?.must_equal false
+    end
+  end
+end
     #   it "must have a unique name" do
     #     order = Order.create(name: orders(:novelty).name)
     #     order.valid?.must_equal false
@@ -125,5 +154,3 @@ describe Order do
     #
     #   new_order.products.must_equal [products(:icecream)]
     # end
-  end
-end

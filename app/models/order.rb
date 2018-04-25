@@ -14,6 +14,11 @@ class Order < ApplicationRecord
   validate :validate_credit_card_info, on: :checkout
   validate :validate_email_address, on: :checkout
 
+  with_options if: !:is_allowed_to_change? do |admin|
+    validate :validate_mailing_info
+    validate :validate_credit_card_info
+    validate :validate_email_address
+  end
 
   def get_current_total
     return calc_revenue if is_allowed_to_change?
@@ -31,6 +36,10 @@ class Order < ApplicationRecord
   def is_allowed_to_change?
     return status == "pending"
   end
+
+  # def is_not_allowed_to_change?
+  #   return status != "pending"
+  # end
 
   def delete_all_items_in_cart
     destroy_all_order_items if is_allowed_to_change?
@@ -55,7 +64,9 @@ class Order < ApplicationRecord
   end
 
   def validate_email_address
-    if !email_address.is_a?(String) || !customer_name.include?("@")
+    if !email_address.is_a?(String) || !email_address.include?("@")
+      # !email_address.is_a?(String)
+      # !customer_name.include?("@")
       errors.add(:email_address, "Invalid email address")
     end
   end
@@ -64,8 +75,8 @@ class Order < ApplicationRecord
     if !is_non_empty_string?(cc_name) || !has_valid_cc_number? ||
       !has_valid_ccv_number? || !is_zip_code?(cc_zip) ||
       !Date.is_in_the_future?(cc_exp_month, cc_exp_year)
+      errors.add(:credit_card, "Invalid credit card info")
     end
-    errors.add(:credit_card, "Invalid credit card info")
   end
 
   def has_valid_ccv_number?
@@ -73,7 +84,8 @@ class Order < ApplicationRecord
   end
 
   def has_valid_cc_number?
-    return is_string_of_n_numbers?(cc_number, 16)
+    return cc_number >= 1_000_000_000_000_000
+    # return is_string_of_n_numbers?(cc_number, 16)
   end
 
   def is_zip_code?(zip)
