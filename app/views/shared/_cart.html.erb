@@ -26,7 +26,7 @@
       <td> <%= f.submit "Update Quantity"%> </td>
       <% end %>
       <td><%= order_item.price %></td>
-      <td> <%= order_item.get_item_subtotal %></td>
+      <td> <%= order_item.get_subtotal %></td>
       <td><%= link_to "Remove item from cart", order_item_path(order_item), method: "delete", data: { confirm: "Are you sure?" } %>
       </td>
       <td><%= order_item.order_id %></td>
