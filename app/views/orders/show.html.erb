@@ -9,10 +9,10 @@
 <p>CC CVV: <%= @order.cc_cvv %></p>
 <p>CC Zip: <%= @order.cc_zip %></p>
 <p>Exp: <%= @order.cc_exp_month %>/<%= @order.cc_exp_year %></p>
-<p>Date placed: <%= @order.created_at %></p>
+<p>Date placed: <%= @order.created_at.show_date %></p>
 <p>Status: <%= @order.status %></p>
 <br>
-<p> Total Cost: $<%= @order.get_total_revenue %> </p>
+<p> Total Cost: $<%= @order.get_total_revenue.cents_to_dollars %> </p>
 <br>
 <%= render partial: "shared/table" , locals: { table_order_items: @order.order_items } %>
 <br>

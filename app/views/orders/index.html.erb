@@ -17,7 +17,7 @@
       <td><%= order.customer_name %></td>
       <td><%= order.email_address %></td>
       <td><%= order.street %> <%= order.city %>, <%= order.state %> <%= order.mailing_zip %></td>
-      <td><%= order.created_at.strftime("%B %d, %Y") %></td>
+      <td><%= order.created_at.show_date %></td>
       <td><%= order.status %></td>
     </tr>
     <% end %>
