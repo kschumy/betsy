@@ -22,7 +22,6 @@ class OrdersController < ApplicationController
       flash[:alert] = @order.errors.messages
       render :new
     end
-
   end
 
   def edit
@@ -45,8 +44,6 @@ class OrdersController < ApplicationController
     @order.save
     redirect_to root_path
   end
-
-
 
   def update
     @order = Order.find_by(id: params[:id])
@@ -79,7 +76,6 @@ class OrdersController < ApplicationController
       flash[:alert] = @order.errors
       redirect_back fallback_location: view_cart_path
     end
-
   end
 
   def destroy

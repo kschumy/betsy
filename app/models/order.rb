@@ -53,11 +53,9 @@ class Order < ApplicationRecord
     return status == "pending"
   end
 
-
   def delete_order_items_in_cart
     order_items.each { |items| items.destroy } if is_allowed_to_change?
   end
-
 
   private
 
