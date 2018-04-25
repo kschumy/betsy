@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     @merchant = Merchant.find_by(id: session[:merchant_id])
   end
 
+  def render_404
+    render file: "/public/404.html", status: :not_found, :layout => false
+  end
+
   private
 
   # # Check that the user is logged in, and send back

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "merchants#destroy", as: "logout"
 
   root 'products#welcome'
-  resources :categories, only: [:create, :edit, :show, :index, :new] do
+  resources :categories, only: [:create, :show, :index, :new] do
     resources :products, only: [:index]
   end
   resources :reviews, only: [:create, :new]
@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create, :new]
   end
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
+<<<<<<< HEAD
+get '/cart', to: "orders#cart", as: 'view_cart'
+# patch '/cart', to: "order#view_cart", as: 'view_cart'
   resources :merchants #, only: [:create, :show, :index]
  get 'merchants/:id/orders', to: "merchants#order_fulfillment", as: 'merchant_orders'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

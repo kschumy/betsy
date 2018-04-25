@@ -3,7 +3,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "minitest/rails"
 require "minitest/reporters"  # for Colorized output
-
+require 'simplecov'
+SimpleCov.start
 #  For colorful output!
 Minitest::Reporters.use!(
   Minitest::Reporters::SpecReporter.new,
@@ -17,7 +18,7 @@ Minitest::Reporters.use!(
 # require "minitest/rails/capybara"
 
 # Uncomment for awesome colorful output
-# require "minitest/pride"
+require "minitest/pride"
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
@@ -31,4 +32,23 @@ class ActiveSupport::TestCase
     # A request to /auth/provider will redirect immediately to /auth/provider/callback.
     OmniAuth.config.test_mode = true
   end
+
+
+  def mock_auth_hash(merchant)
+   return {
+     provider: merchant.provider,
+     uid: merchant.uid,
+     info: {
+       email: merchant.email,
+       nickname: merchant.name,
+     }
+   }
+ end
+
+ def perform_login(user)
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(merchant))
+
+    get auth_callback_path(merchant.provider)
+  end
+
 end

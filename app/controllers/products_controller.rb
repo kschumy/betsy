@@ -6,7 +6,7 @@ class ProductsController < ApplicationController
 
   def show
     product = Product.find_by(id: params[:id])
-
+    @order_item = OrderItem.new
     if product == nil
       flash[:alert] = "Product does not exist"
       redirect_to products_path
@@ -18,8 +18,7 @@ class ProductsController < ApplicationController
 
   def new
     if @merchant.nil?
-      flash[:alert] = "Must be logged in to view page"
-      redirect_to products_path
+      render_404
     else
       @product = Product.new
     end
@@ -33,16 +32,19 @@ class ProductsController < ApplicationController
       flash[:success] = "#{@product.name} saved"
       redirect_to products_path
     else
-      flash[:alert] = "Could not create product #{@product.name}"
+      flash.now[:alert] = @product.errors
       render :new
     end
   end
 
   def edit
     @product = Product.find_by(id: params[:id])
+    render_404 unless !@merchant.nil? && @merchant.id == @product.merchant.id
+
     if @product.nil?
       redirect_to root_path
     end
+
   end
 
   def update
@@ -77,6 +79,6 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :merchant_id, category_ids: [])
+    return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :price_from_form, :merchant_id, category_ids: [])
   end
 end

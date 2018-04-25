@@ -8,11 +8,14 @@
       <%= @product.stock %> <%= @product.inventory_status %>
     </p>
     <p>
-      $<%= @product.price %>
+      $<%= @product.get_price_in_dollars %>
     </p>
     <p>
       <%= link_to @product_merchant.username, merchant_path(@product_merchant.id) %>
     </p>
+    <div>
+      <%= render partial: "add_to_cart_form" %>
+    </div>
     <p>
       Description: <%= @product.description %>
     </p>
@@ -37,7 +40,7 @@
   <h4>Reviews</h4>
 
   <% if @product.reviews.empty? %>
-  <% if @merchant.id != @product.merchant.id %>
+  <% if !@merchant.nil? && @merchant.id != @product.merchant.id %>
   <p>
     Be the first martian to review!
   </p>
@@ -55,34 +58,20 @@
       <%= "🚀" %>
       <% end %>
     </li>
-<<<<<<< HEAD
     <p>
       <%= review.comment %>
     </p>
-  </section>
+    <% end%>
+  </ul>
   <% end%>
-</ul>
-<% end%>
+</section>
 
-<% if @merchant.id != @product.merchant.id %>
+
+<% if @merchant.nil? || @merchant.id != @product.merchant.id %>
 <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
 <% end %>
-<% if @merchant.id == @product.merchant.id %>
+<% if !@merchant.nil? && @merchant.id == @product.merchant.id %>
 <p>
   <%= link_to "Deactivate this product", deactivate_product_path(@product.id), class: 'button', method: :patch %>
 </p>
 <% end %>
-=======
-      <p>
-        <%= review.comment %>
-      </p>
-
-      <% end%>
-  </ul>
-    <% end%>
-  </section>
-  <p><%=link_to "Review Now!", new_product_review_path(@product.id), class: 'button' %></p>
-  <p>
-    <%= link_to "Deactivate", deactivate_product_path(@product.id), class: 'button', method: :patch %>
-  </p>
->>>>>>> 9f06d411d96d3b3af8dde8f4b9c3ff99f8aeb525

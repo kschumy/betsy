@@ -42,6 +42,13 @@ class MerchantsController < ApplicationController
   end
 
   def destroy
+    # Deletes items in cart and cart because user has not purchased them.
+    if session[:cart_id] != nil
+      order = Order.find_by(id: session[:cart_id])
+      order.delete_order_items_in_cart
+      order.destroy
+      session[:cart_id] = nil
+    end
     session[:merchant_id] = nil
     flash[:success] = "Successfully logged out!"
     redirect_to root_path
