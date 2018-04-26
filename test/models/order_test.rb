@@ -549,6 +549,9 @@ describe Order do
       order.update(cc_exp_month: Date.today.month + 1, cc_exp_year: Date.today.year)
       order.valid?.must_equal true
 
+      order.update(cc_exp_month: Date.today.month - 1, cc_exp_year: Date.today.year + 1)
+      order.valid?.must_equal true
+
       order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year + 1)
       order.valid?.must_equal true
     end
@@ -578,6 +581,9 @@ describe Order do
       order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year + 1)
       order.valid?.must_equal true
 
+      order.update(cc_exp_month: Date.today.month - 1, cc_exp_year: Date.today.year + 1)
+      order.valid?.must_equal true
+      
       order.update(cc_exp_month: nil, cc_exp_year: nil)
       order.valid?.must_equal true
     end
