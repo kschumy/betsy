@@ -1,11 +1,5 @@
 {
   "result": {
-<<<<<<< HEAD
-    "covered_percent": 64.96
-||||||| merged common ancestors
-    "covered_percent": 61.06
-=======
-    "covered_percent": 93.82
->>>>>>> 4fcf70a4b9615dbddb7395a6241f18f8afc47cf7
+    "covered_percent": 61.32
   }
 }
