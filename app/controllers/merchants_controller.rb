@@ -56,6 +56,14 @@ class MerchantsController < ApplicationController
     redirect_to root_path
   end
 
+  def manage
+    if @merchant.nil?
+      render_404
+    else
+      @merchant_products = Product.merchant_products(@merchant.id)
+    end
+  end
+
   private
 
   def successful_login(message)
