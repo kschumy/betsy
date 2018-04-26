@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :products, except: [:destroy] do
     resources :reviews, only: [:create, :new]
   end
+  get '/manageinventory', to: "merchants#manage", as: 'manage_inventory'
   patch '/products/:id/deactivate', to: "products#deactivate", as: 'deactivate_product'
 get '/cart', to: "orders#cart", as: 'view_cart'
 # patch '/cart', to: "order#view_cart", as: 'view_cart'
