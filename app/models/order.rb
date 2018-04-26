@@ -1,4 +1,20 @@
+
+#
+# class MyValidator < ActiveModel::Validator
+#   def validate(record)
+#     if record.is_a?(String) && !record.blank?
+#       record.errors.add :base, 'This record is invalid'
+#     end
+#   end
+#
+#   private
+#   def some_complex_logic
+#     # ...
+#   end
+# end
+
 class Order < ApplicationRecord
+   include ActiveModel::Validations
   has_many :order_items
 
   STATES = %w(
@@ -10,15 +26,32 @@ class Order < ApplicationRecord
 
   validates :status, presence: true, inclusion: { in: STATUS }
 
+  validate :valid_customer_name, if: :is_not_allowed_to_change? #, uniqueness: { case_sensitive: false }
+
+  #
+  # validates_presence_of :customer_name, if: -> {  !is_pending? || customer_name.nil? }
+
+
+  # validates_with MyValidator unless: "is_pending? || customer_name.nil?"
+
+  # validates_with GoodnessValidator, fields: [:first_name, :last_name]
+
+ #  validates_each :name, :surname do |record, attr, value|
+ #   record.errors.add(attr, 'must start with upper case') if value =~ /\A[[:lower:]]/
+ # end
 
   # validates :customer_name, presence: true,
   #                   if: [Proc.new { |c| c.market.retail? }, :desktop?],
   #                   unless: Proc.new { |c| c.trackpad.present? }
 
 
-  #
-  # validate :customer_name, :is_non_empty_string?,
-  #             unless: "is_pending? || customer_name.nil?"
+  # validate do
+  #   errors.add(:customer_name, 'Invalid name') unless
+  # end
+
+  # validates :customer_name, if: -> is_non_empty_string?: { self.customer_name }
+      # if: Proc.new { |u_name| u_name.username.nil? || !is_pending? },
+      # unless: "is_pending? || customer_name.nil?"
 
   # validates :username, length: { minimum: 8 }, if: :has_username?
 
@@ -44,11 +77,11 @@ class Order < ApplicationRecord
   # validate :validate_credit_card_info, if: :is_not_allowed_to_change?
   # validate :validate_email_address, if: :is_not_allowed_to_change?
 
-  with_options if: :is_not_allowed_to_change? do
-    validate :validate_mailing_info
-    validate :validate_credit_card_info
-    validate :validate_email_address
-  end
+  # with_options if: :is_not_allowed_to_change? do
+  #   validate :validate_mailing_info
+  #   validate :validate_credit_card_info
+  #   validate :validate_email_address
+  # end
 
   def get_current_total
     return calc_revenue if is_pending?
@@ -123,11 +156,20 @@ class Order < ApplicationRecord
   #   return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
   # end
 
-  # def is_non_empty_string?(input)
-  #   return input.is_a?(String) && !input.blank?
-  # end
+
+  def valid_customer_name
+    if !is_non_empty_string?(customer_name)
+      errors.add(:customer_name, "Invalid customer name")
+    end
+  end
+
+  def is_non_empty_string?(input)
+    return input.is_a?(String) && !input.blank? && input[0].match?(/\S/)#blank?
+  end
 
 end
+
+
 
 
 

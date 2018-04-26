@@ -44,7 +44,8 @@ describe Order do
     end
 
     it "must not be valid if only provided non-pending status" do
-      Order.new(status: "paid").valid?.must_equal false
+      new_order = Order.create(status: "paid")
+      new_order.valid?.must_equal false
       Order.new(status: "cancelled").valid?.must_equal false
       Order.new(status: "complete").valid?.must_equal false
       Order.new(status: nil).valid?.must_equal false
