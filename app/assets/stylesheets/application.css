@@ -51,6 +51,10 @@ header {
   background-color: rgb(23, 1, 110)
 }
 
+.planet a {
+  background-color: rgb(23, 1, 110)
+}
+
 ul {
   list-style-type: none;
 }

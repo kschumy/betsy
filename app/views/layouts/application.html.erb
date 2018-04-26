@@ -18,6 +18,9 @@
       <div class="row">
         <div class="columns">
           <ul class="menu vertical medium-horizontal" data-responsive-menu="drilldown medium-dropdown">
+            <li class="planet">
+              <%= link_to image_tag("icons/mars (1).png", size: "65x65", alt: "User icon"), root_path %>
+            </li>
             <li class="mars"><%= link_to "Mars Depot", root_path, :class =>  "title"%></li>
             <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
             <% if @curr_merchant %>
