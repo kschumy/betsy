@@ -1,6 +1,11 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
+  # def is_string_of_n_numbers?(input, n)
+  #   raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
+  #   return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
+  # end
+
   private
 
   # Returns 'true' if provided input is a String that is not blank. Otherwise,
@@ -14,10 +19,10 @@ class ApplicationRecord < ActiveRecord::Base
   #
   # Returns 'true' if provided input is a String, had a length equal to n, and
   # only contains numbers (0-9).
-  def is_string_of_n_numbers?(input, n)
-    raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
-    return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
-  end
+  # def self.is_string_of_n_numbers?(input, n)
+  #   raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
+  #   return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
+  # end
 
 end
 

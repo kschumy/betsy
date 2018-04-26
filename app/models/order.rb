@@ -8,21 +8,54 @@ class Order < ApplicationRecord
 
   STATUS = %w(pending paid complete cancelled)
 
+  # to do
+  #   order_items: []
+
+  # done
+  #   cc_name: "Test Dummy",
+  #   customer_name: "Ada MarsFan",
+  #   street: "123 Space Ave",
+  #   city: "Seattle",
+  #   status: "pending",
+  #   cc_zip: "99503",
+  #   mailing_zip: "98103",
+  #   email_address: "starmouse@crater.com",
+  #   cc_number: 1234192910312811,
+  #   cc_cvv: "201",
+  #   state: "WA",
+  #   cc_exp_month: 12,
+  #   cc_exp_year: 2050,
+
   validates :status, presence: true, inclusion: { in: STATUS }
 
-  # validate :valid_customer_name_or_error, unless: "is_pending? && customer_name.nil?"
-  # validate :valid_street_or_error, unless: "is_pending? && street.nil?"
+  validates :state, presence: true,
+                inclusion: { in: STATES },
+                if: -> { !(is_pending? && state.nil?) }
 
-  validates_each :customer_name, :street, :city do |record, attrib, value|
-    # value.squish! if value.is_a?(String) #
+  validate :validate_email_address,
+              if: -> { !(is_pending? && email_address.nil?) }
+
+  validate :validate_credit_card_expiration,
+              if: -> { !(is_pending? && cc_exp_month.nil? && cc_exp_year.nil?) }
+
+  validate :validate_cc_number,
+              if: -> { !(is_pending? && cc_number.nil?) }
+
+  validate :validate_cc_cvv,
+              if: -> { !(is_pending? && cc_cvv.nil?) }
+
+
+  validates_each :customer_name, :street, :city, :cc_name do |record, attrib, value|
     if !(record.is_pending? && value.nil?) && !is_non_empty_string?(value)
-      record.errors[attrib] << "Invalid #{attrib}"
+      record.errors[attrib] << "Invalid #{attrib} - cannot be empty"
     end
   end
-  # validate :street, unless: "is_pending? && street.nil?"
-  # validate :street, unless: "is_pending? && street.nil?"
-  # validate :street, unless: "is_pending? && street.nil?"
-  # validate :street, unless: "is_pending? && street.nil?"
+
+  validates_each :mailing_zip, :cc_zip do |record, attribute, value|
+    if !(record.is_pending? && value.nil?) && !is_zip_code?(value)
+      record.errors[attribute] << "Invalid #{attribute} - must be 5 digits"
+    end
+  end
 
   def get_current_total
     return calc_revenue if is_pending?
@@ -49,10 +82,6 @@ class Order < ApplicationRecord
   end
 
   private
-  #
-  # def is_pending_and_value_nil?(value)
-  #   reutis_pending? && value.nil?
-  # end
 
   def destroy_all_order_items
     order_items.each { |items| items.destroy }
@@ -62,80 +91,44 @@ class Order < ApplicationRecord
     return order_items.inject(0) { |sum, item| sum + item.get_subtotal }
   end
 
-  def validate_mailing_info
-    errors.add(:customer_name, "Invalid name") if !is_non_empty_string?(customer_name)
-    errors.add(:street, "Invalid street") if !is_non_empty_string?(street)
-    errors.add(:city, "Invalid city") if !is_non_empty_string?(city)
-    errors.add(:state, "Invalid state") if !STATES.include?(state)
-    errors.add(:mailing_zip, "Invalid mailing zip") if !is_zip_code?(mailing_zip)
-  end
-
   def validate_email_address
     if !email_address.is_a?(String) || !email_address.include?("@")
       errors.add(:email_address, "Invalid email address")
     end
   end
 
-  def validate_credit_card_info
-    if !is_non_empty_string?(cc_name) || !has_valid_cc_number? ||
-      !has_valid_cvv_number? || !is_zip_code?(cc_zip) ||
-      !Date.is_in_the_future?(cc_exp_month, cc_exp_year)
-      errors.add(:credit_card, "Invalid credit card info")
+  def validate_credit_card_expiration
+    if !Date.is_in_the_future?(cc_exp_month, cc_exp_year)
+      errors.add(:credit_card_expiration, "Invalid credit card expiration date")
     end
   end
 
-  def has_valid_cvv_number?
-    return is_string_of_n_numbers?(cc_cvv, 3)
-  end
-
-  def has_valid_cc_number?
-    return cc_number.is_a?(Integer) &&
-      cc_number.between?(1_000_000_000_000_000, 9_999_999_999_999_999)
-  end
-
-  def is_zip_code?(zip)
-    return is_string_of_n_numbers?(zip, 5)
-  end
-
-  # def is_string_of_n_numbers?(input, n)
-  #   return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
-  # end
-
-  def valid_street_or_error
-    if !is_non_empty_string?(street)
-      errors.add(:street, "Invalid street name")
+  def validate_cc_cvv
+    if !cc_cvv.is_a?(String) || !cc_cvv.has_only_n_digits?(3)
+      errors.add(:credit_card_cvv, "Invalid credit card cvv")
     end
   end
 
-  # # def valid
-  # def valid_string(attrib, value)
-  #   if !is_non_empty_string?(value)
-  #     errors.add(attrib, "Invalid customer name")
-  #   end
-  # end
-
-  def valid_customer_name_or_error
-    if !is_non_empty_string?(customer_name)
-      errors.add(:customer_name, "Invalid customer name")
+  def validate_cc_number
+    if !cc_number.is_a?(Integer) ||
+      !cc_number.between?(1_000_000_000_000_000, 9_999_999_999_999_999)
+        errors.add(:credit_card_number, "Invalid credit card number")
     end
   end
 
-  # def self.is_non_empty_string?(input)
-  #   return input.is_a?(String) && !input.blank? && input[0].match?(/\S/)#blank?
-  # end
+  def self.is_zip_code?(zip)
+    return zip.is_a?(String) && zip.has_only_n_digits?(5)
+  end
 
 end
 
+class String
+  def has_only_n_digits?(n)
+    raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
+    return length == n && !self.match?(/[\D]/)
+  end
 
-
-
-
-# class String
-#   def has_only_n_digits?(n)
-#     return length == n && !self.match?(/[\D]/)
-#   end
-#
-# end
+end
 
 # validates :customer_name, presence: true
 # validates :email_address, presence: true
@@ -240,3 +233,6 @@ end
   # end
 
   # include ActiveModel::Validations
+
+  # validate :valid_customer_name_or_error, unless: "is_pending? && customer_name.nil?"
+  # validate :valid_street_or_error, unless: "is_pending? && street.nil?"
