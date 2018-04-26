@@ -8,41 +8,70 @@ class Order < ApplicationRecord
 
   STATUS = %w(pending paid complete cancelled)
 
-  validates :status, presence: true,
-                    inclusion: { in: STATUS }
-  validate :validate_mailing_info, on: :checkout
-  validate :validate_credit_card_info, on: :checkout
-  validate :validate_email_address, on: :checkout
+  validates :status, presence: true, inclusion: { in: STATUS }
 
-  with_options if: !:is_allowed_to_change? do |admin|
+
+  # validates :customer_name, presence: true,
+  #                   if: [Proc.new { |c| c.market.retail? }, :desktop?],
+  #                   unless: Proc.new { |c| c.trackpad.present? }
+
+
+  #
+  # validate :customer_name, :is_non_empty_string?,
+  #             unless: "is_pending? || customer_name.nil?"
+
+  # validates :username, length: { minimum: 8 }, if: :has_username?
+
+#  def has_username?
+#    !(username.nil? || username.empty?)
+#  end
+#
+#
+#
+#   validates :username, length: { minimum: 8 },
+#                 unless: "username.nil? || username.empty?"
+# end
+#
+#   validates :username, length: { minimum: 8 },
+#                 unless: Proc.new { |u| u.username.nil? || u.username.empty? }
+# end
+
+  # validate :validate_mailing_info, on: :checkout
+  # validate :validate_credit_card_info, on: :checkout
+  # validate :validate_email_address, on: :checkout
+
+  # validate :validate_mailing_info, if: :is_not_allowed_to_change?
+  # validate :validate_credit_card_info, if: :is_not_allowed_to_change?
+  # validate :validate_email_address, if: :is_not_allowed_to_change?
+
+  with_options if: :is_not_allowed_to_change? do
     validate :validate_mailing_info
     validate :validate_credit_card_info
     validate :validate_email_address
   end
 
   def get_current_total
-    return calc_revenue if is_allowed_to_change?
+    return calc_revenue if is_pending?
   end
 
-  def get_total_revenue
-    return calc_revenue if !is_allowed_to_change?
-  end
-
+  # def get_total_revenue(merchant)
+  #   return calc_revenue if !is_pending?
+  # end
 
   def add_item_to_cart(new_order_item)
-    order_items << new_order_item if is_allowed_to_change?
+    order_items << new_order_item if is_pending?
   end
 
-  def is_allowed_to_change?
+  def is_pending?
     return status == "pending"
   end
 
-  # def is_not_allowed_to_change?
-  #   return status != "pending"
-  # end
+  def is_not_allowed_to_change?
+    return status != "pending"
+  end
 
   def delete_all_items_in_cart
-    destroy_all_order_items if is_allowed_to_change?
+    destroy_all_order_items if is_pending?
   end
 
   private
@@ -65,55 +94,42 @@ class Order < ApplicationRecord
 
   def validate_email_address
     if !email_address.is_a?(String) || !email_address.include?("@")
-      # !email_address.is_a?(String)
-      # !customer_name.include?("@")
       errors.add(:email_address, "Invalid email address")
     end
   end
 
   def validate_credit_card_info
     if !is_non_empty_string?(cc_name) || !has_valid_cc_number? ||
-      !has_valid_ccv_number? || !is_zip_code?(cc_zip) ||
+      !has_valid_cvv_number? || !is_zip_code?(cc_zip) ||
       !Date.is_in_the_future?(cc_exp_month, cc_exp_year)
       errors.add(:credit_card, "Invalid credit card info")
     end
   end
 
-  def has_valid_ccv_number?
+  def has_valid_cvv_number?
     return is_string_of_n_numbers?(cc_cvv, 3)
   end
 
   def has_valid_cc_number?
-    return cc_number >= 1_000_000_000_000_000
-    # return is_string_of_n_numbers?(cc_number, 16)
+    return cc_number.is_a?(Integer) &&
+      cc_number.between?(1_000_000_000_000_000, 9_999_999_999_999_999)
   end
 
   def is_zip_code?(zip)
     return is_string_of_n_numbers?(zip, 5)
   end
 
-  def is_string_of_n_numbers?(input, n)
-    return input.is_a?(String) || input.length == n || input.match?(/[^\d]/)
-  end
+  # def is_string_of_n_numbers?(input, n)
+  #   return input.is_a?(String) && input.length == n && !input.match?(/[^\d]/)
+  # end
 
-  def is_non_empty_string?(input)
-    return input.is_a?(String) && !input.blank?
-  end
+  # def is_non_empty_string?(input)
+  #   return input.is_a?(String) && !input.blank?
+  # end
 
 end
 
-class Date
-  def self.is_in_the_future?(int_month, int_year)
-    return if !int_month.is_a?(Integer) || !int_year.is_a?(Integer)
-    return check_if_in_the_future(int_month, int_year)
-  end
 
-  private
-
-  def self.check_if_in_the_future(int_month, int_year)
-    return int_month >= self.today.month && int_year >= self.today.year
-  end
-end
 
 # class String
 #   def has_only_n_digits?(n)

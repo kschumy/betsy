@@ -9,7 +9,7 @@ describe Order do
         cc_number: 1234192910312811,
         cc_cvv: "201",
         cc_zip: "99503",
-        status: "paid",
+        status: "pending",
         customer_name: "Ada MarsFan",
         street: "123 Space Ave",
         city: "Seattle",
@@ -29,11 +29,30 @@ describe Order do
           order: Order.new(status: "pending"))
       }
 
-    it "must be valid" do
+    it "must be valid if complete when not pending" do
+      order.must_be :valid? # status is paid
+
+      order.update!(status: "cancelled")
+      order.must_be :valid?
+
+      order.update!(status: "complete")
       order.must_be :valid?
     end
 
-    # Valid customer_name ------------------------------------------------------
+    it "must be valid if only provided pending status" do
+      Order.new(status: "pending").must_be :valid?
+    end
+
+    it "must not be valid if only provided non-pending status" do
+      Order.new(status: "paid").valid?.must_equal false
+      Order.new(status: "cancelled").valid?.must_equal false
+      Order.new(status: "complete").valid?.must_equal false
+      Order.new(status: nil).valid?.must_equal false
+      Order.new(status: "foo bar").valid?.must_equal false
+    end
+
+    # Valid customer_name ======================================================
+    # ------------------------------------------------------------------ Pending
     it "must have at least one character in customer_name" do
       order.update!(status: "paid")
 
@@ -49,17 +68,15 @@ describe Order do
       order.customer_name =  nil
       order.save
       order.valid?.must_equal false
-
-      # Order.create().valid?.must_equal false
     end
 
-    it "must have at least one character in customer_name" do
-      # order.update!(status: "paid")
+    # -------------------------------------------------------------- NOT Pending
+    it "customer name does not matter when pending" do
+      order.update!(status: "pending")
 
       order.customer_name = ""
       order.save
       order.valid?.must_equal true
-      # order.errors.must_include :customer_name
 
       order.customer_name =  "         "
       order.save
@@ -68,8 +85,6 @@ describe Order do
       order.customer_name =  nil
       order.save
       order.valid?.must_equal true
-
-      # Order.create().valid?.must_equal false
     end
   end
 end
