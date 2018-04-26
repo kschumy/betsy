@@ -3,127 +3,631 @@ require "test_helper"
 describe Order do
   describe "valid" do
     let(:order) { orders(:user_mcuser_order) }
-    # let(:new_order_hash) {
-    #   { email_address: "starmouse@crater.com",
-    #     cc_name: "Test Dummy",
-    #     cc_number: "1234192910312811",
-    #     cc_cvv: "201",
-    #     cc_zip: "99503",
-    #     status: "pending",
-    #     customer_name: "Ada Marslover",
-    #     street: 123 Kickass Ave,
-    #     city: Seattle,
-    #     state: WA,
-    #     mailing_zip: 98103,
-    #     cc_exp_month: 12,
-    #     cc_exp_year: 2020
-    #   }
-    #  }
 
-    it "must be valid" do
+    it "must be valid if complete when not pending" do
+      order.must_be :valid? # status is paid
+
+      order.update(status: "cancelled")
+      order.must_be :valid?
+
+      order.update(status: "complete")
       order.must_be :valid?
     end
 
-    # Valid customer_name ------------------------------------------------------
-    it "must have at least one character in customer_name" do
-      order.customer_name = ""
-      order.save
-      order.valid?.must_equal false
-      order.errors.must_include :customer_name
-
-      order.customer_name =  "         "
-      order.save
-      order.valid?.must_equal false
-
-      order.customer_name =  nil
-      order.save
-      order.valid?.must_equal false
-
-
-
-      Order.create().valid?.must_equal false
+    it "must be valid if only provided pending status" do
+      Order.create(status: "pending").must_be :valid?
     end
 
-    #   it "must have a unique name" do
-    #     order = Order.create(name: orders(:novelty).name)
-    #     order.valid?.must_equal false
-    #     order.errors.must_include :name
-    #   end
-    #
-    #   it "must have a unique name regardless of case" do
-    #     new_cat_name = orders(:novelty).name
-    #     new_cat_name[0] = new_cat_name.chr.swapcase
-    #
-    #     new_order = Order.create(name: new_cat_name)
-    #     new_order.valid?.must_equal false
-    #     new_order.errors.must_include :name
-    #   end
-    #
-    #   it "removes strips white space from name" do
-    #     new_order = Order.create(name: "     Hello      World     ")
-    #     new_order.valid?.must_equal true
-    #     new_order.name.must_equal "Hello World"
-    #
-    #   end
-    #
-    #   it "strips white space from name before testing validity" do
-    #     Order.create(name: "Foo Bar      ").name.must_equal "Foo Bar"
-    #
-    #     # Should be invalid because whitespaces are removed and it's a duplicate
-    #     new_order = Order.create(name: "Foo       Bar")
-    #     new_order.valid?.must_equal false
-    #     new_order.errors.must_include :name
-    #
-    #     # Should be invalid because whitespaces are removed and it's a duplicate
-    #     new_order = Order.create(name: "     Foo Bar")
-    #     new_order.valid?.must_equal false
-    #     new_order.errors.must_include :name
-    #   end
-    # end
+    it "must not be valid if only provided non-pending status" do
+      Order.create(status: "paid").valid?.must_equal false
+      Order.create(status: "cancelled").valid?.must_equal false
+      Order.create(status: "complete").valid?.must_equal false
+      Order.create(status: nil).valid?.must_equal false
+      Order.create(status: "foo").valid?.must_equal false
+    end
+
+      # Testing this because unsure if validates_each actually worked and
+      # included the right messages
+      it "includes all error messages" do
+        new_order = Order.create(status: "paid")
+        new_order.valid?.must_equal false
+        new_order.errors.must_include :customer_name
+        new_order.errors.must_include :street
+        new_order.errors.must_include :city
+        new_order.errors.must_include :mailing_zip
+        new_order.errors.must_include :cc_zip
+      end
+
+    # Valid customer_name ======================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have at least one character in customer_name" do
+      order.update(status: "paid")
+
+      order.update(customer_name: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:customer_name]
+
+      order.update(customer_name: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:customer_name]
+
+      order.update(customer_name: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:customer_name]
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "customer name can only be valid or nil if pending" do
+
+      order.update(status: "pending")
+
+      order.update(customer_name: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:customer_name]
+
+      order.update(customer_name: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:customer_name]
+
+      order.update(customer_name: nil)
+      order.valid?.must_equal true
+      order.customer_name.must_be_nil
+
+      order.update(customer_name: "foo")
+      order.valid?.must_equal true
+      order.customer_name.must_equal "foo"
+    end
+
+    # Valid street =============================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have at least one character in street" do
+      order.update(status: "paid")
+
+      order.update(street: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:street]
+
+      order.update(street: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:street]
+
+      order.update(street: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:street]
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "street can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(street: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:street]
+
+      order.update(street: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:street]
+
+      order.update(street: nil)
+      order.valid?.must_equal true
+      order.street.must_be_nil
+
+      order.update(street: "foo")
+      order.valid?.must_equal true
+      order.street.must_equal "foo"
+    end
+
+    # Valid city ===============================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have at least one character in city" do
+      order.update(status: "paid")
+
+      order.update(city: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:city]
+
+      order.update(city: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:city]
+
+      order.update(city: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:city]
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "city can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(city: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:city]
+
+      order.update(city: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:city]
+
+      order.update(city: nil)
+      order.valid?.must_equal true
+      order.city.must_be_nil
+
+      order.update(city: "foo")
+      order.valid?.must_equal true
+      order.city.must_equal "foo"
+    end
+
+    # Valid cc_name ============================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have at least one character in cc_name" do
+      order.update(status: "paid")
+
+      order.update(cc_name: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_name]
+
+      order.update(cc_name: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_name]
+
+      order.update(cc_name: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_name]
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "cc_name can only be valid or nil if pending" do
+
+      order.update(status: "pending")
+
+      order.update(cc_name: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_name]
+
+      order.update(cc_name: "         ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_name]
+
+      order.update(cc_name: nil)
+      order.valid?.must_equal true
+      order.cc_name.must_be_nil
+
+      order.update(cc_name: "foo")
+      order.valid?.must_equal true
+      order.cc_name.must_equal "foo"
+    end
+
+    # Valid mailing zip ========================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have String and 5 digits in mailing_zip" do
+      order.update(status: "paid")
+
+      order.update(mailing_zip: "     ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "123456")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "1234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      # order.update(mailing_zip: 12345) # not a String
+      # order.valid?.must_equal false
+      # order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "12345")
+      order.valid?.must_equal true
+      order.mailing_zip.must_equal "12345"
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "mailing_zip can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(mailing_zip: "     ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "123456")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "1234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      # order.update(mailing_zip: 12345) # not a String
+      # order.valid?.must_equal false
+      # order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: nil)
+      order.valid?.must_equal true
+      order.mailing_zip.must_be_nil
+
+      order.update(mailing_zip: "12345")
+      order.valid?.must_equal true
+      order.mailing_zip.must_equal "12345"
+    end
+
+    # Valid cc zip =============================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have String and 5 digits in cc_zip" do
+      order.update(status: "paid")
+
+      order.update(cc_zip: "     ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "123456")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "1234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      # order.update(cc_zip: 12345) # not a String
+      # order.valid?.must_equal false
+      # order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "12345")
+      order.valid?.must_equal true
+      order.cc_zip.must_equal "12345"
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "cc_zip can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(cc_zip: "     ")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "123456")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "1234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      # order.update(cc_zip: 12345) # not a String
+      # order.valid?.must_equal false
+      # order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: nil)
+      order.valid?.must_equal true
+      order.cc_zip.must_be_nil
+
+      order.update(cc_zip: "12345")
+      order.valid?.must_equal true
+      order.cc_zip.must_equal "12345"
+    end
+
+    # Valid email ==============================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have '@' sign in email" do
+      order.update(status: "paid")
+
+      order.update(email_address: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:email_address]
+
+      order.update(email_address: "helloworld")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:email_address]
+
+      order.update(email_address: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:email_address]
+
+      order.update(email_address: "foo@bar")
+      order.valid?.must_equal true
+      order.email_address.must_equal "foo@bar"
+
+      order.update(email_address: "@")
+      order.valid?.must_equal true
+      order.email_address.must_equal "@"
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "email can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(email_address: "")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:email_address]
+
+      order.update(email_address: "helloworld")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:email_address]
+
+      order.update(email_address: nil)
+      order.valid?.must_equal true
+      order.email_address.must_be_nil
+
+      order.update(email_address: "foo@bar")
+      order.valid?.must_equal true
+      order.email_address.must_equal "foo@bar"
+
+      order.update(email_address: "@")
+      order.valid?.must_equal true
+      order.email_address.must_equal "@"
+    end
+
+    # Valid cc_number ==========================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have 16 digits in cc_number" do
+      order.update(status: "paid")
+
+      order.update(cc_number: 123456789012345)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_number]
+
+      order.update(cc_number: 12345678901234567)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_number]
+
+      order.update(cc_number: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_number]
+
+      # order.update(cc_number: "1234567890123456")
+      # order.valid?.must_equal false
+
+      order.update(cc_number: 1234567890123456)
+      order.valid?.must_equal true
+      order.cc_number.must_equal 1234567890123456
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "cc_number can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(cc_number: 123456789012345)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_number]
+
+      order.update(cc_number: 12345678901234567)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_number]
+
+      # order.update(cc_number: "1234567890123456")
+      # order.valid?.must_equal false
+
+      order.update(cc_number: 1234567890123456)
+      order.valid?.must_equal true
+      order.cc_number.must_equal 1234567890123456
+
+      order.update(cc_number: nil)
+      order.valid?.must_equal true
+      order.cc_number.must_be_nil
+    end
+
+    # Valid cc_cvv ==========================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have 3 digits String in cc_cvv" do
+      order.update(status: "paid")
+
+      order.update(cc_cvv: 1234)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_cvv]
+
+      order.update(cc_cvv: 12)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_cvv]
+
+      order.update(cc_cvv: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_cvv]
+
+      # order.update(cc_cvv: "1234567890123456")
+      # order.valid?.must_equal false
+
+      order.update(cc_cvv: "123")
+      order.valid?.must_equal true
+      order.cc_cvv.must_equal "123"
+
+      order.update(cc_cvv: "000")
+      order.valid?.must_equal true
+      order.cc_cvv.must_equal "000"
+
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "cc_cvv can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(cc_cvv: "1234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_cvv]
+
+      order.update(cc_cvv: "12")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_cvv]
+
+      # order.update(cc_cvv: "1234567890123456")
+      # order.valid?.must_equal false
+
+      order.update(cc_cvv: "123")
+      order.valid?.must_equal true
+      order.cc_cvv.must_equal "123"
+
+      order.update(cc_cvv: "000")
+      order.valid?.must_equal true
+      order.cc_cvv.must_equal "000"
+
+      order.update(cc_cvv: nil)
+      order.valid?.must_equal true
+      order.cc_cvv.must_be_nil
+    end
+
+    # Valid cc_number ==========================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have 16 digits in state" do
+      order.update(status: "paid")
+
+      order.update(state: "WAA")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "W")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "wa")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "WA")
+      order.valid?.must_equal true
+      order.state.must_equal "WA"
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "state can only be valid or nil if pending" do
+      order.update(status: "pending")
+      order.update(state: "WAA")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "W")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "wa")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:state]
+
+      order.update(state: "WA")
+      order.valid?.must_equal true
+      order.state.must_equal "WA"
+
+      order.update(state: nil)
+      order.valid?.must_equal true
+      order.state.must_be_nil
+    end
+
+    # Valid cc expiration ======================================================
+    # -------------------------------------------------------------- NOT Pending
+    it "must have valid expiration date in the future" do
+      order.update(status: "paid")
+
+      order.update(cc_exp_month: nil, cc_exp_year: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: 12, cc_exp_year: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: nil, cc_exp_year: 2050)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: Date.today.month - 1, cc_exp_year: Date.today.year)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year)
+      order.valid?.must_equal true
+
+      order.update(cc_exp_month: Date.today.month + 1, cc_exp_year: Date.today.year)
+      order.valid?.must_equal true
+
+      order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year + 1)
+      order.valid?.must_equal true
+    end
+
+    # ------------------------------------------------------------------ Pending
+    it "state can only be valid or nil if pending" do
+      order.update(status: "pending")
+
+      order.update(cc_exp_month: 12, cc_exp_year: nil)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: nil, cc_exp_year: 2050)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: Date.today.month - 1, cc_exp_year: Date.today.year)
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:credit_card_expiration]
+
+      order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year)
+      order.valid?.must_equal true
+
+      order.update(cc_exp_month: Date.today.month + 1, cc_exp_year: Date.today.year)
+      order.valid?.must_equal true
+
+      order.update(cc_exp_month: Date.today.month, cc_exp_year: Date.today.year + 1)
+      order.valid?.must_equal true
+
+      order.update(cc_exp_month: nil, cc_exp_year: nil)
+      order.valid?.must_equal true
+    end
+
+  end
+end
+
     #
     # describe "relations" do
-    #   it "responds to products" do
-    #     order = orders(:novelty)
-    #     order.must_respond_to :products
-    #     order.products.must_equal []
+    #         let(:order) { orders(:user_mcuser_order) }
+    #   it "responds to order_items" do
+    #     # order = orders(:novelty)
+    #     order.must_respond_to :order_items
+    #     order.order_items.must_equal []
     #   end
     #
-    #   it "can have products" do
-    #     order = orders(:novelty)
-    #     order.products << products(:ball)
+    #   it "can have order_items" do
+    #     # order = orders(:novelty)
+    #     order.order_items << order_items(:ball)
     #
-    #     order.products.must_include(products(:ball))
+    #     order.order_items.must_include(order_items(:ball))
     #   end
     #
     #   it "must be added to product's list of orders" do
-    #     product = products(:sweater)
-    #     order = orders(:clothing)
-    #     order.products << product
+    #     product = order_items(:sweater)
+    #     # order = orders(:clothing)
+    #     order.order_items << product
     #
     #     product.orders.must_include(order)
     #   end
     #
-    #   it "can have multiple products" do
-    #     order = orders(:novelty)
-    #     order.products << products(:ball)
-    #     order.products << products(:icecream)
+    #   it "can have multiple order_items" do
+    #     # order = orders(:novelty)
+    #     order.order_items << order_items(:ball)
+    #     order.order_items << order_items(:icecream)
     #
-    #     order.products.must_equal [products(:ball), products(:icecream)]
+    #     order.order_items.must_equal [order_items(:ball), order_items(:icecream)]
     #   end
     #
-    #   it "can be initialized with products" do
-    #     new_order = Order.create(name: "foo", products: [products(:ball), products(:icecream)])
+    #   it "can be initialized with order_items" do
+    #     new_order = Order.create(name: "foo", order_items: [order_items(:ball), order_items(:icecream)])
     #     new_order.valid?.must_equal true
     #   end
 
-    # it "can be initialized with products" do
-    #   # new_order = Order.new(name: "foo", products: [Date.today])
+    # it "can be initialized with order_items" do
+    #   # new_order = Order.create(name: "foo", order_items: [Date.today])
     #   # new_order.valid?.must_equal false
     #   new_order = Order.create(name: "foo")
-    #   new_order.products << products(:icecream)
+    #   new_order.order_items << order_items(:icecream)
     #   new_order.add_product(Date.today)
     #
-    #   new_order.products.must_equal [products(:icecream)]
+    #   new_order.order_items.must_equal [order_items(:icecream)]
     # end
-  end
-end
