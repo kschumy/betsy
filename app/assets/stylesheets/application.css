@@ -19,26 +19,29 @@
 */
 
 html * {
-  font-family: 'Scope One', serif;
-  text-transform: uppercase;
+  font-family: 'Dosis', sans-serif;
+
 }
 body {
   background-size: 100% auto;
+  background-color: black;
 }
 
-#main-dropdown{
-  display: flex;
+
+.dropdown{
+  /* display: flex;
+>>>>>>> fucking-around-with-css
   justify-content: flex-end;
-  align-items: center;
+  align-items: center; */
 }
 
-header {
+/* header {
   background-color: rgb(23, 1, 110)
-}
+} */
 
 .main-nav {
-  padding: 40px;
-  width: 100%;
+  /* padding: 40px;
+  width: 100%; */
 }
 
 .mars {
@@ -61,11 +64,11 @@ ul {
 
 main, .alert-section {
   /*changed to 90 rem to fit more products in page lemme know if this messes anything up -jackie*/
-  max-width: 90rem;
+  /* max-width: 90rem;
   margin-right: auto;
   margin-left: auto;
   padding-bottom: 2rem;
-  padding: 3px;
+  padding: 3px; */
 }
 
 .astronaut {
@@ -161,6 +164,7 @@ float: right;
   width: 350px;
   padding: 70px;
   margin-right: 10px;
+
 }
 
 .prod-container {
@@ -170,7 +174,115 @@ float: right;
   align-content: center;
 }
 
+.product-summary {
+
+  text-align: center;
+  font-size: 1.2em;
+
+}
 
 .product-summary:hover {
+  font-size: 1.2em;
   color: rgb(235, 124, 8)
 }
+
+.top-bar {
+  background-color: black;
+}
+
+
+.large-article-header {
+  background: url("https://undark.org/wp-content/uploads/sites/2/2018/02/2600-mars.jpg") no-repeat center;
+  background-size: cover;
+  height: 20.25rem;
+  position: relative;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .large-article-header {
+    height: 20.83333rem;
+  }
+}
+
+.large-article-header-content {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  bottom: 3.125rem;
+  left: 0;
+  right: 0;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .large-article-header-content {
+    bottom: 1.25rem;
+  }
+}
+
+.large-article-header-content .center-container {
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .large-article-header-content .center-container {
+    width: 100%;
+    padding: 0 1.25rem;
+  }
+}
+
+.large-article-header-content .article-date {
+  color: #fefefe;
+}
+
+.large-article-header-content .article-title h1 {
+  line-height: 3.125rem;
+  color: #fefefe;
+  font-weight: 600;
+  font-size: 4em;
+}
+
+@media screen and (max-width: 39.9375em) {
+  .large-article-header-content .article-title h1 {
+    line-height: 1.875rem;
+  }
+}
+
+.large-article-header-content .article-details {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.large-article-header-content .article-details a {
+  color: #fefefe;
+}
+
+.large-article-header-content .article-author {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 1rem 0;
+}
+
+.large-article-header-content .article-author img {
+  border-radius: 3.125rem;
+}
+
+.large-article-header-content .article-author a {
+  margin-left: 1rem;
+}
+.top-bar ul { background-color: black; }
