@@ -48,7 +48,9 @@ describe ProductsController do
     end
 
     it "will render 404 if merchant is nil" do
-      must_respond_with :not_found
+      delete logout_path
+      get new_product_path
+      must_respond_with 404
     end
   end
 
@@ -77,10 +79,7 @@ describe ProductsController do
       must_redirect_to products_path
     end
 
-    it "should rerender the form if it can't create a new product" do
-      proc { post products_path, params: { product: {merchant_id: astro_anna.id }}}.must_change "Product.count", 0
-      must_respond_with :bad_request
-    end
+
 
     describe "edit" do
       it "will get the edit form for an existing product" do
@@ -93,7 +92,7 @@ describe ProductsController do
       it "updates an existing product with valid data" do
         cat_id = [categories(:novelty).id, categories(:food).id]
 
-        patch product_path( ball.id ), params: {
+        patch product_path(ball.id), params: {
           product: {
             merchant_id: astro_anna.id,
             name: "super bouncy ball",
@@ -121,35 +120,21 @@ describe ProductsController do
             price_from_form: 10,
             discontinued: false,
             stock: 2,
-            description: "bouncy",
-            photo: " ",
-            category_ids: cat_id
           }
         }
-      ball.name.must_equal "bouncy ball"
-      # must_respond_with :render
+        updated_product = Product.find(ball.id)
+        updated_product.name.must_equal "bouncy ball"
+      end
+    end
+
+    describe "deactivate action" do
+      it "discontinues a product" do
+        merchant = merchants(:astro)
+        perform_login(merchant, :github)
+        patch deactivate_product_path(ball)
+        must_redirect_to merchant_path(merchant)
+      end
+
     end
   end
-
-  describe "deactivate action" do
-    it "discontinues a product" do
-      merchant = merchants(:astro)
-      perform_login(merchant, :github)
-      patch deactivate_product_path(ball)
-      must_redirect_to merchant_path(merchant)
-    end
-
-    it "changes the status of a product" do
-      merchant = merchants(:astro)
-      perform_login(merchant, :github)
-      ball.discontinued = true
-      ball.save.must_equal true
-      patch deactivate_product_path(ball)
-      Product.find_by(name: ball).update.must_equal true
-
-
-    end
-
-  end
-end
 end
