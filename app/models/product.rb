@@ -39,6 +39,10 @@ class Product < ApplicationRecord
     return self.select { |product| product.discontinued == false }
   end
 
+  def self.merchant_products(merchant_id)
+    return self.select { |product| product.merchant_id == merchant_id }
+  end
+
   def get_price_in_dollars
     return price.cents_to_dollars
   end
