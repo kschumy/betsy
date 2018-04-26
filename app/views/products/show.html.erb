@@ -1,4 +1,4 @@
-.cents_to_dollars<section class="product-main">
+<section class="product-main">
   <section class="product-image">
     <%= image_tag(@product.photo, :alt => "product image") %>
   </section>
@@ -8,7 +8,7 @@
       <%= @product.stock %> <%= @product.inventory_status %>
     </p>
     <p>
-      $<%= @product.get_price_in_dollars %>
+      <%= @product.get_price_in_dollars %>
     </p>
     <p>
       <%= link_to @product_merchant.username, merchant_path(@product_merchant.id) %>

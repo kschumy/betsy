@@ -38,7 +38,9 @@ class MerchantsController < ApplicationController
 
   def order_fulfillment
     @merchant = Merchant.find_by(id: params[:id])
-    @orders = @merchant.get_merchant_orders
+    @orders = @merchant.get_merchant_orders("all")
+    @paid_orders = @merchant.get_merchant_orders("paid")
+    @complete_orders = @merchant.get_merchant_orders("complete")
   end
 
   def destroy

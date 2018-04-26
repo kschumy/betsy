@@ -16,7 +16,7 @@ class OrderItemsController < ApplicationController
     @order_item  = OrderItem.new(order_item_params)
     set_order_for_order_item
     if @order_item.save
-      flash[:success] = :success
+      flash[:success] = "Successfully added item to cart!"
       redirect_to view_cart_path
     else
       flash[:alert] = @order_item.errors.messages
@@ -38,7 +38,7 @@ class OrderItemsController < ApplicationController
     @order_item  = OrderItem.find_by(id: params[:id])
     if @order_item
       @order_item.destroy
-      flash[:success] = "Successfully destroyed item from shopping cart"
+      flash[:success] = "Successfully removed item from shopping cart"
       redirect_to view_cart_path
     end
   end
