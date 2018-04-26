@@ -2,14 +2,6 @@
 <% if @order.nil? %>
 <h3>Cart is empty!</h3>
 <% else %>
-<!-- <div class="grid-x padding-gutters align-right">
-	<div class="small-1 small-1 cell">
-		<p> Quantity</p> </div>
-	<div class="small-2 small-2 cell">
-		<p> Price</p>
-		</div>
-	</div>
-</div> -->
 
 <section class="cart-area">
 	<% @order.order_items.each do |item| %>
@@ -30,7 +22,6 @@
 		</section>
 		<% end %>
 	</section>
-	<% end %>
 	<section class="subtotal-summary">
 		<% if @order.total_quantity == 1 %>
 		<h3>subtotal (1 item): <%= @order.get_current_total.cents_to_dollars%></h3>
@@ -38,4 +29,5 @@
 		<h3>subtotal(<%= @order.total_quantity%> items): <%= @order.get_current_total.cents_to_dollars%></h3>
 		<%end%>
 	</section>
+	<%end%>
 </section>
