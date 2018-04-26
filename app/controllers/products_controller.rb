@@ -2,6 +2,15 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.products_available
+    if params[:merchant_id]
+      if Merchant.find_by(id: params[:merchant_id]) == nil
+        render_404
+      else
+        @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
+      end
+    else
+      @products = Product.order(:id)
+    end
   end
 
   def show
