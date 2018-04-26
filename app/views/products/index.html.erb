@@ -4,7 +4,7 @@
 <h2 class="prod-title"><%= Category.find(params[:category_id]).name  %> -  Supplies</strong></h2>
 <% else %>
 <h2 class="prod-title"><strong>All Products</strong></h2>
-<% end %></h5>
+<% end %>
 
 <ul class="prod-container">
   <% @products.each do |p| %>
