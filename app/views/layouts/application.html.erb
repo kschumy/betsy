@@ -66,7 +66,7 @@
               <ul class="menu">
                 <% Merchant.all.each do |merchant| %>
                 <li>
-                  <%= link_to merchant.username, merchant_products_path(@merchant.id) %>
+                  <%= link_to merchant.username, merchant_products_path(merchant.id) %>
                 </li>
                 <%end%>
               </ul>
@@ -79,10 +79,25 @@
       </div>
     </nav>
 
+    <% if flash[:alert] || flash[:success] %>
+    <% if flash[:alert] %>
+    <section class="callout alert" data-closable>
+      <ul>
+        <% flash[:alert].each do |field, message| %>
+        <li><%= field %>: <%= message.is_a?(String) ? message : message.pop %></li>
+        <% end %>
+      </ul>
+    </section>
+    <% else %>
+    <h5 class="success callout" data-closable><%= flash[:success] %></h5>
+    <% end %>
+  </section>
+  <% end %>
 
 
-    <%= yield %>
-  </main>
+
+  <%= yield %>
+</main>
 </body>
 </html>
 
