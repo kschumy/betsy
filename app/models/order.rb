@@ -49,9 +49,13 @@ class Order < ApplicationRecord
     return order_items.inject(0) { |sum, order_item| sum + order_item.quantity }
   end
 
-  # def get_total_revenue(merchant)
-  #   return calc_revenue if !is_pending?
-  # end
+  def get_total_revenue
+     if !is_pending?
+    return calc_revenue.cents_to_dollars
+  else
+    return "pending"
+  end
+  end
 
   def add_item_to_cart(new_order_item)
     order_items << new_order_item if is_pending?
