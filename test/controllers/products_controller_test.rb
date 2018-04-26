@@ -1,4 +1,5 @@
 require "test_helper"
+require 'pry'
 
 describe ProductsController do
   let(:ball) {products(:ball)}
@@ -57,8 +58,23 @@ describe ProductsController do
     end
     it "should be able to create a new product" do
       cat_id = [categories(:novelty).id, categories(:food).id]
-      proc { post products_path, params: { product: { merchant_id: astro_anna.id, name: "cake", price_from_form: 10,  discontinued: false, stock: 2, description: "yummy", photo: "", category_ids: cat_id}}}.must_change "Product.count", 1
+      proc {
+        post products_path,
+        params: {
+          product: {
+            merchant_id: astro_anna.id,
+            name: "pencil",
+            price_from_form: 10,
+            discontinued: false,
+            stock: 2,
+            description: "best",
+            photo: "https://d28rv7itqgss13.cloudfront.net/assets/img/mars_ball-1600_large_2x.jpg",
+            category_ids: cat_id
+          }
+        }
+      }.must_change "Product.count", 1
       must_respond_with :redirect
+      must_redirect_to products_path
     end
 
     it "should rerender the form if it can't create a new product" do
@@ -75,37 +91,65 @@ describe ProductsController do
 
     describe "update" do
       it "updates an existing product with valid data" do
-        proc { patch product_path(ball), params: { product: { merchant_id: astro_anna.id, name: "super bouncy ball", price_from_form: 10,  discontinued: false, stock: 2, description: "bouncy", photo: "", category_ids: cat_id}}}
+        cat_id = [categories(:novelty).id, categories(:food).id]
+
+        patch product_path( ball.id ), params: {
+          product: {
+            merchant_id: astro_anna.id,
+            name: "super bouncy ball",
+            price_from_form: 10,
+            discontinued: false,
+            stock: 2,
+            description: "bouncy",
+            photo: "https://d28rv7itqgss13.cloudfront.net/assets/img/mars_ball-1600_large_2x.jpg",
+            category_ids: cat_id
+          }
+        }
+
         updated_product = Product.find(ball.id)
         updated_product.name.must_equal "super bouncy ball"
         must_redirect_to product_path
       end
 
       it "does not update with invalid data" do
-        proc { patch product_path(ball), params: { product: { merchant_id: astro_anna.id, name: " ", price_from_form: 10,  discontinued: false, stock: 2, description: "bouncy", photo: " ", category_ids: cat_id}}}
-        must_respond_with 404
-      end
-    end
+        cat_id = [categories(:novelty).id, categories(:food).id]
 
-    describe "deactivate action" do
-      it "discontinues a product" do
-        merchant = merchants(:astro)
-        perform_login(merchant, :github)
-        patch deactivate_product_path(ball)
-        must_redirect_to merchant_path(merchant)
-      end
-
-        it "changes the status of a product" do
-          merchant = merchants(:astro)
-          perform_login(merchant, :github)
-          ball.discontinued = true
-          ball.save.must_equal true
-          patch deactivate_product_path(ball)
-          Product.find_by(name: ball).update.must_equal true
-
-
-        end
-
+        patch product_path(ball.id), params: {
+          product: {
+            merchant_id: astro_anna.id,
+            name: " ",
+            price_from_form: 10,
+            discontinued: false,
+            stock: 2,
+            description: "bouncy",
+            photo: " ",
+            category_ids: cat_id
+          }
+        }
+      ball.name.must_equal "bouncy ball"
+      # must_respond_with :render
     end
   end
+
+  describe "deactivate action" do
+    it "discontinues a product" do
+      merchant = merchants(:astro)
+      perform_login(merchant, :github)
+      patch deactivate_product_path(ball)
+      must_redirect_to merchant_path(merchant)
+    end
+
+    it "changes the status of a product" do
+      merchant = merchants(:astro)
+      perform_login(merchant, :github)
+      ball.discontinued = true
+      ball.save.must_equal true
+      patch deactivate_product_path(ball)
+      Product.find_by(name: ball).update.must_equal true
+
+
+    end
+
+  end
+end
 end
