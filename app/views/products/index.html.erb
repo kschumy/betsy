@@ -1,5 +1,7 @@
 <% if params[:merchant_id]%>
 <h2 class="prod-title"><%= Merchant.find(params[:merchant_id]).username  %>'s Mars Supply Shop</strong></h2>
+<% elsif params[:category_id] %>
+<h2 class="prod-title"><%= Category.find(params[:category_id]).name  %> -  Supplies</strong></h2>
 <% else %>
 <h2 class="prod-title"><strong>All Products</strong></h2>
 <% end %></h5>
@@ -11,7 +13,7 @@
     <div class="product-summary">
       <%= image_tag(p.photo, :alt => "product image") %>
       <div><%= p.name %></div>
-      <div><small><%= p.price %></small></div>
+      <div><small><%= p.price.cents_to_dollars %></small></div>
     </div>
     <%end%>
   </li>
