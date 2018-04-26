@@ -21,41 +21,50 @@ describe Order do
       }
     }
       let(:new_item) {
-        OrderItem.new(
+        OrderItem.create(
           quantity: 10,
           price: 249,
           is_shipped: false,
           product: products(:ball),
-          order: Order.new(status: "pending"))
+          order: Order.create(status: "pending"))
       }
 
     it "must be valid if complete when not pending" do
       order.must_be :valid? # status is paid
 
-      order.update!(status: "cancelled")
+      order.update(status: "cancelled")
       order.must_be :valid?
 
-      order.update!(status: "complete")
+      order.update(status: "complete")
       order.must_be :valid?
     end
 
     it "must be valid if only provided pending status" do
-      Order.new(status: "pending").must_be :valid?
+      Order.create(status: "pending").must_be :valid?
     end
 
     it "must not be valid if only provided non-pending status" do
-      new_order = Order.create(status: "paid")
-      new_order.valid?.must_equal false
-      Order.new(status: "cancelled").valid?.must_equal false
-      Order.new(status: "complete").valid?.must_equal false
-      Order.new(status: nil).valid?.must_equal false
-      Order.new(status: "foo bar").valid?.must_equal false
+      Order.create(status: "paid").valid?.must_equal false
+      Order.create(status: "cancelled").valid?.must_equal false
+      Order.create(status: "complete").valid?.must_equal false
+      Order.create(status: nil).valid?.must_equal false
+      Order.create(status: "foo bar").valid?.must_equal false
     end
+
+      # Testing this because unsure if validates_each actually worked and
+      # included the right messages
+      it "includes all error messages" do
+        new_order = Order.create(status: "paid")
+        new_order.valid?.must_equal false
+        new_order.errors.must_include :customer_name
+        new_order.errors.must_include :street
+        new_order.errors.must_include :city
+      end
 
     # Valid customer_name ======================================================
     # ------------------------------------------------------------------ Pending
     it "must have at least one character in customer_name" do
-      order.update!(status: "paid")
+      order.update(status: "paid")
 
       order.customer_name = ""
       order.save
@@ -73,15 +82,15 @@ describe Order do
 
     # -------------------------------------------------------------- NOT Pending
     it "customer name does not matter when pending" do
-      order.update!(status: "pending")
+      order.update(status: "pending")
 
       order.customer_name = ""
       order.save
-      order.valid?.must_equal true
+      order.valid?.must_equal false
 
       order.customer_name =  "         "
       order.save
-      order.valid?.must_equal true
+      order.valid?.must_equal false
 
       order.customer_name =  nil
       order.save
@@ -162,7 +171,7 @@ end
     #   end
 
     # it "can be initialized with products" do
-    #   # new_order = Order.new(name: "foo", products: [Date.today])
+    #   # new_order = Order.create(name: "foo", products: [Date.today])
     #   # new_order.valid?.must_equal false
     #   new_order = Order.create(name: "foo")
     #   new_order.products << products(:icecream)

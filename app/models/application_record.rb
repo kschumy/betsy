@@ -5,7 +5,8 @@ class ApplicationRecord < ActiveRecord::Base
 
   # Returns 'true' if provided input is a String that is not blank. Otherwise,
   # returns 'false'.
-  def is_non_empty_string?(input)
+  def self.is_non_empty_string?(input)
+    input.squish! if input.is_a?(String)
     return input.is_a?(String) && !input.blank?
   end
 
