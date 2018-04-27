@@ -1,14 +1,15 @@
 <section class="large-9 cell">
-  <h3>My Products</h3>
+  <h3>My products</h3>
   <section class="grid-x">
-		<section class="cell medium-auto">
-      <ul>
+    <section class="cell medium-auto">
       <% @merchant_products.each do |product| %>
-        <li>
-          <h5><%= link_to product.name, product_path(product.id) %></h5>
-        </li>
-      <% end %>
-      </ul>
+        <ul>
+          <li>
+            <%= link_to product.name, product_path(product.id) %>
+            <%= link_to " - edit product ", edit_product_path(product.id) %>
+          </li>
+        </ul>
+      <%end%>
     </section>
   </section>
 </section>
