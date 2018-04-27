@@ -1,7 +1,6 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-
   private
 
   # Returns 'true' if provided input is a String that is not blank. Otherwise,
@@ -31,7 +30,6 @@ class Integer
   end
 
 end
-
 
 ################################################################################
 class Date

@@ -39,20 +39,35 @@ describe OrderItemsController do
   describe "create" do
     it "should get created" do
 
-      # puts OrderItem.all.count
-      #
-      # new_order_item = OrderItem.create({quantity: 1,  price: 1000, is_shipped: false, product_id: 1, order_id: 1})
-      #
-      # puts OrderItem.all.count
-      #
-      # order_item_data = {
-      #   order_item: { quantity: 1,  price: 1000, is_shipped: false, product_id: 1, order_id: 1 }
-      # }
-      # post orders_item_path(order_item), params: order_item_data
-      #
-      # must_redirect_to order_items_path
-      # must_respond_with :success
+      proc {
+        post order_items_path,
+        params: {
+          order_item: {
+            quantity: 4,
+            price: 20,
+            is_shipped: false,
+            product_id: products(:ball).id,
+            order_id: orders(:star_mouse_order).id,
+          }
+        }
+      }.must_change "OrderItem.count", 1
+      must_respond_with :redirect
+      must_redirect_to view_cart_path
+    end
 
+    it "will not create with quantity missing" do
+      proc {
+        post order_items_path,
+        params: {
+          order_item: {
+            price: 20,
+            is_shipped: false,
+            product_id: products(:ball).id,
+            order_id: orders(:star_mouse_order).id,
+          }
+        }
+      }.must_change "OrderItem.count", 0
+      must_respond_with :redirect
     end
   end
 
@@ -95,7 +110,7 @@ describe OrderItemsController do
       order_item_id = OrderItem.first.id
       delete order_item_path(order_item_id)
 
-      must_redirect_to order_items_path
+      must_redirect_to view_cart_path
       OrderItem.find_by(id: order_item_id).must_be_nil
     end
 

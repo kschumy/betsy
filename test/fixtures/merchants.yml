@@ -6,7 +6,6 @@ astro:
   provider: github
   uid: 29172354
 
-
 quasar:
   username: Quasar_Qutie
   email: quasar_qutie@meteor.com
