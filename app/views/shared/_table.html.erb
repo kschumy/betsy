@@ -1,4 +1,4 @@
-
+<section class = "order-table-container">
 <table>
   <thead>
     <tr>
@@ -7,7 +7,6 @@
       <th width="100">Price</th>
       <th width="100">Subtotal</th>
       <th width="100">Shipping Status</th>
-      <th width="100"> </th>
       <th width="100"> </th>
     </tr>
   </thead>
@@ -18,7 +17,6 @@
       <td><%= order_item.quantity %></td>
       <td><%= order_item.price.cents_to_dollars %></td>
       <td> <%= order_item.get_subtotal.cents_to_dollars %></td>
-
       <% if order_item.shipping_status == "Ready to ship" &&  params[:merchant_id]%>
       <td>  <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %></td>
       <td></td>
@@ -26,8 +24,8 @@
       <td>  <%= order_item.shipping_status %></td>
       <td>Merchant: <%= link_to order_item.get_item_merchant, merchant_products_path(order_item.get_item_merchant_id) %></td>
       <% end %>
-      <td> </td>
     </tr>
     <% end %>
   </tbody>
 </table>
+</section>
