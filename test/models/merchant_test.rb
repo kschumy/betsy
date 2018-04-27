@@ -57,7 +57,15 @@ describe Merchant do
 
   describe "build_from_github" do
     it "creates a new merchant" do
-
+      merchant = Merchant.build_from_github({
+        info: { name: "Ada Lovelace", email: "ada@gmail.com" },
+        provider: "github",
+        uid: 131331331 } )
+      merchant.valid?.must_equal true
+      merchant.username.must_equal "Ada Lovelace"
+      merchant.provider.must_equal "github"
+      merchant.email.must_equal "ada@gmail.com"
+      merchant.uid.must_equal 131331331
     end
 
     it "does not make a new merchant if uid already exists" do
@@ -96,6 +104,14 @@ describe Merchant do
     it "still requires selects nickname to be unique" do
       merchant = Merchant.build_from_github({
         info: { name: nil, email: "fake@gmail.com", nickname: merchants(:astro).username },
+        provider: "github",
+        uid: 131331331 } )
+      merchant.valid?.must_equal false
+    end
+
+    it "does not allow empty string as name" do
+      merchant = Merchant.build_from_github({
+        info: { name: "  ", email: "fake@gmail.com" },
         provider: "github",
         uid: 131331331 } )
       merchant.valid?.must_equal false

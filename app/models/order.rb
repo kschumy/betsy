@@ -54,6 +54,10 @@ class Order < ApplicationRecord
     return status == "pending"
   end
 
+  def is_paid_or_complete?
+    return status == "pending" || status == "complete"
+  end
+
   # def is_not_allowed_to_change? # not used? - Kirsten
   #   return status != "pending"
   # end
