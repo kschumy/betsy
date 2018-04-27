@@ -55,5 +55,58 @@ describe Merchant do
     end
   end
 
+  describe "build_from_github" do
+    it "creates a new merchant" do
+
+    end
+
+    it "does not make a new merchant if uid already exists" do
+      not_new_merchant = Merchant.build_from_github({
+        info: { name: "Copy Cat", email: "copy_cat@transmars.com" },
+        provider: "github",
+        uid: merchants(:astro).uid } ) # same as another user
+      not_new_merchant.valid?.must_equal false
+    end
+
+    it "does not make a new merchant if email already exists" do
+      not_new_merchant = Merchant.build_from_github({
+        info: { name: "Copy Cat", email: merchants(:astro).email },
+        provider: "github",
+        uid: 131331331 } )
+      not_new_merchant.valid?.must_equal false
+    end
+
+    it "does not make a new merchant if username already exists" do
+      not_new_merchant = Merchant.build_from_github({
+        info: { name: merchants(:astro).username, email: "fake@gmail.com" },
+        provider: "github",
+        uid: 131331331 } )
+      not_new_merchant.valid?.must_equal false
+    end
+
+    it "selects nickname if name does not exist" do
+      merchant = Merchant.build_from_github({
+        info: { name: nil, email: "fake@gmail.com", nickname: "foobar" },
+        provider: "github",
+        uid: 131331331 } )
+      merchant.valid?.must_equal true
+      merchant.username.must_equal "foobar"
+    end
+
+    it "still requires selects nickname to be unique" do
+      merchant = Merchant.build_from_github({
+        info: { name: nil, email: "fake@gmail.com", nickname: merchants(:astro).username },
+        provider: "github",
+        uid: 131331331 } )
+      merchant.valid?.must_equal false
+    end
+
+    it "raises error if invalid info from gitub" do
+      proc { Merchant.build_from_github( "hello, world" )}.must_raise StandardError
+
+      proc { Merchant.build_from_github(
+        { info: nil, provider: "github", uid: 131331331 }) }.must_raise StandardError
+    end
+  end
 
 end

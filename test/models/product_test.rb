@@ -113,8 +113,12 @@ describe Product do
 
     it "can have many order items" do
       product.order_items.must_be_empty
-      new_order_item = OrderItem.new(quantity: 1, price: 3, is_shipped: false, order: orders(:star_mouse_order) )
-      second_order_item = OrderItem.new(quantity: 2, price: 2, is_shipped: false, order: orders(:star_mouse_order) )
+      new_order_item = OrderItem.new(
+        quantity: 1, price: 3, is_shipped: false, order: orders(:star_mouse_order)
+      )
+      second_order_item = OrderItem.new(
+        quantity: 2, price: 2, is_shipped: false, order: orders(:star_mouse_order)
+      )
 
       product.order_items << new_order_item
       product.order_items << second_order_item
@@ -155,7 +159,7 @@ describe Product do
   end
 
   describe "get_average_rating method" do
-    it "returns average rating of a specific product if it has existing reviews" do
+    it "returns average rating of a product if it has existing reviews" do
       product.get_average_rating.must_equal "1.0 out of 5"
     end
 
