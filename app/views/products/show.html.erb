@@ -11,7 +11,7 @@
       <%= @product.get_price_in_dollars %>
     </p>
     <p>
-      <%= link_to @product_merchant.username, merchant_path(@product_merchant.id) %>
+      <%= link_to @product_merchant.username, merchant_products_path(@product_merchant.id) %>
     </p>
     <div>
       <%= render partial: "add_to_cart_form" %>
