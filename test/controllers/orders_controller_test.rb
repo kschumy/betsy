@@ -1,14 +1,16 @@
 require "test_helper"
 
 describe OrdersController do
+  let(:order) {post order_products_path(products(:three), order_product: {quantity: 1})}
+
   it "should get index" do
-    get orders_index_url
+    get orders_path
     value(response).must_be :success?
   end
 
   it "should get show" do
-    get orders_show_url
-    value(response).must_be :success?
+    get order_path((:order).id)
+    must_respond_with :success
   end
 
   it "should get new" do
