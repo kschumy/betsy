@@ -25,7 +25,7 @@
 						<section class="large-3 large-2 cell"><%= image_tag(product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
 
 						<section class="small-2 small-2 cell">
-							<%= product.name %>
+							<%= link_to product.name, product_path(product.id) %>
 						</section>
 
 						<section class="small-2 small-2 cell">
@@ -75,7 +75,7 @@
 								<section class="large-3 large-2 cell"><%= image_tag(product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
 
 								<section class="small-2 small-2 cell">
-									<%= product.name %>
+									<%= link_to product.name, product_path(product.id) %>
 								</section>
 
 								<section class="small-2 small-2 cell">
