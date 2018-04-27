@@ -1,5 +1,4 @@
 <section>
-<<<<<<< HEAD
   <h3><%= page_title %></h3>
   <section>
     <%= form_for @product do |f| %>
@@ -21,26 +20,4 @@
     <%= f.submit %>
     <% end %>
   </section>
-=======
-  <%= form_for @product do |f| %>
-  <%= f.label :product_name %>
-  <%= f.text_field :name %>
-  <%= f.label :price_in_USD %>
-  <%= f.text_field :price_from_form %>
-  <%= f.label :product_description %>
-  <%= f.text_area :description %>
-  <%= f.label :quantity_in_stock %>
-  <%= f.number_field :stock %>
-  <%= f.label :image %>
-  <%= f.text_field :photo %>
-  <%= f.label :categories %>
-  <% Category.all.each do |category| %>
-	<%= check_box_tag :category_ids, category.id, @product.categories.include?(category), :name => 'product[category_ids][]' %> <%= category.name %>
-	<% end %>
-  <br />
-  <%= f.submit class: 'button' %>
-  <% end %>
-
-</section>
->>>>>>> afabaaef2e3ae8a4da6f565de37284ed9517e956
 </section>
