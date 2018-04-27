@@ -1,4 +1,4 @@
-<h3 class="page-header">Manage Inventory</h3>
+
 
 <section class="listing-section">
   <h3 class="header-status">Active Listings</h3>
@@ -10,9 +10,10 @@
         <section class="small-2 small-2 cell manage-header"><strong>Unit Price</strong></section>
         <section class="small-1 small-1 cell manage-header"><strong>Stock</strong></section>
         <section class="small-2 small-2 cell"> </section>
-        <section class="small-2 small-2 cell manage-header"><strong>Edit Product</strong></section>
+        <section class="small-2 small-2 cell manage-header"><strong> </strong></section>
       </section>
     </section>
+
     <% @active_products.each do |product| %>
     <section>
 
@@ -45,6 +46,7 @@
   </section>
 </section>
 
+
 <section class="listing-section">
   <h3 class="header-status">Inactive Listings</h3>
 
@@ -58,26 +60,28 @@
     </section>
 
     <% @inactive_products.each do |product| %>
+    <section>
 
-    <section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections" id="listing-section">
+      <section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections" id="listing-section">
 
-      <section class="large-3 large-2 cell"><%= image_tag(product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
+        <section class="large-3 large-2 cell"><%= image_tag(product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
 
-      <section class="small-2 small-2 cell">
-        <%= product.name %>
+        <section class="small-2 small-2 cell">
+          <%= product.name %>
+        </section>
+
+        <section class="small-2 small-2 cell">
+          <%= product.price.cents_to_dollars %>
+        </section>
+
+        <section class="small-2 small-2 cell"> </section>
+        <section class="small-1 small-1 cell"> </section>
+
+        <section class="small-1 small-1 cell">Inactive
+        </section>
+
       </section>
-
-      <section class="small-2 small-2 cell">
-        <%= product.price.cents_to_dollars %>
-      </section>
-
-      <section class="small-2 small-2 cell"> </section>
-      <section class="small-1 small-1 cell"> </section>
-
-      <section class="small-1 small-1 cell">Inactive
-      </section>
-
+      <% end %>
     </section>
-    <% end %>
   </section>
 </section>
