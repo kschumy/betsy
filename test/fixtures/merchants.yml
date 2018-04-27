@@ -1,20 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 astro:
-  username: Astro_Anna
+  username: astro_anna
   email: astro_anna@transmars.com
   provider: github
   uid: 29172354
 
 
 quasar:
-  username: Quasar_Qutie
+  username: quasar_qutie
   email: quasar_qutie@meteor.com
   provider: github
   uid: 23457332
 
 rover:
-  username: Rover_Rocks
+  username: rover_rocks
   email: rrrrrrrover@marsmail.com
   provider: github
   uid: 46788885
