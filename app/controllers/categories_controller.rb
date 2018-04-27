@@ -4,10 +4,6 @@ class CategoriesController < ApplicationController
     @categories = Category.all
   end
 
-  def show
-    @category = Category.find_by(id: params[:id])
-  end
-
   def new
     if @merchant.nil?
       render_404
@@ -25,7 +21,7 @@ class CategoriesController < ApplicationController
         flash[:success] = "Successfully created category: #{@category.name}!"
         redirect_to merchant_products_path(@merchant.id)
       else
-        flash[:alert] = "Category creation could not be completed"
+        flash[:alert] = @category.errors
         render :new, status: :bad_request
       end
     end
