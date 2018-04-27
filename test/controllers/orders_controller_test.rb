@@ -89,7 +89,7 @@ describe OrdersController do
   describe "update" do
     it "is able to update a current order" do
       proc {
-        patch order_item_path(orders(:mystring_order).id),params: {
+        patch order_path(orders(:mystring_order).id),params: {
           order: {      email_address: orders(:mystring_order).email_address,
             cc_name: orders(:mystring_order).cc_name,
             cc_number: orders(:mystring_order).cc_number,
@@ -106,8 +106,8 @@ describe OrdersController do
           }
         }
       }.must_change 'Order.count', 0
-      updated_user = Order.find_by(id: orders(:mystring_order).id)
-      updated_user.name.must_equal "New Name"
+      updated_order = Order.find_by(id: orders(:mystring_order).id)
+      updated_order.customer_name.must_equal "New Name"
       must_respond_with :redirect
       must_redirect_to order_path(orders(:mystring_order).id)
     end
