@@ -18,7 +18,7 @@
       <td><%= order_item.price.cents_to_dollars %></td>
       <td> <%= order_item.get_subtotal.cents_to_dollars %></td>
       <td>
-        <% if order_item.shipping_status == "Ready to ship" %>
+        <% if order_item.shipping_status == "Ready to ship" &&  params[:merchant_id]%>
         <%= link_to('Mark Shipped', mark_item_shipped_path(order_item), method: :patch) %>
         <% else %>
         <%= order_item.shipping_status %>
