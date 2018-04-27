@@ -52,7 +52,7 @@ end
 class String
   def has_only_n_digits?(n)
     raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
-    return length == n && !self.match?(/[\D]/)
+    return length == n && !self.match(/[\D]/)
   end
 
 end
