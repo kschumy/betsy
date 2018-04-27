@@ -81,7 +81,36 @@ describe OrdersController do
   end
 
   describe "checkout order" do
+    it "text" do
 
+    end
+  end
+
+  describe "update" do
+    it "is able to update a current order" do
+      proc {
+        patch order_item_path(orders(:mystring_order).id),params: {
+          order: {      email_address: orders(:mystring_order).email_address,
+            cc_name: orders(:mystring_order).cc_name,
+            cc_number: orders(:mystring_order).cc_number,
+            cc_exp_month: orders(:mystring_order).cc_exp_month,
+            cc_exp_year: orders(:mystring_order).cc_exp_year,
+            cc_cvv: orders(:mystring_order).cc_cvv,
+            cc_zip: orders(:mystring_order).cc_zip,
+            status: orders(:mystring_order).status,
+            street: orders(:mystring_order).street,
+            customer_name: "New Name",
+            city: orders(:mystring_order).city,
+            state:orders(:mystring_order).state,
+            mailing_zip: orders(:mystring_order).mailing_zip,
+          }
+        }
+      }.must_change 'Order.count', 0
+      updated_user = Order.find_by(id: orders(:mystring_order).id)
+      updated_user.name.must_equal "New Name"
+      must_respond_with :redirect
+      must_redirect_to order_path(orders(:mystring_order).id)
+    end
   end
 
   describe "cancel order" do
