@@ -133,7 +133,7 @@ describe ProductsController do
       merchant = merchants(:astro)
       perform_login(merchant, :github)
       patch deactivate_product_path(ball)
-      must_redirect_to merchant_path(merchant)
+      must_redirect_to merchant_products_path(merchant)
     end
 
   end
