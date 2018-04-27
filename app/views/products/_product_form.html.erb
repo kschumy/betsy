@@ -20,10 +20,6 @@
   <br />
   <%= f.submit class: 'button' %>
   <% end %>
-  <% if !@merchant.nil? && @merchant.id == @product.merchant.id %>
-  <p>
-    <%= link_to "Deactivate this product", deactivate_product_path(@product.id), class: 'button', method: :patch %>
-  </p>
-  <% end %>
+
 </section>
 </section>
