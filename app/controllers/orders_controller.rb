@@ -33,9 +33,14 @@ class OrdersController < ApplicationController
 
   def checkout_order
     @order = Order.find_by(id: params[:id])
-    @order.update(status: "paid")
-    @order.save
-    redirect_to order_path
+    @order.update(order_params)
+    if @order.save
+      flash[:success] = "Order placed!"
+      redirect_to order_path(params[:id])
+    else
+      flash[:alert] = @order.errors
+      redirect_back fallback_location: view_cart_path
+    end
   end
 
   def cancel_order
@@ -83,7 +88,7 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    return params.require(:order).permit(:email_address, :cc_name, :email_address, :cc_number, :cc_exp_month, :cc_exp_year , :cc_cvv, :cc_zip, :status, :street , :customer_name ,:city, :state, :mailing_zip )
+    return params.require(:order).permit(:email_address, :cc_name, :cc_number, :cc_exp_month, :cc_exp_year, :cc_cvv, :cc_zip, :status, :street , :customer_name ,:city, :state, :mailing_zip )
   end
 
 end
