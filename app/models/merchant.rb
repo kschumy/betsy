@@ -17,10 +17,11 @@ class Merchant < ApplicationRecord
   end
 
   def get_merchant_orders(status)
-    order_ids = get_merchant_order_items.collect { |order_item| order_item.order_id }
     if status == "all"
+      order_ids = get_merchant_order_items.collect { |order_item| order_item.order_id }
       Order.where(:id => order_ids).where("orders.status = ? OR orders.status = ?", "paid","complete")
     elsif
+      order_ids = get_merchant_order_items.collect { |order_item| order_item.order_id }
       Order.where(:id => order_ids).where("orders.status = ?", status)
     end
   end
