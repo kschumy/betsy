@@ -75,7 +75,7 @@ class ProductsController < ApplicationController
     if !@product.nil?
       if @product.update(discontinued: true)
         flash[:success] = "Product #{@product.name} (Product ID: #{@product.id}) Deactivated"
-        redirect_to merchant_products_path(@merchant.id)
+        redirect_to manage_inventory_path
       else
         flash[:alert] = "A problem occurred: Could not deactivate product #{@product.name}"
         redirect_to merchant_products_path(@merchant.id)

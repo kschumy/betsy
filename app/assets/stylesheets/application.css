@@ -32,6 +32,9 @@ body > * {
   color: #EEEEEE;
 }
 
+label {
+  color: #EEEEEE;
+}
 
 .mars {
   margin-right: auto;
@@ -67,12 +70,9 @@ ul {
 .cart {
   margin-right: 50px;
   margin-bottom: 10px;
-  /* background-color: rgb(23, 1, 110) */
 }
 
-.cart-container a {
-  /* background-color: rgb(23, 1, 110) */
-}
+
 
 .merch-name {
   color: #EEEEEE;
@@ -92,12 +92,6 @@ ul {
   padding: 10px;
   display: inline;
 }
-.row {
-  /* max-width: 100%;
-  border-bottom: 1px solid #EEEEEE;
-  margin-bottom: 10px;
-  padding: 25px 20px 10px 20px; */
-}
 
 .cart-sections {
   max-width: 100%;
@@ -106,26 +100,6 @@ ul {
   padding: 25px 20px 10px 20px;
 }
 
-/*
-** ignored this!!! ** - Kirsten
-.cart-rows {
-height: 8rem;
-}
-
-.cart-row {
-max-width: 100%;
-border-bottom: 1px solid #EEEEEE;
-margin-bottom: 10px;
-padding: 25px 20px 10px 20px;
-}
-
-.cart-rows, .cart-rows * {
-height: 6em;
-}
-
-.cart-rows > .row {
-height: 6em;
-} */
 
 .item-name-in-cart {
   font-size: 1.5rem;
@@ -148,10 +122,6 @@ height: 6em;
 align-items: center;
 }
 
-
-/* .checkout-button {
-float: right;
-} */
 
 .prod-title {
   text-align: center;
@@ -214,6 +184,7 @@ float: right;
   right: 0;
 }
 
+
 @media screen and (max-width: 39.9375em) {
   .large-article-header-content {
     bottom: 1.25rem;
@@ -236,12 +207,14 @@ float: right;
   color: #fefefe;
 }
 
-.large-article-header-content .article-title h1 {
+.large-article-header-content .article-title a {
   line-height: 3.125rem;
   color: #fefefe;
   font-weight: 600;
   font-size: 4em;
   font-family: 'Audiowide', cursive;
+  pdding-left: none;
+
 }
 
 @media screen and (max-width: 39.9375em) {
@@ -296,4 +269,31 @@ float: right;
 
 .is-submenu-item a:hover {
   color: rgb(235, 124, 8);
+}
+
+.tiny-button-in-cart {
+  margin: 0;
+  padding: 0.5em 1em;
+
+}
+
+.tiny-button-in-cart {
+  padding: none;
+  justify-content: center;
+}
+
+.items-subtotal-price-in-cart {
+  text-align: right;
+}
+
+.subtotal-summary {
+  padding-right: 35px;
+}
+
+.in-line-button {
+  padding: 0.5em 1em;
+  vertical-align: middle;
+}
+select{
+  width: auto;
 }

@@ -5,11 +5,11 @@ class OrdersController < ApplicationController
   end
 
   def show
-    if params[:merchant_id]
+    # if params[:merchant_id] # extra code, probably redundant
+    #   @order = Order.find_by(id: params[:id])
+    # else
       @order = Order.find_by(id: params[:id])
-    else
-      @order = Order.find_by(id: params[:id])
-    end
+    # end
   end
 
   def new
@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
       flash[:success] = "Successfully created order"
       redirect_to view_cart_path
     else
-      flash[:alert] = @order.errors.messages
+      flash[:alert] = @order.errors
       render :new
     end
   end
@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
       flash[:success] = "Successfully updated order"
       redirect_to order_path(params[:id])
     else
-      flash[:alert] = @order.errors.messages
+      flash[:alert] = @order.errors
       render :edit
     end
   end
@@ -71,7 +71,7 @@ class OrdersController < ApplicationController
     if session.has_key?(:cart_id)
       @order = Order.find_by(id: session[:cart_id])
     else
-      flash.now[:status] = "Cart is empty"
+      flash[:status] = "Cart is empty"
     end
   end
 

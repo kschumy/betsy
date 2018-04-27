@@ -1,3 +1,4 @@
+<section class="large-10 cell">
 <section class = "merchant order metrics">
   <br>
   <h4 class = "table title"> Merchant Metrics for username: <%= @merchant.username %> </h4>
@@ -43,4 +44,5 @@
   <%= link_to "Order ##{order.id}", merchant_order_path(@merchant.id, order.id) %>  (Date placed: <%= order.created_at.show_date %>)
   <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products) } %>
   <% end %>
+</section>
 </section>
