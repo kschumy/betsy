@@ -1,5 +1,9 @@
 require "test_helper"
 
+# IMPORTANT! These tests may seem like overkill, but we choose to try out some
+# complicated/new validation approaches and needed to make sure we were actually
+# doing what we wanted.
+
 describe Order do
   describe "valid" do
     let(:order) { orders(:user_mcuser_order) }
@@ -25,18 +29,6 @@ describe Order do
       Order.create(status: nil).valid?.must_equal false
       Order.create(status: "foo").valid?.must_equal false
     end
-
-      # Testing this because unsure if validates_each actually worked and
-      # included the right messages
-      it "includes all error messages" do
-        new_order = Order.create(status: "paid")
-        new_order.valid?.must_equal false
-        new_order.errors.must_include :customer_name
-        new_order.errors.must_include :street
-        new_order.errors.must_include :city
-        new_order.errors.must_include :mailing_zip
-        new_order.errors.must_include :cc_zip
-      end
 
     # Valid customer_name ======================================================
     # -------------------------------------------------------------- NOT Pending
@@ -242,9 +234,13 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:mailing_zip]
 
-      # order.update(mailing_zip: 12345) # not a String
-      # order.valid?.must_equal false
-      # order.errors.messages.keys.must_equal [:mailing_zip]
+      order.update(mailing_zip: "1 234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
+
+      order.update(mailing_zip: "1 2345")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:mailing_zip]
 
       order.update(mailing_zip: nil)
       order.valid?.must_equal true
@@ -272,9 +268,13 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:cc_zip]
 
-      # order.update(cc_zip: 12345) # not a String
-      # order.valid?.must_equal false
-      # order.errors.messages.keys.must_equal [:cc_zip]
+      order.update(cc_zip: "1 234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "1 2345")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
 
       order.update(cc_zip: nil)
       order.valid?.must_equal false
@@ -301,9 +301,13 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:cc_zip]
 
-      # order.update(cc_zip: 12345) # not a String
-      # order.valid?.must_equal false
-      # order.errors.messages.keys.must_equal [:cc_zip]
+      order.update(cc_zip: "1 234")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
+
+      order.update(cc_zip: "1 2345")
+      order.valid?.must_equal false
+      order.errors.messages.keys.must_equal [:cc_zip]
 
       order.update(cc_zip: nil)
       order.valid?.must_equal true
@@ -382,8 +386,8 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:credit_card_number]
 
-      # order.update(cc_number: "1234567890123456")
-      # order.valid?.must_equal false
+      order.update(cc_number: "hello, world")
+      order.valid?.must_equal false
 
       order.update(cc_number: 1234567890123456)
       order.valid?.must_equal true
@@ -402,8 +406,8 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:credit_card_number]
 
-      # order.update(cc_number: "1234567890123456")
-      # order.valid?.must_equal false
+      order.update(cc_number: "hello, world")
+      order.valid?.must_equal false
 
       order.update(cc_number: 1234567890123456)
       order.valid?.must_equal true
@@ -414,7 +418,7 @@ describe Order do
       order.cc_number.must_be_nil
     end
 
-    # Valid cc_cvv ==========================================================
+    # Valid cc_cvv =============================================================
     # -------------------------------------------------------------- NOT Pending
     it "must have 3 digits String in cc_cvv" do
       order.update(status: "paid")
@@ -431,8 +435,8 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:credit_card_cvv]
 
-      # order.update(cc_cvv: "1234567890123456")
-      # order.valid?.must_equal false
+      order.update(cc_cvv: "hello, world")
+      order.valid?.must_equal false
 
       order.update(cc_cvv: "123")
       order.valid?.must_equal true
@@ -456,8 +460,8 @@ describe Order do
       order.valid?.must_equal false
       order.errors.messages.keys.must_equal [:credit_card_cvv]
 
-      # order.update(cc_cvv: "1234567890123456")
-      # order.valid?.must_equal false
+      order.update(cc_cvv: "hello, world")
+      order.valid?.must_equal false
 
       order.update(cc_cvv: "123")
       order.valid?.must_equal true
