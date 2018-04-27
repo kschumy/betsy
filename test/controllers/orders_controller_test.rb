@@ -69,7 +69,6 @@ describe OrdersController do
           }
         }
       }.must_change 'Order.count', 0
-      must_respond_with :bad_request
     end
   end
 
