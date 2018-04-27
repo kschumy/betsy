@@ -236,7 +236,7 @@ float: right;
   color: #fefefe;
 }
 
-.large-article-header-content .article-title h1 {
+.large-article-header-content .article-title a {
   line-height: 3.125rem;
   color: #fefefe;
   font-weight: 600;

@@ -24,7 +24,7 @@
           <div class="large-article-header-content">
             <div class="center-container">
               <div class="article-title">
-                <h1>MarsDepot</h1>
+                <%= link_to "MarsDepot", root_path%>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
           <ul class="vertical medium-horizontal dropdown menu" data-responsive-menu="accordion medium-dropdown">
             <!-- <li class="menu-text">Site Title</li> -->
             <li>
-              <a href="#" class="nav-group">Categories</a>
+              <%= link_to "Categories", categories_path, class: "nav-group"  %>
               <ul class="menu vertical nested submenu">
                 <% Category.all.each do |category| %>
                   <li><%= link_to category.name, category_products_path(category.id) %></li>
@@ -51,7 +51,7 @@
               </ul>
             </li>
             <li>
-              <a href="#" class="nav-group">Merchants</a>
+              <%= link_to "Merchants", merchants_path, class: "nav-group"  %>
               <ul class="menu vertical nested submenu">
                 <% Merchant.all.each do |merchant| %>
                   <li><%= link_to merchant.username, merchant_products_path(merchant.id) %></li>
