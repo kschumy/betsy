@@ -25,7 +25,8 @@
             <%= f.text_field :city, placeholder:"Must be at least one character" %>
 
             <%= f.label :state %>
-            <%= f.text_field :state %>
+            <%= f.select :state, Order::STATES %>
+
 
             <%= f.label :mailing_zip %>
             <%= f.text_field :mailing_zip, placeholder:"Must be 5 digits" %>
