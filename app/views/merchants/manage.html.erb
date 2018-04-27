@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <h3 class="page-header">Manage Inventory</h3>
 
 <section class="listing-section">
@@ -14,7 +13,6 @@
         <section class="small-2 small-2 cell manage-header"><strong>Edit Product</strong></section>
       </section>
     </section>
-
     <% @active_products.each do |product| %>
     <section>
 
@@ -82,20 +80,5 @@
     </section>
     <% end %>
 
-=======
-<section class="large-9 cell">
-  <h3>My products</h3>
-  <section class="grid-x">
-    <section class="cell medium-auto">
-      <% @merchant_products.each do |product| %>
-        <ul>
-          <li>
-            <%= link_to product.name, product_path(product.id) %>
-            <%= link_to " - edit product ", edit_product_path(product.id) %>
-          </li>
-        </ul>
-      <%end%>
-    </section>
->>>>>>> f6a2c270c49eeb2b47fc370999f07af802c1f40a
   </section>
 </section>
