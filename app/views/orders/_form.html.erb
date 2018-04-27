@@ -1,85 +1,133 @@
+<section class="large-9 cell">
+	<h3>Order Summary</h3>
+		<section class="grid-x">
+			<section class="cell medium-auto">
 
-<% if @order.status == "pending" %>
-<h4>Order Summary</h4>
-<section class="cart-area">
-  <% @order.order_items.each do |item| %>
-  <section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
-    <section class="large-3 large-2 cell"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
 
-    <section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %>
+        <h3 class="page-header">Cart</h3>
+        <% if @order.nil? %>
+        <h3>Cart is empty!</h3>
+        <% else %>
+
+        <section class="cart-area">
+        	<% @order.order_items.each do |item| %>
+        	<section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
+        		<section class="large-3 large-2 cell"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
+
+        		<section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %>
+        		</section>
+
+        		<section class="small-2 small-2 cell"><%= link_to "remove", order_item_path(item.id), method: :delete, class: "button tiny", data: {confirm: 'Are you sure?' } %></section>
+
+        		<section class="small-1 small-1 cell"><%= form_for item do |f| %>
+        			<%= f.label :quantity %>
+        			<%= f.select :quantity, options_for_select(1..item.product.stock, item.quantity ), {}, {value: item.quantity, class: 'form-control', onchange: 'this.form.submit();'} %>
+        			<% end %></section>
+
+        			<section class="small-1 small-1 cell"><%= item.get_subtotal.cents_to_dollars %></section>
+        		</section>
+        		<% end %>
+        	</section>
+        	<section class="subtotal-summary">
+        		<% if @order.total_quantity == 1 %>
+        		<h3>subtotal (1 item): <%= @order.get_total.cents_to_dollars%></h3>
+        		<% else %>
+        		<h3>subtotal(<%= @order.total_quantity%> items): <%= @order.get_total.cents_to_dollars%></h3>
+        		<%end%>
+        	</section>
+        	<%end%>
+        </section>
+
+        <section>
+        	<%= link_to "Checkout", edit_order_path(@order.id), class: "button" %>
+        </section>
+
+
+
+        <% if @order.status == "pending" %>
+        <!-- <h4>Order Summary</h4> -->
+          <section class="cart-area">
+            <% @order.order_items.each do |item| %>
+              <section class="row grid-x grid-padding-x grid-padding-y align-middle cart-sections">
+              <section class="large-3 large-2 cell"><%= image_tag(item.product.photo, :alt => "product image", class:"order-item-cart-pic") %></section>
+              <section class="large-3 large-4 cell item-name-in-cart"><%= item.product.name %>
+              </section>
+
+              <section class="small-1 small-1 cell">
+                QTY: <%= item.quantity %>
+              </section>
+
+              <section class="small-1 small-1 cell"><%= item.get_subtotal.cents_to_dollars %></section>
+            </section>
+            <% end %>
+          </section>
+
+        <section>
+          <% if @order.total_quantity == 1 %>
+          <h6>Total (1 item): <%= @order.get_total_revenue.cents_to_dollars%></h6>
+          <% else %>
+          <h6>Total(<%= @order.total_quantity%> items): <%= @order.get_total_revenue.cents_to_dollars%></h6>
+          <%end%>
+        </section>
+        <%end%>
+        <section>
+          <%= link_to "Edit Cart", view_cart_path(id: session[:cart_id]), class: "button" %>
+        </section>
+        </section>
+
+        <section>
+          <%= form_for @order, :url => checkout_order_path(@order.id) do |f| %>
+          <h4>Customer Name:</h4>
+
+          <%= f.label :customer_name %>
+          <%= f.text_field :customer_name %>
+          <%= f.label :email_address %>
+          <%= f.text_field :email_address %>
+
+          <h4>Shipping Address:</h4>
+          <%= f.label :street %>
+          <%= f.text_field :street %>
+
+          <%= f.label :city %>
+          <%= f.text_field :city %>
+
+          <%= f.label :state %>
+          <%= f.text_field :state %>
+
+          <%= f.label :mailing_zip %>
+          <%= f.text_field :mailing_zip %>
+
+          <h4>Payment Method:</h4>
+          <%= f.label :cc_name %>
+          <%= f.text_field :cc_name %>
+
+          <%= f.label :cc_number %>
+          <%= f.text_field :cc_number %>
+
+          <%= f.label :cc_cvv %>
+          <%= f.text_field :cc_cvv %>
+
+          <%= f.label :cc_zip %>
+          <%= f.text_field :cc_zip %>
+
+          <%= f.label :cc_exp_month %>
+          <%= f.text_field :cc_exp_month %>
+
+          <%= f.label :cc_exp_year %>
+          <%= f.text_field :cc_exp_year %>
+
+          <%= f.hidden_field :status, value: "paid" %>
+
+          <%= f.submit "Place your order" %>
+
+          <% end %>
+        </section>
+
+        <% if @order.status == "pending" %>
+        <%= link_to('Cancel Order', mark_order_cancelled_path(@order), method: :patch, class: "button") %>
+        <%= link_to('Checkout', checkout_order_path(@order), method: :patch, class: "button") %>
+        <% end %>
+      </section>
     </section>
-
-    <section class="small-1 small-1 cell">
-      QTY: <%= item.quantity %>
-    </section>
-
-    <section class="small-1 small-1 cell"><%= item.get_subtotal.cents_to_dollars %></section>
   </section>
-  <% end %>
 </section>
-
-<section>
-  <% if @order.total_quantity == 1 %>
-  <h6>Total (1 item): <%= @order.get_total_revenue.cents_to_dollars%></h6>
-  <% else %>
-  <h6>Total(<%= @order.total_quantity%> items): <%= @order.get_total_revenue.cents_to_dollars%></h6>
-  <%end%>
-</section>
-<%end%>
-<section>
-  <%= link_to "Edit Cart", view_cart_path(id: session[:cart_id]), class: "button" %>
-</section>
-</section>
-
-<section>
-  <%= form_for @order, :url => checkout_order_path(@order.id) do |f| %>
-  <h4>Customer Name:</h4>
-
-  <%= f.label :customer_name %>
-  <%= f.text_field :customer_name %>
-  <%= f.label :email_address %>
-  <%= f.text_field :email_address %>
-
-  <h4>Shipping Address:</h4>
-  <%= f.label :street %>
-  <%= f.text_field :street %>
-
-  <%= f.label :city %>
-  <%= f.text_field :city %>
-
-  <%= f.label :state %>
-  <%= f.text_field :state %>
-
-  <%= f.label :mailing_zip %>
-  <%= f.text_field :mailing_zip %>
-
-  <h4>Payment Method:</h4>
-  <%= f.label :cc_name %>
-  <%= f.text_field :cc_name %>
-
-  <%= f.label :cc_number %>
-  <%= f.text_field :cc_number %>
-
-  <%= f.label :cc_cvv %>
-  <%= f.text_field :cc_cvv %>
-
-  <%= f.label :cc_zip %>
-  <%= f.text_field :cc_zip %>
-
-  <%= f.label :cc_exp_month %>
-  <%= f.text_field :cc_exp_month %>
-
-  <%= f.label :cc_exp_year %>
-  <%= f.text_field :cc_exp_year %>
-
-  <%= f.hidden_field :status, value: "paid" %>
-
-  <%= f.submit "Place your order" %>
-
-  <% end %>
-</section>
-
-<% if @order.status == "pending" %>
-<%= link_to('Cancel Order', mark_order_cancelled_path(@order), method: :patch, class: "button") %>
-<%= link_to('Checkout', checkout_order_path(@order), method: :patch, class: "button") %>
-<% end %>

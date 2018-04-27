@@ -31,8 +31,18 @@ CSV.foreach(merchant_file, :headers => true) do |row|
   merchant = Merchant.new
   merchant.username = row['username']
   merchant.email = row['email']
+  if row['provider'] != nil
+  merchant.provider = row['provider']
+  else
+    merchant.provider = "github"
+  end
+  if row['provider'] != nil
+  merchant.uid = row['uid']
+  else
+    merchant.uid = i
+  end
   merchant.uid = i
-  merchant.provider = "github"
+
   successful = merchant.save
   if !successful
     merchant_failures << merchant
