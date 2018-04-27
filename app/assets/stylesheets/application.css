@@ -188,6 +188,7 @@ float: right;
 }
 
 
+
 .large-article-header {
   background: url("https://undark.org/wp-content/uploads/sites/2/2018/02/2600-mars.jpg") no-repeat center;
   background-size: cover;
@@ -213,6 +214,7 @@ float: right;
   left: 0;
   right: 0;
 }
+
 
 @media screen and (max-width: 39.9375em) {
   .large-article-header-content {
@@ -242,6 +244,8 @@ float: right;
   font-weight: 600;
   font-size: 4em;
   font-family: 'Audiowide', cursive;
+  pdding-left: none;
+
 }
 
 @media screen and (max-width: 39.9375em) {
@@ -296,4 +300,13 @@ float: right;
 
 .is-submenu-item a:hover {
   color: rgb(235, 124, 8);
+}
+
+.tiny-button-in-cart .tiny {
+  margin: 0;
+}
+
+.tiny-button-in-cart {
+  padding: none;
+  justify-content: center;
 }
