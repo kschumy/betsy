@@ -1,7 +1,18 @@
 
 <section class="large-9 cell">
 
-	<h3>Active Listings</h3>
+	<section class="add-buttons">
+
+		<%= link_to "Add New Product", new_product_path, class: "button" %>
+		<%= link_to "Add New Category", new_category_path, class: "button" %>
+	</section>
+
+	<h3 class="header-status">Active Listings</h3>
+	<% if @active_products.empty? %>
+		<p>
+			NO PRODUCTS
+		</p>
+		<%else%>
 	<section class="grid-x">
 		<section class="cell medium-auto">
 
@@ -45,18 +56,19 @@
 						</section>
 					</section>
 					<% end %>
-					<section class="add-buttons">
 
-						<%= link_to "Add New Product", new_product_path, class: "button" %>
-						<%= link_to "Add New Category", new_category_path, class: "button" %>
-					</section>
 
 				</section>
-
+				<%end%>
 
 
 				<section class="listing-section">
 					<h3 class="header-status">Inactive Listings</h3>
+					<% if @inactive_products.empty? %>
+					<p>
+						NO PRODUCTS
+					</p>
+					<%else%>
 
 					<section>
 						<section class="row grid-x grid-padding-x grid-padding-y align-middle">
@@ -92,6 +104,8 @@
 							<% end %>
 						</section>
 					</section>
+					<%end%>
+
 				</section>
 			</section>
 		</section>
