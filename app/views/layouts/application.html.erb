@@ -51,7 +51,7 @@
               </ul>
             </li>
             <li>
-              <%= link_to "Merchants", merchants_path, class: "nav-group"  %>
+              <%= link_to "Merchants", merchants_path, class:"nav-group"%>
               <ul class="menu vertical nested submenu">
                 <% Merchant.all.each do |merchant| %>
                   <li><%= link_to merchant.username, merchant_products_path(merchant.id) %></li>
@@ -115,10 +115,6 @@
 
     <section class="grid-container">
          <section class="grid-x grid-margin-x align-center">
-
-
-
-
 
   <%= yield %>
   </section>
