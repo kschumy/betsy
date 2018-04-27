@@ -20,9 +20,9 @@
 
 <section>
   <% if @order.total_quantity == 1 %>
-  <h6>Total (1 item): <%= @order.get_current_total.cents_to_dollars%></h6>
+  <h6>Total (1 item): <%= @order.get_total_revenue.cents_to_dollars%></h6>
   <% else %>
-  <h6>Total(<%= @order.total_quantity%> items): <%= @order.get_current_total.cents_to_dollars%></h6>
+  <h6>Total(<%= @order.total_quantity%> items): <%= @order.get_total_revenue.cents_to_dollars%></h6>
   <%end%>
 </section>
 <%end%>
