@@ -1,5 +1,12 @@
-<h1 class="page-header">Order Info</h1>
 
+<% if params[:merchant_id]%>
+<h3 class="page-header"><%= Merchant.find(params[:merchant_id]).username  %>'s Products in Order #<%= @order.id %>  </h3>
+<p> Total revenue: <%= @order.get_total_revenue %> </p>
+<% merchant = Merchant.find(params[:merchant_id])  %>
+<% else %>
+<h3 class="page-header">Order Info for Order #<%= @order.id %></h3>
+<p> Total Cost: <%= @order.get_total_revenue %> </p>
+<% end %>
 
 <p>Order ID: <%= @order.id %></p>
 <p>Email Address: <%= @order.email_address %></p>
@@ -14,7 +21,11 @@
 <br>
 <p> Total Cost: <%= @order.get_total_revenue %> </p>
 <br>
+<% if params[:merchant_id]%>
+  <%= render partial: "shared/table" , locals: { table_order_items: @order.order_items.where(product_id: merchant.get_merchant_products) } %>
+<% else%>
 <%= render partial: "shared/table" , locals: { table_order_items: @order.order_items } %>
+<% end %>
 <br>
 <br>
 <%= link_to "Edit Order", edit_order_path, class: "button" %>

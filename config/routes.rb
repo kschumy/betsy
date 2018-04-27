@@ -26,6 +26,13 @@ get '/cart', to: "orders#cart", as: 'view_cart'
   resources :merchants do
     resources :products, only: [:index]
   end
+#Pretty sure we can delete the merchant order_items below
+  # resources :merchants do
+  #   resources :order_items, only: [:index]
+  # end
+  resources :merchants do
+    resources :orders, only: [:show]
+  end
  get 'merchants/:id/orders', to: "merchants#order_fulfillment", as: 'merchant_orders'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
