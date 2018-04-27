@@ -20,3 +20,13 @@
 .page-header {
   line-height: normal;
 }
+
+.add-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-buttons a {
+  margin-right: 20px;
+  background-color: rgb(230, 138, 0);
+}
