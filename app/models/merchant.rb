@@ -36,6 +36,14 @@ class Merchant < ApplicationRecord
       order_items.inject(0) { |sum, order_item| sum + (order_item.get_subtotal) }
   end
 
+  def active_products
+    return self.products.select { |product| product.discontinued == false}
+  end
+
+  def inactive_products
+    return self.products.select { |product| product.discontinued == true }
+  end
+
 
   private
 

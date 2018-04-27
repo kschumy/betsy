@@ -1,3 +1,22 @@
 // Place all the styles related to the Merchants controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#listing-section {
+  border: 2px solid rgb(61, 61, 61);
+}
+
+.manage-header {
+  color: #1779ba;
+}
+//
+// .listing-section {
+//   margin-top: 200px;
+// }
+
+.header-status {
+  color: rgb(235, 124, 8);
+}
+.page-header {
+  line-height: normal;
+}

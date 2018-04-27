@@ -47,7 +47,8 @@ class MerchantsController < ApplicationController
     if @merchant.nil?
       render_404
     else
-      @merchant_products = Product.merchant_products(@merchant.id)
+      @active_products = @merchant.active_products
+      @inactive_products = @merchant.inactive_products
     end
   end
 
