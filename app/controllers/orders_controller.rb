@@ -5,7 +5,11 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find_by(id: params[:id])
+    if params[:merchant_id]
+      @order = Order.find_by(id: params[:id])
+    else
+      @order = Order.find_by(id: params[:id])
+    end
   end
 
   def new
