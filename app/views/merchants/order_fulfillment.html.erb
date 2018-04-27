@@ -2,7 +2,7 @@
   <section class = "fulfillment-container">
     <section class = "merchant-order-metrics">
       <br>
-      <h4 > Merchant Metrics for username: <%= @merchant.username %> </h4>
+      <h4 > Merchant Metrics for <%= @merchant.username %> </h4>
       <table>
         <thead>
           <tr>
@@ -16,8 +16,8 @@
           <tr>
             <td> <strong>Order Count</strong></td>
             <td> <%= @orders.count %></td>
-            <td> <%= @paid_orders.count unless @paid_orders.nil? %></td>
-            <td> <%= @complete_orders.count unless @complete_orders.nil?%></td>
+            <td> <%= @paid_orders.count %></td>
+            <td> <%= @complete_orders.count %></td>
           </tr>
           <tr>
             <td> <strong>Revenue</strong></td>
@@ -33,23 +33,15 @@
     <section class = "table-order-items">
       <h4> Order Fulfillment Summary </h4>
       <h5> Paid Orders </h5>
-      <% if !@paid_orders.nil? %>
-      <% @paid_orders.each do |order|  %>
-      <%= link_to "Order ##{order.id}", merchant_order_path(@merchant.id, order.id) %>  (Date placed: <%= order.created_at.show_date %>)
-      <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products) } %>
-      <% end %>
-        <% else %>
-        <p> -- No paid orders </p>
+      <% @paid_orders.each do |order| %>
+      <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
+      <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
       <% end %>
 
       <h5>  Completed Orders </h5>
-      <% if !@complete_orders.nil? %>
       <% @complete_orders.each do |order| %>
-      <%= link_to "Order ##{order.id}", merchant_order_path(@merchant.id, order.id) %>  (Date placed: <%= order.created_at.show_date %>)
-      <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products) } %>
-      <% end %>
-        <% else %>
-        <p> -- No complete orders </p>
+      <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
+      <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
       <% end %>
     </section>
   </section>
