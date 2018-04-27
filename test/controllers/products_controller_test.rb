@@ -82,60 +82,58 @@ describe ProductsController do
 
 
 
-    describe "edit" do
-      it "will get the edit form for an existing product" do
-        get edit_product_path(ball)
-        must_respond_with :success
-      end
+  describe "edit" do
+    it "will get the edit form for an existing product" do
+      get edit_product_path(ball)
+      must_respond_with :success
+    end
+  end
+
+  describe "update" do
+    it "updates an existing product with valid data" do
+      cat_id = [categories(:novelty).id, categories(:food).id]
+
+      patch product_path(ball.id), params: {
+        product: {
+          merchant_id: astro_anna.id,
+          name: "super bouncy ball",
+          price_from_form: 10,
+          discontinued: false,
+          stock: 2,
+          description: "bouncy",
+          photo: "https://d28rv7itqgss13.cloudfront.net/assets/img/mars_ball-1600_large_2x.jpg",
+          category_ids: cat_id
+        }
+      }
+
+      updated_product = Product.find(ball.id)
+      updated_product.name.must_equal "super bouncy ball"
+      must_redirect_to product_path
     end
 
-    describe "update" do
-      it "updates an existing product with valid data" do
-        cat_id = [categories(:novelty).id, categories(:food).id]
+    it "does not update with invalid data" do
+      cat_id = [categories(:novelty).id, categories(:food).id]
 
-        patch product_path(ball.id), params: {
-          product: {
-            merchant_id: astro_anna.id,
-            name: "super bouncy ball",
-            price_from_form: 10,
-            discontinued: false,
-            stock: 2,
-            description: "bouncy",
-            photo: "https://d28rv7itqgss13.cloudfront.net/assets/img/mars_ball-1600_large_2x.jpg",
-            category_ids: cat_id
-          }
+      patch product_path(ball.id), params: {
+        product: {
+          merchant_id: astro_anna.id,
+          name: " ",
+          price_from_form: 10,
+          discontinued: false,
+          stock: 2,
         }
-
-        updated_product = Product.find(ball.id)
-        updated_product.name.must_equal "super bouncy ball"
-        must_redirect_to product_path
-      end
-
-      it "does not update with invalid data" do
-        cat_id = [categories(:novelty).id, categories(:food).id]
-
-        patch product_path(ball.id), params: {
-          product: {
-            merchant_id: astro_anna.id,
-            name: " ",
-            price_from_form: 10,
-            # discontinued: false,
-            stock: 2,
-          }
-        }
-        updated_product = Product.find(ball.id)
-        updated_product.name.must_equal "bouncy ball"
-      end
+      }
+      updated_product = Product.find(ball.id)
+      updated_product.name.must_equal "bouncy ball"
     end
+  end
 
-    describe "deactivate action" do
-      it "discontinues a product" do
-        merchant = merchants(:astro)
-        perform_login(merchant, :github)
-        patch deactivate_product_path(ball)
-        must_redirect_to merchant_path(merchant)
-      end
-
+  describe "deactivate action" do
+    it "discontinues a product" do
+      merchant = merchants(:astro)
+      perform_login(merchant, :github)
+      patch deactivate_product_path(ball)
+      must_redirect_to merchant_path(merchant)
     end
   end
 end
