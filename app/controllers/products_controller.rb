@@ -85,6 +85,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def welcome
+    @products = Product.all.sample(6)
+  end
+
   private
   def product_params
     return params.require(:product).permit(:name, :price, :description, :stock, :photo, :discontinued, :price_from_form, :merchant_id, category_ids: [])
