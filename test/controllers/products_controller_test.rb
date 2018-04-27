@@ -80,8 +80,6 @@ describe ProductsController do
     end
   end
 
-
-
   describe "edit" do
     it "will get the edit form for an existing product" do
       get edit_product_path(ball)
