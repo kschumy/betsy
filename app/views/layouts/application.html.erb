@@ -43,11 +43,7 @@
           <ul class="vertical medium-horizontal dropdown menu" data-responsive-menu="accordion medium-dropdown">
             <!-- <li class="menu-text">Site Title</li> -->
             <li>
-<<<<<<< HEAD
-              <%= link_to "Categories", categories_path, class: "nav-group"  %>
-=======
               <%= link_to "Categories", categories_path, class:"nav-group" %>
->>>>>>> f6a2c270c49eeb2b47fc370999f07af802c1f40a
               <ul class="menu vertical nested submenu">
                 <% Category.all.each do |category| %>
                   <li><%= link_to category.name, category_products_path(category.id) %></li>
@@ -55,11 +51,7 @@
               </ul>
             </li>
             <li>
-<<<<<<< HEAD
               <%= link_to "Merchants", merchants_path, class: "nav-group"  %>
-=======
-              <%= link_to "Merchants", merchants_path, class:"nav-group"%>
->>>>>>> f6a2c270c49eeb2b47fc370999f07af802c1f40a
               <ul class="menu vertical nested submenu">
                 <% Merchant.all.each do |merchant| %>
                   <li><%= link_to merchant.username, merchant_products_path(merchant.id) %></li>
