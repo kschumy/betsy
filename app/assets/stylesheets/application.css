@@ -18,8 +18,9 @@
 
 */
 
+
 html * {
-  font-family: 'Dosis', sans-serif;
+  font-family: 'Quicksand', sans-serif;
 
 }
 body {
@@ -27,22 +28,10 @@ body {
   background-color: black;
 }
 
-
-.dropdown{
-  /* display: flex;
->>>>>>> fucking-around-with-css
-  justify-content: flex-end;
-  align-items: center; */
+body > * {
+  color: #EEEEEE;
 }
 
-/* header {
-  background-color: rgb(23, 1, 110)
-} */
-
-.main-nav {
-  /* padding: 40px;
-  width: 100%; */
-}
 
 .mars {
   margin-right: auto;
@@ -62,13 +51,12 @@ ul {
   list-style-type: none;
 }
 
-main, .alert-section {
-  /*changed to 90 rem to fit more products in page lemme know if this messes anything up -jackie*/
-  /* max-width: 90rem;
+.alert-section {
+  max-width: 66rem;
   margin-right: auto;
   margin-left: auto;
   padding-bottom: 2rem;
-  padding: 3px; */
+  padding: 3px;
 }
 
 .astronaut {
@@ -79,13 +67,21 @@ main, .alert-section {
 .cart {
   margin-right: 50px;
   margin-bottom: 10px;
-  background-color: rgb(23, 1, 110)
+  /* background-color: rgb(23, 1, 110) */
 }
 
 .cart-container a {
-  background-color: rgb(23, 1, 110)
+  /* background-color: rgb(23, 1, 110) */
 }
 
+.merch-name {
+  color: #EEEEEE;
+}
+
+.nav-group {
+  font-weight: 500;
+  font-size: 1.2em;
+}
 
 .nav-items {
   font-size: 1.5em;
@@ -148,7 +144,8 @@ height: 6em;
 
 .callout {
   font-size: 0.9em;
-
+  max-width: 66rem;
+align-items: center;
 }
 
 
@@ -244,6 +241,7 @@ float: right;
   color: #fefefe;
   font-weight: 600;
   font-size: 4em;
+  font-family: 'Audiowide', cursive;
 }
 
 @media screen and (max-width: 39.9375em) {
@@ -286,3 +284,6 @@ float: right;
   margin-left: 1rem;
 }
 .top-bar ul { background-color: black; }
+.is-submenu-item a:hover {
+  color: rgb(235, 124, 8)
+}
