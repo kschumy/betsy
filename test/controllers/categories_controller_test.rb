@@ -11,7 +11,7 @@ describe CategoriesController do
   end
 
   it "should get show" do
-    get category_products_path(:id)
+    get category_products_path(novelty.id)
     value(response).must_be :success?
   end
 
