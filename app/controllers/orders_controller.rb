@@ -5,7 +5,11 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find_by(id: params[:id])
+    if params[:merchant_id]
+      @order = Order.find_by(id: params[:id])
+    else
+      @order = Order.find_by(id: params[:id])
+    end
   end
 
   def new
@@ -33,9 +37,15 @@ class OrdersController < ApplicationController
 
   def checkout_order
     @order = Order.find_by(id: params[:id])
-    @order.update(status: "paid")
-    @order.save
-    redirect_to order_path
+    @order.update(order_params)
+    if @order.save
+      flash[:success] = "Order placed!"
+      session[:cart_id] = nil
+      redirect_to order_path(params[:id])
+    else
+      flash[:alert] = @order.errors
+      redirect_back fallback_location: view_cart_path
+    end
   end
 
   def cancel_order
@@ -60,9 +70,8 @@ class OrdersController < ApplicationController
   def cart
     if session.has_key?(:cart_id)
       @order = Order.find_by(id: session[:cart_id])
-      # redirect_to order_path(params[:id])
     else
-      # flash.now[:status] = "Cart is empty"
+      flash.now[:status] = "Cart is empty"
     end
   end
 
@@ -83,7 +92,7 @@ class OrdersController < ApplicationController
 
   private
   def order_params
-    return params.require(:order).permit(:email_address, :cc_name, :email_address, :cc_number, :cc_exp_month, :cc_exp_year , :cc_cvv, :cc_zip, :status, :street , :customer_name ,:city, :state, :mailing_zip )
+    return params.require(:order).permit(:email_address, :cc_name, :cc_number, :cc_exp_month, :cc_exp_year, :cc_cvv, :cc_zip, :status, :street , :customer_name ,:city, :state, :mailing_zip )
   end
 
 end

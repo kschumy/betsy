@@ -119,7 +119,7 @@ describe ProductsController do
           merchant_id: astro_anna.id,
           name: " ",
           price_from_form: 10,
-          discontinued: false,
+          # discontinued: false,
           stock: 2,
         }
       }
@@ -133,7 +133,8 @@ describe ProductsController do
       merchant = merchants(:astro)
       perform_login(merchant, :github)
       patch deactivate_product_path(ball)
-      must_redirect_to merchant_path(merchant)
+      must_redirect_to merchant_products_path(merchant)
     end
+
   end
 end

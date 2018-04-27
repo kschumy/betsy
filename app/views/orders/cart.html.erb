@@ -24,10 +24,16 @@
 	</section>
 	<section class="subtotal-summary">
 		<% if @order.total_quantity == 1 %>
-		<h3>subtotal (1 item): <%= @order.get_total.cents_to_dollars%></h3>
+		<h3>Subtotal (1 item): <%= @order.get_total_revenue.cents_to_dollars%></h3>
 		<% else %>
-		<h3>subtotal(<%= @order.total_quantity%> items): <%= @order.get_total.cents_to_dollars%></h3>
+		<h3>Subtotal(<%= @order.total_quantity%> items): <%= @order.get_total_revenue.cents_to_dollars%></h3>
 		<%end%>
 	</section>
 	<%end%>
 </section>
+
+<% if !@order.nil? %>
+<section>
+	<%= link_to "Checkout", edit_order_path(@order.id), class: "button" %>
+</section>
+<%end%>
