@@ -18,7 +18,7 @@ describe Product do
     end
 
     it "is invalid with name that is not unique" do
-      product.name = "Mars Mud Soap"
+      product.name = "mars mud soap"
       value(product).wont_be :valid?
       product.errors.messages.must_include :name
     end
