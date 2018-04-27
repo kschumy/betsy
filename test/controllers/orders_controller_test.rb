@@ -86,8 +86,54 @@ describe OrdersController do
   end
 
   describe "checkout order" do
-    it "text" do
+    it "Updates order and redirects to order path" do
+      proc {
+        patch checkout_order_path(orders(:star_mouse_order).id), params: {
+          order: {
+            email_address: "google@google.com",
+            cc_name: "Jackie O",
+            cc_number: 1234123412341234,
+            cc_ccv: 123,
+            cc_zip: 40032,
+            status: "paid",
+            street: "650 walnut",
+            customer_name: "Jackie O",
+            city: "Higland Park",
+            state: "IL",
+            mailing_zip: 60035,
+            cc_exp_month: 2,
+            cc_exp_year: 2021
+          }
+        }
+      }.must_change 'Order.count', 0
 
+      must_respond_with :redirect
+      must_redirect_to order_path(orders(:star_mouse_order).id)
+    end
+
+    it "Does not update order and redirects back with invalid data" do
+      proc {
+        patch checkout_order_path(orders(:star_mouse_order).id), params: {
+          order: {
+            email_address: "google@google.com",
+            cc_name: "Jackie O",
+            cc_number: 1232341234,
+            cc_ccv: 123,
+            cc_zip: 40032,
+            status: "paid",
+            street: "650 walnut",
+            customer_name: "Jackie O",
+            city: "Higland Park",
+            state: "PM",
+            mailing_zip: 60035,
+            cc_exp_month: 2,
+            cc_exp_year: 2021
+          }
+        }
+      }.must_change 'Order.count', 0
+
+      must_respond_with :redirect
+      must_redirect_to view_cart_path
     end
   end
 
