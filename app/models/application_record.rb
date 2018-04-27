@@ -46,6 +46,6 @@ class Date
   private
 
   def self.check_if_in_the_future(int_month, int_year)
-    return int_month >= self.today.month && int_year >= self.today.year
+    return (int_month >= self.today.month && int_year >= self.today.year) || int_year >= self.today.year
   end
 end

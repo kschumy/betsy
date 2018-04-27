@@ -41,20 +41,12 @@ class Order < ApplicationRecord
     end
   end
 
-  def get_current_total
-    return calc_revenue if is_pending?
-  end
-
   def total_quantity
     return order_items.inject(0) { |sum, order_item| sum + order_item.quantity }
   end
 
   def get_total_revenue
-     if !is_pending?
-    return calc_revenue.cents_to_dollars
-  else
-    return "pending"
-  end
+    return calc_revenue
   end
 
   def add_item_to_cart(new_order_item)

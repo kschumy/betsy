@@ -51,6 +51,11 @@ class Product < ApplicationRecord
     self.price = (form_price.to_f * 100).to_i
   end
 
+
+  def self.merchant_products(merchant_id)
+    return self.select { |product| product.merchant_id == merchant_id }
+  end
+
   private
 
   # def calc_avg_rating
