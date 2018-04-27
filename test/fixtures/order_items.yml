@@ -11,7 +11,7 @@ order_two:
   quantity: 10
   price: 249
   is_shipped: false
-  product: one
+  product: soda
   order: user_mcuser_order
 
 order_three:

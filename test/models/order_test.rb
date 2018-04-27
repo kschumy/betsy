@@ -583,57 +583,62 @@ describe Order do
 
       order.update(cc_exp_month: Date.today.month - 1, cc_exp_year: Date.today.year + 1)
       order.valid?.must_equal true
-      
+
       order.update(cc_exp_month: nil, cc_exp_year: nil)
       order.valid?.must_equal true
     end
 
   end
-end
 
-    #
-    # describe "relations" do
-    #         let(:order) { orders(:user_mcuser_order) }
-    #   it "responds to order_items" do
-    #     # order = orders(:novelty)
-    #     order.must_respond_to :order_items
-    #     order.order_items.must_equal []
-    #   end
-    #
-    #   it "can have order_items" do
-    #     # order = orders(:novelty)
-    #     order.order_items << order_items(:ball)
-    #
-    #     order.order_items.must_include(order_items(:ball))
-    #   end
-    #
-    #   it "must be added to product's list of orders" do
-    #     product = order_items(:sweater)
-    #     # order = orders(:clothing)
-    #     order.order_items << product
-    #
-    #     product.orders.must_include(order)
-    #   end
-    #
-    #   it "can have multiple order_items" do
-    #     # order = orders(:novelty)
-    #     order.order_items << order_items(:ball)
-    #     order.order_items << order_items(:icecream)
-    #
-    #     order.order_items.must_equal [order_items(:ball), order_items(:icecream)]
-    #   end
-    #
-    #   it "can be initialized with order_items" do
-    #     new_order = Order.create(name: "foo", order_items: [order_items(:ball), order_items(:icecream)])
-    #     new_order.valid?.must_equal true
-    #   end
+  describe "relations" do
+    let(:order) { orders(:user_mcuser_order) }
+    let(:new_order_item) {
+        OrderItem.new(quantity: 1, price: 6032, is_shipped: false, product: products(:ball))
+    }
+    let(:new_order) { Order.create(status: "pending") }
 
-    # it "can be initialized with order_items" do
-    #   # new_order = Order.create(name: "foo", order_items: [Date.today])
-    #   # new_order.valid?.must_equal false
-    #   new_order = Order.create(name: "foo")
-    #   new_order.order_items << order_items(:icecream)
-    #   new_order.add_product(Date.today)
+    it "responds to order_items" do
+      # order = orders(:novelty)
+      orders(:pending_order).must_respond_to :order_items
+      orders(:pending_order).order_items.must_equal []
+    end
+
+    it "can have order_items" do
+      # order = orders(:novelty)
+      # new_order_item = OrderItem.new(quantity: 1, price: 6032, is_shipped: false, product: products(:ball))
+      new_order.order_items << new_order_item
+
+      new_order.order_items.must_equal [new_order_item]
+    end
+
+    it "must be added to order item's order" do
+      order = orders(:mystring_order)
+      order.order_items << new_order_item
+
+      new_order_item.order.must_equal order
+    end
+
+    # it "can have multiple order_items" do
+    #   # order = orders(:novelty)
+    #   order.order_items << order_items(:ball)
+    #   order.order_items << order_items(:icecream)
     #
-    #   new_order.order_items.must_equal [order_items(:icecream)]
+    #   order.order_items.must_equal [order_items(:ball), order_items(:icecream)]
     # end
+    #
+    # it "can be initialized with order_items" do
+    #   new_order = Order.create(name: "foo", order_items: [order_items(:ball), order_items(:icecream)])
+    #   new_order.valid?.must_equal true
+    # end
+
+  # it "can be initialized with order_items" do
+  #   # new_order = Order.create(name: "foo", order_items: [Date.today])
+  #   # new_order.valid?.must_equal false
+  #   new_order = Order.create(name: "foo")
+  #   new_order.order_items << order_items(:icecream)
+  #   new_order.add_product(Date.today)
+  #
+  #   new_order.order_items.must_equal [order_items(:icecream)]
+  # end
+  end
+end

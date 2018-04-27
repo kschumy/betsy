@@ -19,8 +19,8 @@ rover:
   provider: github
   uid: 46788885
 
-# four:
-#  username: Rover_Rocks
-#  email: rrrrrrrover@marsmail.com
-#  provider: github
-#  uid: 12345
+no_activity_merchant:
+  username: Nada
+  email: nothinghere@blackhole.org
+  provider: github
+  uid: 98765
