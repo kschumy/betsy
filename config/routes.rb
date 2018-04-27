@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     resources :products, only: [:index]
   end
   resources :reviews, only: [:create, :new]
-  resources :order_items
+  resources :order_items #, except: [:destroy]  #at some point, we'll want to destroy this route, using it as an admin page for now
   patch 'order_items/:id/mark_shipped', to: 'order_items#mark_shipped', as: 'mark_item_shipped'
   patch 'orders/:id/checkout_order', to: 'orders#checkout_order', as: 'checkout_order'
   patch 'orders/:id/cancel_order', to: 'orders#cancel_order', as: 'mark_order_cancelled'
