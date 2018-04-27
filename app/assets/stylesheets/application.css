@@ -284,6 +284,16 @@ float: right;
   margin-left: 1rem;
 }
 .top-bar ul { background-color: black; }
+
+.submenu {
+  border: none;
+}
+
+.one-body {
+  width: 100%;
+  align-content: center;
+}
+
 .is-submenu-item a:hover {
-  color: rgb(235, 124, 8)
+  color: rgb(235, 124, 8);
 }
