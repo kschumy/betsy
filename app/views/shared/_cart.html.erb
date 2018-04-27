@@ -17,7 +17,7 @@
     <% if order_item.get_order_status == "pending"%>
     <tr>
       <td><%= link_to order_item.get_item_name, product_path(order_item.product_id) %></td>
-      <td><%= link_to order_item.get_item_merchant, merchant_path(order_item.get_item_merchant_id) %></td>
+      <td><%= link_to order_item.get_item_merchant, merchant_products_path(order_item.get_item_merchant_id) %></td>
 
       <td>
         <%= form_for order_item do |f| %>
