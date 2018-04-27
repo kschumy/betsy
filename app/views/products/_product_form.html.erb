@@ -18,7 +18,12 @@
 	<%= check_box_tag :category_ids, category.id, @product.categories.include?(category), :name => 'product[category_ids][]' %> <%= category.name %>
 	<% end %>
   <br />
-  <%= f.submit %>
+  <%= f.submit class: 'button' %>
+  <% end %>
+  <% if !@merchant.nil? && @merchant.id == @product.merchant.id %>
+  <p>
+    <%= link_to "Deactivate this product", deactivate_product_path(@product.id), class: 'button', method: :patch %>
+  </p>
   <% end %>
 </section>
 </section>

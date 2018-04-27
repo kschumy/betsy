@@ -1,8 +1,9 @@
-<h2>my products</h2>
+<h2>My products</h2>
 <% @merchant_products.each do |product| %>
 <ul>
   <li>
-    <%= product.name %>
+    <%= link_to product.name, product_path(product.id) %>
+    <%= link_to " - edit product ", edit_product_path(product.id) %>
   </li>
 </ul>
 <%end%>
