@@ -32,15 +32,15 @@
   <h4 class = "table title"> Order Fulfillment Summary </h4>
   <h5 class = "subtable title"> Paid Orders </h5>
   <% @paid_orders.each do |order| %>
-  <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
-  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
+  <%= link_to "Order ##{order.id}", merchant_order_path(@merchant.id, order.id) %>  (Date placed: <%= order.created_at.show_date %>)
+  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products) } %>
   <% end %>
 </section>
 
 <section class = "merchant orders">
   <h5 class = "subtable title">  Completed Orders </h5>
   <% @complete_orders.each do |order| %>
-  <%= link_to "Order ##{order.id}", order_path(order.id) %>  (<%= order.created_at.show_date %>)
-  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products), page_title: "#{@merchant.username} orders" } %>
+  <%= link_to "Order ##{order.id}", merchant_order_path(@merchant.id, order.id) %>  (Date placed: <%= order.created_at.show_date %>)
+  <%= render partial: "shared/table" , locals: { table_order_items: order.order_items.where(product_id: @merchant.get_merchant_products) } %>
   <% end %>
 </section>

@@ -5,7 +5,7 @@
 		  <ul>
 				<% @merchants.each do |merchant| %>
 				<li>
-					<h5><%= link_to merchant.username, merchant_path(merchant) %> - <%= link_to "View Products", merchant_products_path(merchant[:id]) %></h5>
+					<h5><%= link_to "#{merchant.username} - View Products", merchant_products_path(merchant[:id]) %></h5>
 					</li>
 				<% end %>
 				</ul>

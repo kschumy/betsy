@@ -3,21 +3,13 @@ class ProductsController < ApplicationController
   def index
     @products = Product.products_available
     @categories = Category.order(:name)
-    # if params[:merchant_id]
-    #   if Merchant.find_by(id: params[:merchant_id]) == nil
-    #     render_404
-    #   else
-    #     @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
-    #   end
-    # elsif params[:category_id]
-    #   if Category.find_by(id: params[:category_id]) == nil
-    #     render_404
-    #   else
-    #     @products = Product.includes(:categories).where( categories: { id: params[:category_id]})
-    #   end
-    # else
-    #   @products = Product.order(:id)
-    # end
+    if params[:merchant_id]
+      @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
+    elsif params[:category_id]
+      @products = Product.includes(:categories).where( categories: { id: params[:category_id]})
+    else
+      @products = Product.order(:id)
+    end
   end
 
   def show
@@ -83,10 +75,10 @@ class ProductsController < ApplicationController
     if !@product.nil?
       if @product.update(discontinued: true)
         flash[:success] = "Product #{@product.name} (Product ID: #{@product.id}) Deactivated"
-        redirect_to merchant_path(@merchant.id)
+        redirect_to merchant_products_path(@merchant.id)
       else
         flash[:alert] = "A problem occurred: Could not deactivate product #{@product.name}"
-        redirect_to merchant_path(@merchant.id)
+        redirect_to merchant_products_path(@merchant.id)
       end
     else
       redirect_to products_path
