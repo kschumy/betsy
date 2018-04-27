@@ -1,13 +1,5 @@
 class OrderItemsController < ApplicationController
 
-  # def index
-  #   if params[:merchant_id]
-  #     @order_items = OrderItem.includes(:merchant).where(order_items: {merchant_id: params[:merchant_id]})
-  #   else
-  #     @order_items = OrderItem.all
-  #   end
-  # end
-
   def index
     @order_items = OrderItem.all
   end
