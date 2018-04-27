@@ -16,7 +16,6 @@ class OrderItem < ApplicationRecord
     end
   end
 
-
   def get_subtotal
     price * quantity
   end
@@ -34,15 +33,13 @@ class OrderItem < ApplicationRecord
   end
 
   def get_item_merchant
-    merchant_id = Product.find(product_id).merchant_id
-    Merchant.find(merchant_id).username
+    return product.merchant.username
+
   end
 
   def get_item_merchant_id
-    merchant_id = Product.find(product_id).merchant_id
-    Merchant.find(merchant_id).id
+    return product.merchant.id
   end
-
 
   def shipping_status
     # TODO: review the logic on this when all logic is figured out. Also, our
@@ -63,7 +60,6 @@ class OrderItem < ApplicationRecord
     # end
   end
 
-  #
   # def table_view
   #   if table_order_items == @order.order_items
   #     table_view = "Order view"
