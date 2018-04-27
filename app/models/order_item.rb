@@ -44,7 +44,6 @@ class OrderItem < ApplicationRecord
     # Merchant.find(merchant_id).id
   end
 
-
   def shipping_status
     # TODO: review the logic on this when all logic is figured out. Also, our
     # logic currently has a 'complete' mean that the order has shipped. But does
@@ -64,7 +63,6 @@ class OrderItem < ApplicationRecord
     # end
   end
 
-  #
   # def table_view
   #   if table_order_items == @order.order_items
   #     table_view = "Order view"
