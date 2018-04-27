@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    # if params[:merchant_id]
+    # if params[:merchant_id] # extra code, probably redundant
     #   @order = Order.find_by(id: params[:id])
     # else
       @order = Order.find_by(id: params[:id])
