@@ -41,8 +41,8 @@ class Order < ApplicationRecord
     end
   end
 
-  def get_current_total
-    return calc_revenue if is_pending?
+  def get_total
+    return calc_revenue
   end
 
   def total_quantity

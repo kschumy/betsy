@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 ball:
-  name: Bouncy Ball
+  name: bouncy ball
   price: 249
   description: If you thought balls were fun on earth, you'll LOVE how high these bounce!!
   stock: 100
@@ -10,7 +10,7 @@ ball:
   merchant: astro
 
 sweater:
-  name: Marslandic Sweater
+  name: marslandic sweater
   price: 6032
   description: Cozy sweater that has buttons to adjust to the huge variations in temperature on Mars!
   stock: 7
@@ -19,7 +19,7 @@ sweater:
   merchant: quasar
 
 soap:
-  name: Mars Mud Soap
+  name: mars mud soap
   price: 408
   description: Keep your hands clean and soft with this luxurious soap made out of the most precious Martian mud.
   stock: 100
@@ -28,7 +28,7 @@ soap:
   merchant: quasar
 
 icecream:
-  name: Artisan Ice Cream
+  name: artisan ice cream
   price: 702
   description: Miss your favorite ice cream? We've got you covered - you won't even notice it's dehydrated!
   stock: 50
@@ -38,7 +38,7 @@ icecream:
 
 
 soda:
-  name: Dr. Pepper
+  name: dr pepper
   price: 4
   description: Favorite drink
   stock: 50
