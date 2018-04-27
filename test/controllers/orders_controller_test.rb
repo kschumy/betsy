@@ -77,6 +77,12 @@ describe OrdersController do
       get edit_order_path(orders(:star_mouse_order).id)
       must_respond_with :success
     end
+
+    it "should redirect if order doesn't exist" do
+      get edit_order_path(1111111)
+      must_respond_with :redirect
+      must_redirect_to products_path
+    end
   end
 
   describe "checkout order" do
