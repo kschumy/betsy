@@ -40,6 +40,7 @@ class OrdersController < ApplicationController
     @order.update(order_params)
     if @order.save
       flash[:success] = "Order placed!"
+      session[:cart_id] = nil
       redirect_to order_path(params[:id])
     else
       flash[:alert] = @order.errors
@@ -69,9 +70,8 @@ class OrdersController < ApplicationController
   def cart
     if session.has_key?(:cart_id)
       @order = Order.find_by(id: session[:cart_id])
-      # redirect_to order_path(params[:id])
     else
-      # flash.now[:status] = "Cart is empty"
+      flash.now[:status] = "Cart is empty"
     end
   end
 
