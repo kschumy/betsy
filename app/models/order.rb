@@ -8,7 +8,6 @@ class Order < ApplicationRecord
 
   STATUS = %w(pending paid complete cancelled)
 
-
   validates :status, presence: true, inclusion: { in: STATUS }
 
   validates :state, presence: true,
@@ -27,13 +26,11 @@ class Order < ApplicationRecord
   validate :validate_cc_cvv,
               if: -> { !(is_pending? && cc_cvv.nil?) }
 
-
   validates_each :customer_name, :street, :city, :cc_name do |record, attrib, value|
     if !(record.is_pending? && value.nil?) && !is_non_empty_string?(value)
       record.errors[attrib] << "Invalid #{attrib} - cannot be empty"
     end
   end
-
 
   validates_each :mailing_zip, :cc_zip do |record, attribute, value|
     if !(record.is_pending? && value.nil?) && !is_zip_code?(value)

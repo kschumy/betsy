@@ -8,14 +8,11 @@ class OrderItem < ApplicationRecord
   validates :quantity, presence: true, numericality: { only_integer: true }
   validate :quantity_limits
 
-  # TODO: needs validations!
   def quantity_limits
-    available_quantity = product.stock
-    if quantity.to_i > available_quantity
+    if quantity.to_i > product.stock
       errors.add(:quantity, "Only #{product.stock} are available")
     end
   end
-
 
   def get_subtotal
     price * quantity
@@ -26,21 +23,25 @@ class OrderItem < ApplicationRecord
   end
 
   def get_order_status
-    Order.find(order_id).status
+    return order.status
+    # Order.find(order_id).status
   end
 
   def get_item_name
-    Product.find(product_id).name
+    return product.name
+    # Product.find(product_id).name
   end
 
   def get_item_merchant
-    merchant_id = Product.find(product_id).merchant_id
-    Merchant.find(merchant_id).username
+    return product.merchant.username
+    # merchant_id = Product.find(product_id).merchant_id
+    # Merchant.find(merchant_id).username
   end
 
   def get_item_merchant_id
-    merchant_id = Product.find(product_id).merchant_id
-    Merchant.find(merchant_id).id
+    return product.merchant.id
+    # merchant_id = Product.find(product_id).merchant_id
+    # Merchant.find(merchant_id).id
   end
 
 

@@ -6,11 +6,11 @@ class Product < ApplicationRecord
 
   # before_validation :convert_price_to_int
 
-  validates :name, presence: true, uniqueness: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 } #numericality: { only_integer: true, greater_than_or_equal_to: 0.01 }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.01 }
   validates :merchant, presence: true
   validates :photo, presence: true
-  validates :stock, presence: true
+  validates :stock, presence: true, numericality: { greater_than_or_equal_to: 1 }
 
   # validates_length_of :category_ids, :minimum => 1
   def inventory_status
@@ -43,16 +43,19 @@ class Product < ApplicationRecord
     return price.cents_to_dollars
   end
 
+  # Helper needed to convert float from creating new product form into an int.
   def price_from_form
-    price
+    price # Please do not change! - Kirsten
   end
 
+  # Needed to convert float from creating new product form into an int.
   def price_from_form=(form_price)
-    self.price = (form_price.to_f * 100).to_i
+    self.price = (form_price.to_f * 100).to_i # Please do not change! - Kirsten
   end
-
 
   def self.merchant_products(merchant_id)
+    # Do we actually need this or can this be done through relationships
+    # however/wherever this is being used? - Kirsten
     return self.select { |product| product.merchant_id == merchant_id }
   end
 
@@ -62,8 +65,9 @@ class Product < ApplicationRecord
   #   reviews.inject(0.0) { |sum, review| sum + review.rating  } / reviews.size
   # end
 
+  # Converts price into an int if price is a double.
   def convert_price_to_int
-    # raise
+    # Please do not change! - Kirsten
     self.price = (self.price * 100).to_i if self.price.is_a?(Float)
   end
 end
