@@ -51,14 +51,14 @@
 
             <%= f.hidden_field :status, value: "paid" %>
 
-            <%= f.submit "Place your order" %>
+            <%= f.submit "Place your order", class:"button" %>
 
           <% end %>
         </section>
-        <section>
+        <section class="checkout-options">
           <% if @order.status == "pending" %>
-          <%= link_to('Cancel Order', mark_order_cancelled_path(@order), method: :patch, class: "button") %>
-          <%= link_to('Checkout', checkout_order_path(@order), method: :patch, class: "button") %>
+          <%= link_to('Cancel Order', mark_order_cancelled_path(@order), method: :patch, class: "button in-line-button float-right") %>
+          <%= link_to('Continue Shopping', root_path, class: "button in-line-button float-right") %>
           <% end %>
         </section>
       <% end %>
