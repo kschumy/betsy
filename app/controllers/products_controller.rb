@@ -4,17 +4,9 @@ class ProductsController < ApplicationController
     @products = Product.products_available
     @categories = Category.order(:name)
     if params[:merchant_id]
-      if Merchant.find_by(id: params[:merchant_id]) == nil
-        render_404
-      else
-        @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
-      end
+      @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
     elsif params[:category_id]
-      if Category.find_by(id: params[:category_id]) == nil
-        render_404
-      else
-        @products = Product.includes(:categories).where( categories: { id: params[:category_id]})
-      end
+      @products = Product.includes(:categories).where( categories: { id: params[:category_id]})
     else
       @products = Product.order(:id)
     end
