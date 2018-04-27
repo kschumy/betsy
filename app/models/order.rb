@@ -54,9 +54,9 @@ class Order < ApplicationRecord
     return status == "pending"
   end
 
-  def is_not_allowed_to_change?
-    return status != "pending"
-  end
+  # def is_not_allowed_to_change? # not used? - Kirsten
+  #   return status != "pending"
+  # end
 
   def delete_all_items_in_cart
     destroy_all_order_items if is_pending?
@@ -102,27 +102,3 @@ class Order < ApplicationRecord
   end
 
 end
-
-class String
-  def has_only_n_digits?(n)
-    raise ArgumentError.new("'n' must be int > 0") if !n.is_a?(Integer) && n < 0
-    return length == n && !self.match?(/[\D]/)
-  end
-
-end
-
-# def self.show_pending
-#   show_orders("pending")
-# end
-#
-# def self.show_paid
-#   show_orders("paid")
-# end
-#
-# def self.show_complete
-#   show_orders("complete")
-# end
-#
-# def self.show_cancelled
-#   show_orders("cancelled")
-# end
