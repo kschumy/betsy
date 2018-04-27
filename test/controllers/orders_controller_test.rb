@@ -1,6 +1,7 @@
 require "test_helper"
 
-describe OrdersController do
+describe
+ OrdersController do
   let(:order) {post order_products_path(products(:three), order_product: {quantity: 1})}
 
   it "should get index" do
