@@ -34,7 +34,6 @@ class OrderItem < ApplicationRecord
 
   def get_item_merchant
     return product.merchant.username
-
   end
 
   def get_item_merchant_id
