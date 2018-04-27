@@ -1,10 +1,14 @@
 <section class="large-9 cell">
 	<h3>List of Merchants</h3>
-	<article class="grid-x">
+	<section class="grid-x">
 		<section class="cell medium-auto">
-					<% @merchants.each do |merchant| %>
-			<h4><%= link_to merchant.username, merchant_path(merchant) %> - <%= link_to "View Products", merchant_products_path(merchant[:id]) %></h4>
-					<% end %>
+		  <ul>
+				<% @merchants.each do |merchant| %>
+				<li>
+					<h5><%= link_to merchant.username, merchant_path(merchant) %> - <%= link_to "View Products", merchant_products_path(merchant[:id]) %></h5>
+					</li>
+				<% end %>
+				</ul>
 		</section>
-	</article>
+	</section>
 </section>
