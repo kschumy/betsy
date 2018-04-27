@@ -136,6 +136,6 @@ describe ProductsController do
         must_redirect_to merchant_path(merchant)
       end
 
-    end
+
   end
 end
