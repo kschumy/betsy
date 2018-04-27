@@ -4,9 +4,9 @@ class ProductsController < ApplicationController
     # @products = Product.products_available
     @categories = Category.order(:name)
     if params[:merchant_id]
-      @products = Product.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
+      @products = Product.products_available.includes(:merchant).where(products: {merchant_id: params[:merchant_id]})
     elsif params[:category_id]
-      @products = Product.includes(:categories).where( categories: { id: params[:category_id]})
+      @products = Product.products_available.includes(:categories).where( categories: { id: params[:category_id]})
     else
       @products = Product.order(:id).products_available
     end
