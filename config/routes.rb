@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "merchants#destroy", as: "logout"
 
   root 'products#welcome'
-  resources :categories, only: [:create, :show, :index, :new] do
+  resources :categories, only: [:create, :index, :new] do
     resources :products, only: [:index]
   end
   resources :reviews, only: [:create, :new]
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   # patch '/cart', to: "order#view_cart", as: 'view_cart'
   #resources :merchants #, only: [:create, :show, :index]
   resources :merchants do
-    resources :products, only: [:index]
+    resources :products, only: [:index] #may be a use to adding :show
     resources :orders, only: [:show]
   end
   #Pretty sure we can delete the merchant order_items below
