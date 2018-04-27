@@ -95,7 +95,7 @@ describe OrderItemsController do
       order_item_id = OrderItem.first.id
       delete order_item_path(order_item_id)
 
-      must_redirect_to order_items_path
+      must_redirect_to view_cart_path
       OrderItem.find_by(id: order_item_id).must_be_nil
     end
 
