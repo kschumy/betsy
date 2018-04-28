@@ -36,6 +36,10 @@ label {
   color: #EEEEEE;
 }
 
+td {
+  color: dimgray;
+}
+
 .mars {
   margin-right: auto;
   font-size: 5em;

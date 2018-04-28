@@ -28,7 +28,7 @@
 						<%end%>
 					</section>
 				<%end%>
-			<% if !@order.nil? %>
+			<% if !@order.nil? && !@order.order_items.empty? %>
 				<section><%= link_to "Checkout", edit_order_path(@order.id), class: "button" %></section>
 			<%end%>
 		</section>

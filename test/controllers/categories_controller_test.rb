@@ -10,11 +10,6 @@ describe CategoriesController do
     value(response).must_be :success?
   end
 
-  it "should get show" do
-    get category_products_path(novelty.id)
-    value(response).must_be :success?
-  end
-
   it "should not let a guest get new" do
     get new_category_path
     must_respond_with :not_found
@@ -30,6 +25,13 @@ describe CategoriesController do
     perform_login(merchant, :github)
     proc { post categories_path, params: {category: {name: "marscrafts"}}}.must_change 'Category.count', 1
     must_respond_with :redirect
+  end
+
+  it "should not let a merchant create a new category with bad params" do
+
+    perform_login(merchant, :github)
+    proc { post categories_path, params: {category: {name: " "}}}.must_change 'Category.count', 0
+    must_respond_with :bad_request
   end
 
   it "should not let a guest create a new category" do

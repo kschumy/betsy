@@ -21,12 +21,6 @@ describe OrderItemsController do
       must_respond_with :success
     end
 
-    # it "renders 404 not_found for an invalid order_item ID" do
-    #   invalid_order_item_id = OrderItem.last.id + 1
-    #   get order_item_path(invalid_order_item_id)
-    #   must_respond_with :not_found
-    # end
-
   end
 
   describe "new" do
@@ -81,25 +75,21 @@ describe OrderItemsController do
   describe "update" do
     it "should get updated" do
 
-
-
-      order_item = OrderItem.first
-      order_item_data = [
-        order_item: {
-          price: order_item.price + 1
+      proc {
+        patch order_item_path(order_items(:order_one).id),
+        params: {
+          order_item: {
+            quantity: 4,
+            price: 20,
+            is_shipped: false,
+            product_id: products(:sweater).id,
+            order_id: orders(:star_mouse_order).id,
+          }
         }
-      ]
+      }.must_change "OrderItem.count", 0
+      must_respond_with :redirect
+      must_redirect_to view_cart_path
 
-      # order_item.update(order_item_params)
-      # must_redirect_to redirect_to order_items_path
-
-      # OrderItem.find(order_item.id).price.must_equal order_item_data[:order_item][:price]
-      # puts order_item_test.price += order_item_test.price + 1
-      # put order_item_path order_items(order_item_test).id , params: {
-      #   order_item_test: {
-      #     quantity: original_quantity + 1
-      #   }
-      # }
 
     end
   end
@@ -120,9 +110,13 @@ describe OrderItemsController do
 
   end
 
-  # private
-  #
-  # def order_item_params
-  #   params.require(:order_item).permit(:quantity, :price, :is_shipped, :product_id, :order_id)
-  # end
+  describe "mark_shipped" do
+    it "shoud update order item as shipped and redirect to order items path" do
+      proc {
+        patch mark_item_shipped_path(order_items(:order_one).id)
+      }.must_change "OrderItem.count", 0
+
+    end
+  end
+
 end
