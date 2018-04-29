@@ -125,4 +125,12 @@ describe Merchant do
     end
   end
 
+  describe 'get_merchant_orders(status)' do
+    it "gets the merchants orders" do
+      merchant = merchants(:quasar)
+      items = merchant.get_merchant_orders("all")
+      items.must_be Array
+    end
+  end
+
 end

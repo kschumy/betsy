@@ -27,6 +27,10 @@ class OrderItem < ApplicationRecord
     # Order.find(order_id).status
   end
 
+  def is_paid_or_complete?
+    return status == "pending" || status == "complete"
+  end
+
   def get_item_name
     return product.name
     # Product.find(product_id).name
