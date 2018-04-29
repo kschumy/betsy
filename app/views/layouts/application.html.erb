@@ -18,28 +18,28 @@
 
 
     <!-- Navigation -->
-    <div class="row expanded">
-      <div class="column">
-        <div class="large-article-header">
-          <div class="large-article-header-content">
-            <div class="center-container">
-              <div class="article-title">
+    <secton class="row expanded">
+      <secton class="column">
+        <secton class="large-article-header">
+          <secton class="large-article-header-content">
+            <secton class="center-container">
+              <secton class="article-title">
                 <%= link_to "MarsDepot", root_path%>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div  data-sticky-containerdata >
-      <div data-sticky data-options="marginTop:0;">
+              </secton>
+            </secton>
+          </secton>
+        </secton>
+      </secton>
+    </secton>
+    <secton  data-sticky-containerdata >
+      <secton data-sticky data-options="marginTop:0;">
 
-        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+        <secton class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
           <button class="menu-icon" type="button" data-toggle="example-menu"></button>
-          <div class="title-bar-title">Menu</div>
-        </div>
+          <secton class="title-bar-title">Menu</secton>
+        </secton>
 
-        <div class="top-bar" id="example-menu">
+        <secton class="top-bar" id="example-menu">
           <ul class="vertical medium-horizontal dropdown menu" data-responsive-menu="accordion medium-dropdown">
             <!-- <li class="menu-text">Site Title</li> -->
             <li>
@@ -62,9 +62,9 @@
                 <%= link_to "Shop All", products_path, class:"nav-group" %>
 
           </ul>
-        <!-- </div> -->
+        <!-- </secton> -->
 
-        <div class="top-bar-right">
+        <secton class="top-bar-right">
           <% @curr_merchant = Merchant.find_by(id: session[:merchant_id]) %>
           <ul class="vertical medium-horizontal dropdown menu" data-responsive-menu="accordion medium-dropdown">
           <% if @curr_merchant %>
@@ -84,11 +84,11 @@
             <li class="cart-container"><%= link_to image_tag("icons/if_shopping_cart red_10535.png", size: "40x40", alt: "Shopping Cart", class: "cart"),  view_cart_path(id: session[:cart_id]) %></li>
           </ul>
 
-        </div>
-      </div>
+        </secton>
+      </secton>
 
-      </div>
-    </div>
+      </secton>
+    </secton>
 
 
   </header>
@@ -119,7 +119,7 @@
   <%= yield %>
   </section>
   </section>
-</div>
+</secton>
 
 </main>
 </body>
